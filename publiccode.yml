@@ -114,6 +114,6 @@ platforms:
 releaseDate: '2022-12-01'
 softwareType: standalone/web
 softwareVersion: 1.0.0
-url: 'https://github.com/comunedibari/cruscotto_geospaziale'
+url: 'https://github.com/comunedibari/gestione-autorizzazioni'
 usedBy:
   - Comune di Bari
