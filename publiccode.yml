@@ -1,0 +1,119 @@
+# This repository adheres to the publiccode.yml standard by including this 
+# metadata file that makes public software easily discoverable.
+# More info at https://github.com/italia/publiccode.yml
+
+publiccodeYmlVersion: '0.2'
+applicationSuite: Città connessa
+categories:
+  - geographic-information-systems
+dependsOn:
+  open:
+    - name: PostgreSQL
+      optional: false
+      version: ''
+      versionMax: '10'
+      versionMin: '9'
+    - name: PostGIS
+      optional: false
+      version: '2.4'
+      versionMax: ''
+      versionMin: ''
+    - name: Node.js
+      optional: false
+      version: '10.7'
+      versionMax: ''
+      versionMin: ''
+    - name: OpenLayers
+      optional: false
+      version: 5.3.1
+      versionMax: ''
+      versionMin: ''
+    - name: Mapfish (print-servlet)
+      optional: false
+      version: 3.18.4
+      versionMax: ''
+      versionMin: ''
+description:
+  it:
+    features:
+      - GIS
+    genericName: Gestione autorizzazioni
+    localisedName: Gestione autorizzazioni
+    longDescription: |
+      Lo scopo principale di questa applicazione è la gestione web-based delle
+      richieste di manutenzione stradale e trasloco effettuate dalle aziende
+      competenti.
+
+
+      MODULO "MANUTENZIONE STRADE"
+
+
+      Il modulo in oggetto consente alle Società preposte di avviare
+      l’interlocuzione con gli uffici competenti del Comune al fine di ricevere
+      idonea autorizzazione per l’esecuzione dei lavori su sede stradale.
+
+
+      Gli operatori delle Società e gli utenti amministratori della piattaforma
+      hanno accesso con credenziali custom. Tali credenziali sono generate e
+      gestite attraverso un pannello dedicato di amministrazione.  La fase di
+      richiesta di rilascio autorizzazione all’esecuzione dei lavori prevede la
+      compilazione di un form con informazioni alfanumeriche e allegati; tale
+      richiesta inviata attraverso il sistema viene protocollata e valutata
+      dagli operatori comunali ai fini dell’approvazione.
+
+
+      MODULO TRASLOCHI
+
+
+      Il modulo consente di gestire le richieste di trasloco effettuate da parte
+      delle specifiche aziende. Anche in questo caso sono gestite le funzioni di
+      registrazione e relativo controllo dell’accesso degli utenti abilitati. Le
+      aziende di traslochi accedono alla piattaforma con credenziali ad hoc e
+      con ruolo specifico e possono segnalare un trasloco; l’elenco dei
+      traslochi è poi visibile agli operatori di Polizia municipale che
+      approvano o negano la richiesta. 
+    shortDescription: |-
+      Gestione autorizzazioni, gestionale per l'autorizzazione di cantieri
+      stradali e traslochi sul territorio urbano
+developmentStatus: stable
+it:
+  conforme:
+    gdpr: false
+    lineeGuidaDesign: false
+    misureMinimeSicurezza: false
+    modelloInteroperabilita: false
+  countryExtensionVersion: '0.2'
+  piattaforme:
+    anpr: false
+    cie: false
+    pagopa: false
+    spid: false
+  riuso:
+    codiceIPA: c_a662
+legal:
+  license: AGPL-3.0-or-later
+  mainCopyrightOwner: Comune di Bari
+  repoOwner: Comune di Bari
+localisation:
+  availableLanguages:
+    - it
+  localisationReady: false
+maintenance:
+  contacts:
+    - email: rip.innovazionetecnologica@comune.bari.it
+      name: |-
+        Comune di Bari - Ripartizione Innovazione Tecnologica, Sistemi
+
+
+        Informativi e TLC
+      phone: '+390805774702'
+  type: internal
+name: Gestione autorizzazioni
+platforms:
+  - web
+releaseDate: '2022-12-01'
+softwareType: standalone/web
+softwareVersion: 1.0.0
+url: 'https://github.com/comunedibari/cruscotto_geospaziale'
+usedBy:
+  - Comune di Bari
