@@ -1,0 +1,71 @@
+<nav id="custom-bootstrap-menu" style="margin-bottom:0px;"
+  class="navbar navbar-default navbar-static-top">
+
+  <!-- Container -->
+  <div class="container-fluid">
+
+    <!-- Collapse button -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+        data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <!-- Navigation bar -->
+    <div id="navbar" class="navbar-collapse collapse" ng-controller="menuCtrl">
+
+      <!-- Menu -->
+      <ul class="nav navbar-nav">
+        <li class="dropdown" ng-repeat="m in menu">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button"
+            aria-haspopup="true" aria-expanded="false" href="#">
+            {{m.label | translate}} <span class="caret"></span>
+          </a>
+
+          <ul class="dropdown-menu">
+            <li ng-repeat="it in m.items">
+              <a href="" ng-click="onMenuAction(it.action)">
+                {{it.label | translate}}
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- Right side -->
+      <ul class="nav navbar-nav navbar-right">
+
+        <!-- User info -->
+        <li>
+          <a href="" ng-if="userInfo" ng-click="onMenuAction('userInfo')">
+            {{userInfo.name}} {{userInfo.surname}}
+          </a>
+        </li>
+
+        <!-- Languages -->
+        <li ng-repeat="lang in languages">
+          <a style="padding:0;" href="" ng-click="changeLanguage(lang)">
+            <img ng-src="image/navbar/{{lang}}.png">
+          </a>
+        </li>
+
+        <!-- Reserved area -->
+        <li>
+          <a href="" ng-if="resAreaLogin" ng-click="accessResArea()">
+            <span class="glyphicon glyphicon-log-in"></span> Login
+          </a>
+        </li>
+        <li>
+          <a href="" ng-if="resAreaLogout" ng-click="quitResArea()">
+            <span class="glyphicon glyphicon-log-out"></span> Logout
+          </a>
+        </li>
+      </ul>
+
+    </div>
+
+  </div>
+</nav>

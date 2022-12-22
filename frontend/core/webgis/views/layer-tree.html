@@ -1,0 +1,706 @@
+<div ng-controller="wgLayersTreeCtrl">
+  <!-- spinner -->
+  <div class="modal-loader" ng-show="showLoader">
+    <div class="spinner"></div>
+  </div>
+  <div class="no-pad container-fluid">
+    <div class="row no-margin">
+      <div class="no-pad col-lg-5 col-md-5 col-sm-12 col-xs-12">
+        <div class="row no-margin">
+           <!-- Add Category Button -->
+          <button class="no-pad btn btn-default btn-xs layer-tree-node-btn"
+            style="min-width:24px; float:right; margin:5px 5px 2px 5px;"
+            type="button" ng-click="addCategory()" title="{{'WORDS.ADD' | translate}}">
+            <span class="glyphicon glyphicon-plus"></span>
+          </button>
+        </div>
+        <div class="row no-margin">
+          <!-- Legend tree -->
+          <div ui-tree="treeOptions" data-drag-delay="dataDragDelay"
+            style="overflow-y:auto" class="layer-tree-body">
+            <ol ui-tree-nodes="" ng-model="tree">
+              <li ng-repeat="category in tree" ui-tree-node >
+                <!-- Category -->
+                <div ui-tree-handle
+                  class="layer-tree-node layer-tree-node-content autoHeight">
+                  <div>
+                    <a class="pull-left cursorPointer" ng-click="toggle(this)">
+                      <span class="glyphicon glyphicon-chevron-right"
+                        ng-class="{'glyphicon-chevron-right': collapsed,
+                              'glyphicon-chevron-down': !collapsed}"></span>
+                    </a>
+
+                    <div class="layer-no-border layer-tree-label cursorPointer
+                        col-lg-8 col-md-8 col-sm-9 col-xs-7"
+                        ng-click="toggle(this)">
+                      <p ng-if="category.op=='U'" class="itemTitle noMargin">
+                        {{category.label | translate}}
+                      </p>
+                    </div>
+                    <div style="position:absolute; right:10px">
+                    <a class="pull-right btn btn-danger btn-xs"
+                      ng-click="removeCategory(this)"
+                      title="{{'WORDS.DELETE' | translate}}">
+                      <span class="glyphicon glyphicon-remove"></span>
+                      </a>
+                      <a class="pull-right btn btn-default btn-xs layer-tree-node-btn"
+                        ng-click="addLayer(this)"
+                        title="{{'WORDS.ADD' | translate}}">
+                        <span class="glyphicon glyphicon-plus"></span>
+                      </a>
+                      <a class="pull-right btn btn-default btn-xs
+                        layer-tree-node-btn"
+                        ng-click="editCategory(this)"
+                        title="{{'WORDS.MODIFY' | translate}}">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                      </a>
+                    </div>
+
+                  </div>
+
+                </div>
+                <!-- G -->
+                <ol ui-tree-nodes="" ng-model="category.layers"
+                  ng-class="{hidden: collapsed}">
+                  <li ng-repeat="group in category.layers" ui-tree-node
+                    ng-include="'core/webgis/views/layer-tree-item.html'">
+                  </li>
+                </ol>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12"
+        style="padding: 0 5px 0 5px;">
+        <div class="container-fluid layer-tree-body" style="overflow-y:auto">
+          <div class="row" ng-show="showI18nCategoryForm">
+            <!-- I18N Config Form -->
+            <rw-form config="i18nFormCfg" entity="curEntity.i18n"
+              controllers="groupFormCtrlObj">
+            </rw-form>
+            <!-- Layer permission Form -->
+            <rw-form config="permissionFormCfg" entity="curEntity"
+              controllers="groupFormCtrlObj">
+            </rw-form>
+          </div>
+          <div class="row" ng-show="showLayerForm">
+            <!-- I18N Config Form -->
+            <rw-form config="i18nFormCfg" entity="curEntity.i18n"
+              controllers="layerFormCtrlObj">
+            </rw-form>
+            <!-- Layer permission Form -->
+            <rw-form config="permissionFormCfg" entity="curEntity"
+              controllers="layerFormCtrlObj">
+            </rw-form>
+
+            <uib-tabset active="activeTab">
+              <uib-tab index="0" heading="{{'WEBGIS.BASIC_CONFIG' | translate}}"
+                class="rw-control-font-size"
+                ng-hide="curEntity.type == 'VECTOR' &&
+                  (curEntity._enableSourceAndType != undefined &&
+                    !curEntity._enableSourceAndType)">
+                <div >
+                  <!-- Layer's source config Form -->
+                  <rw-form config="layerSourceFormCfg" entity="curEntity.source"
+                    ng-show="curEntity._enableSourceAndType"
+                    controllers="layerFormCtrlObj">
+                  </rw-form>
+                  <rw-form config="layerSimpleSourceFormCfg" entity="curEntity"
+                    ng-show="!curEntity._enableSourceAndType"
+                    controllers="layerFormCtrlObj">
+                  </rw-form>
+
+                  <!-- WFS Attributes  -->
+                  <div ng-if="curEntity.source.show_attributes">
+                    <label class="control-label rw-control-font-size "
+                      style="margin:10px 5px 0px 15px">
+                      {{'WEBGIS.SELECT_ATTRIBUTES'| translate}}
+                    </label></br>
+                    <label class="control-label"
+                      style="margin:0px 5px 5px 15px;font-size:10px">
+                      {{'WEBGIS.SELECT_ATTRIBUTES_SUB'| translate}}
+                    </label>
+
+                    <!-- Attribute table -->
+                    <div ng-style="attributeTableStyle">
+                      <table class="row-border hover" style="margin:0px;" datatable="ng"
+                        dt-options="attributeDtOpt" dt-column-defs="attributeDtColDef">
+                        <thead>
+                          <tr>
+                            <th>{{"WORDS.SELECTED" | translate}}</th>
+                            <th>{{"WORDS.ATTRIBUTE" | translate}}</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <tr ng-repeat="sourceAttr in curEntity.source.attributesForView">
+                            <td class="text-center">
+                              <input type="checkbox" ng-model="sourceAttr.checked">
+                            </td>
+                            <td>{{sourceAttr.id}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                </div>
+              </uib-tab>
+
+              <uib-tab index="1" heading="{{'WEBGIS.ADVANCED_CONFIG' | translate}}"
+                class="rw-control-font-size">
+                <div >
+                  <!-- Layer Config Form -->
+                  <rw-form config="layerFormCfg" entity="curEntity"
+                    controllers="layerFormCtrlObj">
+                  </rw-form>
+                </div>
+              </uib-tab>
+
+              <uib-tab index="2" heading="{{'WORDS.FILTER' | translate}}"
+                class="rw-control-font-size" ng-click="filterTabClicked()"
+                ng-show="curEntity.type == 'VECTOR' &&
+                  (curEntity._enableSourceAndType != undefined &&
+                    !curEntity._enableSourceAndType)">
+                <wg-filter-item entity="curEntity.filter"></wg-filter-item>
+              </uib-tab>
+
+              <uib-tab index="3" heading="{{'WEBGIS.PRINT_LEGEND' | translate}}"
+                class="rw-control-font-size"
+                ng-click="legendTabClicked()">
+                <div >
+                  <!-- Layer's legend i18n-->
+                  <rw-form config="layerLegendI18nFormCfg"
+                    entity="curEntity.legend.i18n"
+                    controllers="layerFormCtrlObj">
+                  </rw-form>
+                  <!-- Layer's legend -->
+                  <rw-form config="layerLegendFormCfg" entity="curEntity.legend"
+                    controllers="layerFormCtrlObj">
+                  </rw-form>
+                  <!-- ICON -->
+                  <div ng-if="!curEntity.legend.extern &&
+                    curEntity.legend.class_presence == false">
+                    <label class="control-label rw-control-font-size"
+                      style="padding-left:15px">
+                      {{'WORDS.ICON' | translate}}
+                    </label>
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                          <div class="fileinput-new thumbnail"
+                            style="height: 30px;margin-bottom:5px;">
+                            <img ng-show="disableIcon"
+                              src="./image/empty_gallery.png"
+                              style="height: 20px;">
+
+                            <a href="data:image/png;base64,{{lIconToDownload}}"
+                            download="image" ng-if="curEntity.legend.image">
+                              <img ng-hide="disableIcon"
+                                data-ng-src="data:image/png;base64,{{curEntity.legend.image}}"
+                                data-err-src="./image/empty_gallery.png"
+                                style="height: 20px;"/>
+                            </a>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                          <!-- Toolbar -->
+                          <label class="btn btn-default btn-file btn-sm"
+                            title="{{'WORDS.NEW_FILE' | translate}}"
+                            ng-hide="!disableIcon">
+                            <input type="file" style="display:none;"
+                            rw-file-model="curEntity.imageIcon">
+                              <span class="glyphicon glyphicon-plus"></span>
+                            </input>
+                          </label>
+
+                          <button class="btn btn-default btn-sm"
+                            ng-click="deleteLegendIcon()" ng-disabled="disableIcon"
+                            title="{{'CORE_MSG.DELETE_FILE_MSG' | translate}}" >
+                            <span class="glyphicon glyphicon-trash"></span>
+                          </button>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                          <h6 style="color:red" ng-show="showLIconError">
+                            {{lIconErrorMsg | translate}}
+                          </h6>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                    <!-- CLASSES -->
+                    <div ng-if="!curEntity.legend.extern &&
+                      curEntity.legend.class_presence == true">
+                      <div class="row no-margin" ng-repeat="legendClass in curEntity.legend.classes">
+                        <div class="layer-tree-legend-class">
+                          <div class="row no-margin">
+                            <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9"
+                              style="text-align:left;font-size:11px;">
+                              <p ng-if="legendClass.op=='U'" style="margin-bottom:7px">
+                                {{legendClass.name | translate}}
+                              </p>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3"
+                              style="padding-right:0px">
+                              <a class="pull-right btn btn-danger btn-xs"
+                                ng-click="removeClass($index)"
+                                title="{{'WORDS.DELETE' | translate}}">
+                                <span class="glyphicon glyphicon-remove"></span>
+                              </a>
+                            </div>
+                          </div>
+                          <div class="row no-margin">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-sx-12"
+                              style="padding-left:0px">
+                              <wg-legend-class class="legendClass" url="">
+                              </wg-legend-class>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </uib-tab>
+              <uib-tab index="4" heading="{{'WORDS.SEARCH' | translate}}"
+                class="rw-control-font-size"
+                ng-click="searchTabClicked()"
+                ng-show="(curEntity.source && (curEntity.source.type=='VECTOR' || curEntity.source.type=='GEOJSON'))">
+
+                <!-- Searchable table -->
+                <div ng-style="searchableTableStyle">
+                  <table class="row-border hover" style="margin:0px;" datatable="ng"
+                    dt-options="searchDtOpt" dt-column-defs="searchDtColDef">
+                    <thead>
+                      <tr>
+                        <th>{{"WORDS.ATTRIBUTE" | translate}}</th>
+                        <th>{{"WORDS.TYPE" | translate}}</th>
+                        <th>{{"WEBGIS.SEARCHABLE" | translate}}</th>
+                        <th>{{"WEBGIS.RETURNED" | translate}}</th>
+                        <th>Alias</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr ng-repeat="attr in curEntity.searchable.attributesForView">
+                        <td>{{attr.id}}</td>
+                        <td>{{attr.type}}</td>
+                        <td class="text-center">
+                          <input type="checkbox" ng-model="attr.searchable">
+                        </td>
+                        <td class="text-center">
+                          <input type="checkbox" ng-model="attr.returned">
+                        </td>
+                        <td>
+                        <input type="text"
+                            class="form-control rw-control-font-size input-sm"
+                            ng-model="attr.name"
+                            ng-disabled="!(attr.searchable || attr.returned)"/>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+              </uib-tab>
+              <uib-tab index="5" heading="{{'WEBGIS.STYLE_LBL' | translate}}"
+                class="rw-control-font-size" ng-click="styleTabClicked()"
+                ng-show="(curEntity.styleStatus != undefined) &&
+                  (curEntity.styleStatus != curEntity.styleStatusEnum.DEFINED_IN_RELATIVES) &&
+                  ((curEntity.source && (curEntity.source.type=='VECTOR' || curEntity.source.type=='GEOJSON')) ||
+                  (curEntity._parentSource && (curEntity._parentSource.type =='VECTOR' || curEntity._parentSource.type =='GEOJSON') &&
+                  curEntity._enableSourceAndType != undefined &&
+                  !curEntity._enableSourceAndType))">
+                <div >
+                  <div class="container-fluid">
+                    <div class="row no-margin">
+                      <label class="control-label rw-control-font-size">
+                        {{'WEBGIS.STYLE.STYLE_TYPE' | translate }}
+                      </label>
+                    </div>
+                    <div class="row no-margin" style="margin-bottom:10px">
+                      <select class="input-sm"
+                        ng-model="styleObj.style_type"
+                        ng-change="changedStyleType()"
+                        ng-options="opt.id as opt.name | translate for opt in styleTypeDs"/>
+                    </div>
+                    <!-- Unclassified style -->
+                    <div class="row no-margin" ng-if="showUnclassifiedStyle">
+                      <wg-styles-item entity="curEntity.style"
+                        layer-id="curEntity.id"
+                        feature-attribs="featureAttrDs"></wg-styles-item>
+                    </div>
+
+                    <!-- Classified style -->
+                    <div class="row no-margin" ng-if="showClassifiedStyle">
+                      <div class="row no-margin">
+                        <legend class="rw-legend">
+                          {{'WORDS.CLASSES' | translate}}
+                        </legend>
+                        <button type="button" class="btn btn-default btn-sm"
+                          ng-click="addStyleClassesObj()"
+                          title="{{'WORDS.ADD' | translate}}">
+                          <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                      </div>
+                      <!-- Classes Styles -->
+                      <div ui-tree="styleTreeOpt" data-drag-delay="dataDragDelay">
+                        <ol ui-tree-nodes="" ng-model="curEntity.style.classes">
+                          <li ng-repeat="cls in curEntity.style.classes"
+                            ui-tree-node data-collapsed="cls.collapsed">
+                            <div ui-tree-handle class="layer-tree-node
+                              layer-tree-node-content autoHeight">
+                              <div class="row no-margin">
+                                <a class="pull-left cursorPointer"
+                                  ng-click="toggle(this)">
+                                  <span class="glyphicon glyphicon-chevron-right"
+                                    ng-class="{'glyphicon-chevron-right': collapsed,
+                                          'glyphicon-chevron-down': !collapsed}">
+                                  </span>
+                                </a>
+                                <div class="col-lg-8 col-md-8 col-sm-9 col-xs-7">
+                                  <input class="layer-style-name" type="text"
+                                    ng-change="curEntity.style.setDirty()"
+                                    ng-model="cls.name"/>
+                                </div>
+                                <div style="position:absolute; right:10px">
+                                  <a class="pull-right btn btn-danger btn-xs"
+                                    ng-click="removeStyleClassesObj($index)"
+                                    title="{{'WORDS.DELETE' | translate}}">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- Class detail -->
+                            <div ng-if="cls.display" ng-class="{hidden: collapsed}"
+                              style="margin:2px 5px 0px 5px;border: 1px solid #ccc;">
+                              <div class="container-fluid" style="padding-bottom:5px">
+
+                                <!-- Class conditions -->
+                                <div class="row">
+                                  <legend class="rw-legend">
+                                    {{'WORDS.CONDITION' | translate}}
+                                  </legend>
+
+                                  <!-- Add button -->
+                                  <button class="btn btn-default btn-sm"
+                                    ng-click="curEntity.style.addCond(cls)">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                  </button>
+
+                                  <!-- Operator buttons -->
+                                  <div class="btn-group">
+                                    <label class="btn btn-default btn-sm"
+                                      ng-model="cls.op" uib-btn-radio="'AND'">
+                                      AND
+                                    </label>
+                                    <label class="btn btn-default btn-sm"
+                                      ng-model="cls.op" uib-btn-radio="'OR'">
+                                      OR
+                                    </label>
+                                  </div>
+
+                                  <!-- Condition items -->
+                                  <div class="row no-margin" ng-repeat="cond in cls.conditions">
+                                    <div class="col-md-11 col-sm-10 col-xs-10 no-pad">
+                                      <wg-filter-item entity="cond">
+                                      </wg-filter-item>
+                                    </div>
+
+                                    <!-- Condition del button -->
+                                    <div class="col-md-1 col-sm-2 col-xs-2 no-pad">
+                                      <button class="btn btn-danger btn-xs" style="margin-top:34px;"
+                                        ng-click="curEntity.style.delCond(cls,$index)"
+                                        title="{{'WORDS.DELETE' | translate}}">
+                                        <span class="glyphicon glyphicon-remove">
+                                        </span>
+                                      </button>
+                                    </div>
+                                  </div>
+
+                                </div>
+
+                                <!-- Class Style -->
+                                <div class="row">
+                                  <wg-styles-item entity="cls.style"
+                                    layer-id="curEntity.id"
+                                    feature-attribs="featureAttrDs">
+                                  </wg-styles-item>
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                        </ol>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </uib-tab>
+              <uib-tab index="6" heading="{{'WEBGIS.CLUSTER_STYLE' | translate}}"
+                class="rw-control-font-size" ng-click="clusterStyleTabClicked()"
+                ng-show="(curEntity.clusterStyleStatus != curEntity.styleStatusEnum.DEFINED_IN_RELATIVES) &&
+                  (curEntity.source && (curEntity.source.type == 'VECTOR' || curEntity.source.type=='GEOJSON') &&
+                  curEntity.source.cluster)" >
+                <div >
+                  <div clasS="no-pad container-fluid">
+                    <div class="row no-margin">
+                      <wg-styles-item entity="curEntity.cluster_style"
+                        layer-id="curEntity.id"
+                        feature-attribs="featureAttrDs"></wg-styles-item>
+                    </div>
+                  </div>
+                </div>
+              </uib-tab>
+              <uib-tab index="7" heading="Tooltip"
+                class="rw-control-font-size" ng-click="hoverTabClicked()"
+                ng-show="(curEntity.source != null && (curEntity.source.type=='VECTOR' || curEntity.source.type=='GEOJSON'))">
+                <div class="container-fluid no-pad">
+                  <div class="row no-margin">
+                    <div class="col-lg-12 col-md-12 cols-sm-12 col-xs-12">
+                      <label class="control-label rw-control-font-size"
+                        style="margin-bottom:0px">
+                          {{'WEBGIS.HOVER_POPUP_INFO' | translate }}
+                      </label>
+                    </div>
+                  </div>
+                  <div class="row no-margin">
+                    <!-- Textarea -->
+                    <div class="col-lg-9 col-md-8 cols-sm-8 col-xs-12">
+                      <div class="row no-margin">
+                        <label class="control-label"
+                          style="font-size:9px; margin-bottom:5px;">
+                          {{'WEBGIS.HOVER_POPUP_INFO_DESCR' | translate}}
+                        </label>
+                      </div>
+                      <div class="row no-margin" >
+                        <div ng-if="(curEntity.source != null &&
+                          (curEntity.source.type=='VECTOR' || curEntity.source.type=='GEOJSON'))"
+                          summernote config="summOpt" ng-model="curEntity.hover">
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Attributes Combo -->
+                    <div class="col-lg-3 col-md-4 cols-sm-4 col-xs-12">
+                      <div class="row no-margin">
+                        <label class="control-label rw-control-font-size">
+                        {{'WORDS.ATTRIBUTE' | translate }}
+                        </label>
+                      </div>
+                      <div class="row no-margin">
+                        <select class="input-sm col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                        ng-model="hoverObj.attribute"
+                        ng-change="changedHoverAttribute()"
+                        ng-options="opt.id as opt.name for opt in hoverAttrDs"/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </uib-tab>
+              <uib-tab index="8" heading="{{'WORDS.QUERY' | translate}}"
+                class="rw-control-font-size" ng-click="wfsQueryTabClicked()"
+                ng-show="(curEntity.source && (curEntity.source.type=='VECTOR' || curEntity.source.type=='GEOJSON'))">
+                <div class="no-pad container-fluid">
+                  <div class="row no-margin">
+                    <!-- FeatureId Combo -->
+                    <div class="col-lg-5 col-md-6 col-sm-6 col-xs-6">
+                      <div class="row no-margin">
+                        <label class="control-label rw-control-font-size">
+                          {{'WEBGIS.FEATURE_ID' | translate }}
+                        </label>
+                      </div>
+                      <div class="row no-margin">
+                        <select class="input-sm col-lg-12 col-md-12 col-sm-12
+                          col-xs-12"
+                          ng-model="curEntity.selectable.feature_id"
+                          ng-options="opt.id as opt.name for opt in
+                            curEntity.selectable.attributes"/>
+                      </div>
+                    </div>
+                    <!-- Cluster_attribute Combo -->
+                    <div class="col-lg-5 col-md-6 col-sm-6 col-xs-6"
+                      ng-show="curEntity.source && curEntity.source.cluster">
+                      <div class="row no-margin">
+                        <label class="control-label rw-control-font-size">
+                          {{'WEBGIS.CLUSTER_ATTRIBUTE' | translate }}
+                        </label>
+                      </div>
+                      <div class="row no-margin">
+                        <select class="input-sm col-lg-12 col-md-12 col-sm-12
+                          col-xs-12"
+                          ng-model="curEntity.selectable.cluster_attribute"
+                          ng-options="opt.id as opt.name for opt in
+                            curEntity.selectable.attributes"/>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row no-margin">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <!-- Informative message before the table-->
+                      <div class="control-label rw-control-font-size"
+                        style="margin-top:10px">
+                        {{'WEBGIS.QUERY_LBL' | translate}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Selectable table -->
+                <div ng-style="queryableTableStyle">
+                  <table class="row-border hover" style="margin:0px;" datatable="ng"
+                    dt-options="queryableDtOpt" dt-column-defs="queryableDtColDef">
+                    <thead>
+                      <tr>
+                        <th>{{"WORDS.SELECTED" | translate}}</th>
+                        <th>{{"WORDS.ATTRIBUTE" | translate}}</th>
+                        <th>Alias</th>
+                        <th>{{"WORDS.TYPE" | translate}}</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr ng-repeat="prop in curEntity.selectable.tableRows">
+                        <td class="text-center">
+                          <input type="checkbox" ng-model="prop.checked">
+                        </td>
+                        <td>{{prop.id}}</td>
+                        <td>
+                          <input type="text"
+                            class="form-control rw-control-font-size input-sm"
+                            ng-model="prop.name" ng-disabled="!(prop.checked)"/>
+                        </td>
+                        <td>
+                          <select class="form-control input-sm" ng-model="prop.type"
+                            ng-disabled="!(prop.checked)"
+                            ng-options="t as t for t in selectableAttrTypeDs"/>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </uib-tab>
+              <uib-tab index="9" heading="{{'WORDS.QUERY' | translate}}"
+                class="rw-control-font-size" ng-click="queryTabClicked()"
+                ng-hide="curEntity.type == 'VECTOR' || curEntity.type == 'GROUP'
+                  || (curEntity.source && curEntity.source.type == 'VECTOR')
+                  || (curEntity.source && curEntity.source.type == 'WMS' &&
+                      curEntity.source.layer_name == null)">
+                <div>
+                  <div class="no-pad container-fluid">
+                    <div class="row no-margin">
+                      <!-- FeatureId Combo -->
+                      <div class="col-lg-5 col-md-6 col-sm-6 col-xs-6">
+                        <div class="row no-margin">
+                          <label class="control-label rw-control-font-size">
+                            {{'WEBGIS.FEATURE_ID' | translate }}
+                          </label>
+                        </div>
+                        <div class="row no-margin">
+                          <select class="input-sm col-lg-12 col-md-12 col-sm-12
+                            col-xs-12"
+                            ng-model="curEntity.queryable.feature_id"
+                            ng-options="opt.id as opt.name for opt in
+                              curEntity.queryable.properties"/>
+                        </div>
+                      </div>
+                      <!-- InfoFormat Combo -->
+                      <div class="col-lg-5 col-md-6 col-sm-6 col-xs-6"
+                        ng-if="infoFormat.length>1">
+                        <div class="row no-margin">
+                          <label class="control-label rw-control-font-size">
+                            {{'WORDS.FORMAT' | translate }}
+                          </label>
+                        </div>
+                        <div class="row no-margin">
+                          <select class="input-sm col-lg-12 col-md-12 col-sm-12
+                            col-xs-12"
+                            ng-model="curEntity.queryable.info_format"
+                            ng-options="v as v for v in infoFormat"/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div ng-show="showQueryTable">
+                    <div class="no-pad container-fluid">
+                      <div class="row no-margin">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                          <!-- Informative message before the table-->
+                          <div class="control-label rw-control-font-size"
+                            style="margin-top:10px">
+                            {{'WEBGIS.QUERY_LBL' | translate}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Queryable table -->
+                    <div ng-style="queryableTableStyle" ng-show="showQueryTable">
+                      <table class="row-border hover" style="margin:0px;" datatable="ng"
+                        dt-options="queryableDtOpt" dt-column-defs="queryableDtColDef">
+                        <thead>
+                          <tr>
+                            <th>{{"WORDS.SELECTED" | translate}}</th>
+                            <th>{{"WORDS.ATTRIBUTE" | translate}}</th>
+                            <th>Alias</th>
+                            <th>{{"WORDS.TYPE" | translate}}</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <tr ng-repeat="prop in curEntity.queryable.properties">
+                            <td class="text-center">
+                              <input type="checkbox" ng-model="prop.checked">
+                            </td>
+                            <td>{{prop.id}}</td>
+                            <td>
+                              <input type="text"
+                                class="form-control rw-control-font-size input-sm"
+                                ng-model="prop.name" ng-disabled="!(prop.checked)"/>
+                            </td>
+                            <td>
+                            <select class="form-control input-sm" ng-model="prop.type"
+                              ng-disabled="!(prop.checked)"
+                              ng-options="t as t for t in selectableAttrTypeDs"/>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div ng-show="!showQueryTable">
+                    <!-- Informative message before fields -->
+                    <p class="control-label rw-control-font-size"
+                      style="padding: 5px 15px 5px 15px;">
+                      {{'WEBGIS.RASTER_QUERY_LBL' | translate}}
+                    </p>
+                    <!-- Raster queryable -->
+                    <rw-form config="layerRasterQueryableFormCfg"
+                      entity="curEntity.queryable.properties[0]"
+                      controllers="layerFormCtrlObj">
+                    </rw-form>
+                  </div>
+                </div>
+              </uib-tab>
+            </uib-tabset>
+        </div>
+        </div>
+        <!-- Toolbar -->
+        <div class="container-fluid" style="padding-right:0px;"
+          ng-show="showLayerForm || showI18nCategoryForm || showI18nGroupForm">
+          <button class="no-pad btn btn-default btn-sm"
+            style="min-width:37px; float:right; margin:5px 5px 2px 5px;"
+            type="button" ng-click="close()" title="{{'WORDS.CLOSE'|translate}}">
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+          <button class="no-pad btn btn-default btn-sm"
+            style="min-width:37px; float:right; margin:5px 5px 2px 5px;"
+            type="button" ng-click="save()" title="{{'WORDS.SAVE'|translate}}">
+            <span class="glyphicon glyphicon-floppy-disk"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

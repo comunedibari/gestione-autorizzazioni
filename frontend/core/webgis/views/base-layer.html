@@ -1,0 +1,126 @@
+<div ng-controller="wgBaseLayersCtrl">
+  <!-- spinner -->
+  <div class="modal-loader" ng-show="showLoader">
+    <div class="spinner"></div>
+  </div>
+
+   <div class="row no-margin">
+    <div class="no-pad col-lg-5 col-md-5 col-sm-12 col-xs-12"
+      style="max-height:530px;height:500px;overflow-y:auto;">
+      <div class="row no-margin">
+        <!-- Add Base Layer Button -->
+        <button class="no-pad btn btn-default btn-xs layer-tree-node-btn"
+          style="min-width:24px; float:right; margin:5px 5px 2px 5px;"
+          type="button" ng-click="addBaseLayer()" title="{{'WORDS.ADD' | translate}}">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+      </div>
+      <div class="row no-margin">
+        <div ui-tree="baseTreeOptions" data-drag-delay="dataDragDelay"
+          style="overflow-y:auto" class="layer-tree-body">
+            <ol ui-tree-nodes="" ng-model="baseLayers">
+              <li ng-repeat="layer in baseLayers" ui-tree-node >
+                <!-- L -->
+                <div ui-tree-handle class="layer-tree-node autoHeight
+                  base-layer-tree-node-content">
+                  <div class="row no-margin">
+                    <input type="radio" class="pull-left radio-margin"
+                      ng-value="true" ng-model="layer._default"
+                      title="{{'WEBGIS.INITIAL_SELECTION' | translate}}"
+                      ng-change="defaultChanged(this,$index)"/>
+                    <img class="pull-left" style="margin-top:5px;height: 70px;"
+                      data-ng-src="data:image/png;base64,{{layer.image}}"
+                      ng-if="layer.image">
+                    <p class="layer-no-border layer-tree-label
+                      rw-control-font-size col-lg-6 col-md-6 col-sm-6 col-xs-5"
+                      ng-show="layer.op=='U'">
+                      {{layer.label | translate}}
+                    </p>
+                    <a class="pull-right btn btn-danger btn-xs"
+                      ng-click="removeBaseLayer(this)"
+                      title="{{'WORDS.DELETE' | translate}}">
+                      <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                    <a class="pull-right btn btn-default btn-xs
+                      layer-tree-node-btn" ng-click="editBaseLayer(this)"
+                      title="{{'WORDS.MODIFY' | translate}}">
+                      <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                  </div>
+                </div>
+              </li>
+            </ol>
+        </div>
+      </div>
+    </div>
+    <div class="no-pad col-lg-7 col-md-7 col-sm-12 col-xs-12">
+      <div style="max-height:450px;height:540px;overflow-y:auto;"
+        ng-show="showBaseLayerForm">
+        <!-- I18N Config Form -->
+        <rw-form config="i18nFormCfg" entity="baseLayerEntity.i18n"
+          controllers="baseFormCtrlObj">
+        </rw-form>
+        <!-- Base Layer's source config Form -->
+        <rw-form config="baseLayerSourceFormCfg" entity="baseLayerEntity.source"
+          controllers="baseFormCtrlObj">
+        </rw-form>
+        <!-- Base Layer Config Form -->
+        <rw-form config="baseLayerFormCfg" entity="baseLayerEntity"
+          controllers="baseFormCtrlObj">
+        </rw-form>
+        <!-- Icon -->
+        <legend class="rw-legend">{{'WORDS.ICON' | translate}}*</legend>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-5 col-sm-5 col-xs-4">
+              <div class="fileinput-new thumbnail"
+                style="height: 100px;margin-bottom:5px;">
+
+                  <img ng-show="disabled" src="./image/empty_gallery.png"
+                    style="height: 90px;">
+                  <img ng-hide="disabled"
+                    data-ng-src= "data:image/png;base64,{{imageToShow}}"
+                    data-err-src="./image/empty_gallery.png"
+                    style="height: 90px;"/>
+                  </a>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-4">
+              <!-- Toolbar -->
+              <label class="btn btn-default btn-file btn-sm"
+                title="{{'WORDS.NEW_FILE' | translate}}" ng-hide="!disabled">
+                <input type="file" style="display:none;" rw-file-model="file">
+                  <span class="glyphicon glyphicon-plus"></span>
+                </input>
+              </label>
+
+              <button class="btn btn-default btn-sm"
+                ng-click="deleteIcon()" ng-disabled="disabled"
+                title="{{'CORE_MSG.DELETE_FILE_MSG' | translate}}" >
+                <span class="glyphicon glyphicon-trash"></span>
+              </button>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4">
+              <h6 style="color:red" ng-show="showIconError">
+                {{iconErrorMsg | translate}}
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Toolbar -->
+      <div ng-show="showBaseLayerForm">
+        <button class="no-pad btn btn-default btn-sm"
+          style="min-width:37px; float:right; margin:5px 5px 2px 5px;"
+          type="button" ng-click="close()" title="{{'WORDS.CLOSE'|translate}}">
+          <span class="glyphicon glyphicon-remove"></span>
+        </button>
+        <button class="no-pad btn btn-default btn-sm"
+          style="min-width:37px; float:right; margin:5px 5px 2px 5px;"
+          type="button" ng-click="save()" title="{{'WORDS.SAVE'|translate}}">
+          <span class="glyphicon glyphicon-floppy-disk"></span>
+        </button>
+      </div>
+    </div>
+   </div>
+</div>

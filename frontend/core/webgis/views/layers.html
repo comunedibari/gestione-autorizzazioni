@@ -1,0 +1,116 @@
+<div id="layersPanel" ng-controller="wgLayerCtrl">
+  <div ng-style="{'max-height':toolsPanelHeight,'overflow-y':'auto'};">
+    <uib-tabset active="active" justified="true">
+
+      <!--  LIST BASE LAYERS  -->
+      <uib-tab index="0"  heading="{{'WEBGIS.BASE_MAPS' | translate}}">
+
+        <div class="row no-margin layerBaseContainer">
+
+          <div class="sliderBar col-lg-12 col-md-12">
+            <rzslider class="col-lg-10 col-md-10"
+                      rz-slider-model="configBaseSlider.value"
+                      rz-slider-options="configBaseSlider.options"
+                      ng-if="true">
+            </rzslider>
+          </div>
+
+          <div ng-repeat="layer in baseLayersArr" class="row no-margin" 
+            ng-if="$index % 2 == 0">
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
+              <img ng-if="baseLayersArr[$index].icon"
+                    ng-src="{{baseLayersArr[$index].icon}}"
+                    ng-class="borderBaseLayer[baseLayersArr[$index].id]"
+                    ng-click="selectBaseLayer(baseLayersArr[$index].id)"
+                    class="layerBaseThumb"
+                    alt="{{baseLayersArr[$index+1].label | translate}}" />
+              <img ng-if="baseLayersArr[$index].image"
+                   data-ng-src="data:image/png;base64,{{baseLayersArr[$index].image}}"
+                   ng-class="borderBaseLayer[baseLayersArr[$index].id]"
+                   ng-click="selectBaseLayer(baseLayersArr[$index].id)"
+                   class="layerBaseThumb"
+                   alt="{{baseLayersArr[$index+1].label | translate}}" />
+
+              <div class="layerBaseLabel">
+                <span alt="{{baseLayersArr[$index].label | translate}}">
+                  {{baseLayersArr[$index].label | translate}}
+                </span>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center" 
+              ng-if="baseLayersArr.length > ($index + 1)">
+              <img ng-if="baseLayersArr[$index+1].icon"
+                   ng-src="{{baseLayersArr[$index+1].icon}}"
+                   ng-class="borderBaseLayer[baseLayersArr[$index+1].id]"
+                   ng-click="selectBaseLayer(baseLayersArr[$index+1].id)"
+                   class="layerBaseThumb"
+                   alt="{{baseLayersArr[$index+1].label | translate}}" />
+
+              <img ng-if="baseLayersArr[$index+1].image"
+                   data-ng-src="data:image/png;base64,{{baseLayersArr[$index+1].image}}"
+                   ng-class="borderBaseLayer[baseLayersArr[$index+1].id]"
+                   ng-click="selectBaseLayer(baseLayersArr[$index+1].id)"
+                   class="layerBaseThumb"
+                   alt="{{baseLayersArr[$index+1].label | translate}}" />
+
+              <div class="layerBaseLabel">
+                <span>{{baseLayersArr[$index+1].label | translate}}</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </uib-tab>
+
+      <!-- LIST MAP LAYERS -->
+      <uib-tab index="1" heading="{{'WEBGIS.LAYERS' | translate}}">
+        <div  class="row no-margin layers-margin">
+
+          <div ui-tree="layersTreeOpt" data-drag-delay="dataDragDelay">
+            <ol ui-tree-nodes="" ng-model="layersCategories">
+              <li ng-repeat="category in layersCategories"
+                  ui-tree-node
+                  data-collapsed="category.collapsed">
+                <!-- categories -->
+                <div ui-tree-handle
+                     class="layer-tree-node layer-tree-node-content autoHeight">
+                  <div class="row no-margin">
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 no-pad cursorPointer" 
+                      ng-click="toggle(this)">
+                      <span class="glyphicon"
+                            ng-if="category.layers.length > 0"
+                            ng-class="{'glyphicon-chevron-right': collapsed,
+                                       'glyphicon-chevron-down' : !collapsed}">
+                      </span>
+                    </div>
+
+                    <div class="layer-no-border layer-tree-label cursorPointer
+                      col-lg-11 col-md-11 col-sm-11 col-xs-11 no-pad"
+                      ng-click="toggle(this)">
+                      <p class="itemTitle noMargin">
+                        {{category.label | translate}}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- first level container (simple layer or groups) -->
+                <ol ui-tree-nodes="" ng-if="category.display"
+                    ng-model="category.layers"
+                    ng-class="{hidden: collapsed}">
+                  <li ng-repeat="item in category.layers" ui-tree-node
+                      ng-include="'core/webgis/views/layer-item.html'"
+                      data-collapsed="item.collapsed">
+                  </li>
+                </ol>
+              </li>
+            </ol>
+          </div>
+
+        </div>
+      </uib-tab>
+    </uib-tabset>
+  </div>
+</div>

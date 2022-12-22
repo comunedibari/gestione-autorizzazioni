@@ -1,0 +1,22 @@
+<div class="modal-body" style="padding:0px;">
+  <div ng-class="mainClass" style="margin-bottom:0px;">
+
+    <button ng-if="!buttons" type="button" class="close" ng-click="close()">
+      &times;
+    </button>
+
+    <strong>{{data.title | translate}}</strong>
+    <p>{{data.text | translate}}</p>
+
+    <!-- Custom buttons -->
+    <div class="text-right" style="margin-top:20px;">
+
+      <button ng-repeat="bt in buttons" ng-click="btnClicked(bt)"
+        ng-class="btnClass" style="margin-left:6px;">
+        {{bt.text | translate}}
+      </button>
+
+    </div>
+
+  </div>
+</div>

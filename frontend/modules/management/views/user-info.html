@@ -1,0 +1,24 @@
+<rw-modal-header config="headerCfg">
+</rw-modal-header>
+
+<div class="modal-body modal-body-scroll" ng-hide="headerCfg.minimized">
+
+  <!-- Form -->
+  <rw-form config="formCfg" entity="userInfo" controllers="formCtrlObj">
+  </rw-form>
+
+  <!-- Toolbar -->
+  <div class="row no-margin">
+    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style="color:red;">
+      {{message | translate}}
+    </div>
+
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-right">
+      <button class="btn btn-default btn-sm" ng-click="save()"
+        title="{{'WORDS.SAVE' | translate}}">
+        <span class="glyphicon glyphicon-floppy-disk"></span>
+      </button>
+    </div>
+  </div>
+
+</div>

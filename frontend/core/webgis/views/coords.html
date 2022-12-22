@@ -1,0 +1,10 @@
+<div id="coordsPanel" ng-controller="wgCoordsCtrl">
+  <div ng-style="{'max-height':toolsPanelHeight,'overflow-y':'auto'};">
+    <rw-form config="coordsFormCfg" entity="coordsObj" controllers="objFormCtrl">
+    </rw-form>
+    <div class="error-msg" ng-if="coordsOutOfBBoxError">
+      {{"WEBGIS.OUT_OF_BBOX_ERROR"|translate}}
+    </div>
+  </div>
+
+</div>

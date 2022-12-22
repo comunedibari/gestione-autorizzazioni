@@ -1,0 +1,298 @@
+/*
+ * General
+ */
+.pointer {
+  cursor: pointer;
+}
+
+.left-pad {
+  padding: 0 0 0 15px;
+}
+
+.l7-pad {
+  padding: 0 0 0 7px;
+}
+
+.right-pad {
+  padding: 0 15px 0 0 ;
+}
+
+.r7-pad {
+  padding: 0 7px 0 0 ;
+}
+
+.readonly form {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.readonlyDualListBox {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.disabledLink {
+  pointer-events: none;
+}
+
+/*
+ * Toolbar
+ */
+.sd-toolbar {
+  margin-top: 10px;
+  text-align: right;
+}
+
+.sd-toolbar-left {
+  margin-top: 10px;
+  text-align: left;
+}
+
+.sd-add-button {
+  margin-bottom: 5px;
+}
+
+/*
+ * Tab (pills type)
+ */
+.nav-pills > li > a {
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-left: 1px;
+  margin-right: 1px;
+  border-radius: 0px;
+  font-size: 12px;
+  background-color: rgba(239,239,239,1);
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus,
+.nav-pills>li.active>a:hover {
+  color: #fff;
+  background-color: rgba(8,52,90,1);
+}
+
+.nav-pills>li:hover, .nav-pills>li:focus{
+  background-color: rgba(204,204,204,1);
+}
+
+.nav-pills>li>a:hover, .nav-pills>li>a:focus{
+  background-color: rgba(204,204,204,1);
+}
+
+.nav-pills>li.disabled>a, .nav-pills>li.disabled>a:focus
+{
+  background-color: rgba(239,239,239,1);
+}
+
+/*
+ * Login
+ */
+.login-title {
+  color: #08345a;
+  font-size: 24px;
+}
+
+/*
+ * Sidebar
+ */
+.sidebar {
+  overflow-y: auto;
+  border-right: 2px solid #08345a;
+}
+
+.sb-box {
+  margin: 6px;
+  border: 1px solid #e5e5e5;
+  box-shadow: -4px 4px 4px #e5e5e5;
+}
+
+.sb-box-header {
+  color: #fff;
+  height: 32px;
+  font-size: 12px;
+  text-align: center;
+  line-height: 32px;
+  border-bottom: 1px solid #e5e5e5;
+  background-color: #08345a;
+}
+
+.sb-box-body {
+  overflow-y: auto;
+}
+
+.sb-box-body-row {
+  height: 42px;
+  font-size: 12px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.sb-box-body-col-1 {
+  width: 40px;
+  text-align: center;
+}
+
+.sb-box-body-col-2 {
+  padding-left: 4px;
+}
+
+/* Box body row blinking */
+@keyframes sb-box-body-row-an {
+  50% {background-color: #ccdcec;}
+}
+
+.sbBoxBodyRowBlink {
+  animation: sb-box-body-row-an;
+  animation-duration: 0.5s;
+  animation-direction: alternate;
+  animation-iteration-count: 16;
+  animation-timing-function: step-end;
+}
+
+/*
+ * Alert for modal panel
+ */
+.modal-alert {
+  top: 57px;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+  z-index: 100;
+  position: fixed;
+  background-color: rgba(0,0,0,0.1);
+}
+
+.modal-alert-content {
+  width: 80%;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  border-radius: 4px;
+}
+
+/*
+ * Feature info
+ */
+.fi-key-cell {
+  text-align: right;
+  padding-right: 8px;
+  vertical-align: top;
+}
+
+/*
+ * Directive Dual List Box
+ */
+.sd-dual-list-box {
+  overflow-y: auto;
+  margin: 0px 15px;
+}
+
+.sd-dual-list-box-list-items {
+  height: 135px;
+  max-height: 140px;
+  overflow-y: auto;
+  border: 1px solid #dadada;
+  border-radius: 4px;
+}
+
+.sd-dual-list-box-single-item {
+  margin: 1px 0;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/*
+ * Directive Dinamic Fields
+ */
+.sd-dinamic-fields {
+  border: 1px solid #ccc;
+  background-color: #eee;
+  overflow-y: auto;
+  margin: 10px;
+  padding-bottom:4px;
+}
+
+.sd-df-leggend {
+  padding-left:15px;
+}
+
+.sd-df-label {
+  margin-top:10px;
+}
+
+.sd-df-title{
+  padding-top:4px;
+}
+
+.sd-df-remove-button{
+  margin-top:31px;
+}
+
+/*
+ * Header
+ */
+.header {
+  color: #000;
+  font-size: 16px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.header-right {
+  text-align: right;
+}
+
+/* Application */
+.subtitle-geom
+{
+  padding-left: 45px;
+  padding-top: 15px;
+}
+
+/* Roadsiste*/
+ .roadsite-list
+ {
+   height: 490px;
+ }
+/* .list {
+  overflow-y: auto;
+  max-height: 411px;
+  margin-bottom:4px;
+  margin-top:4px;
+} */
+
+.zoom-div {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 10%;
+  margin-top: 15px;
+  margin-right: 15px;
+}
+
+.auth-row {
+  height: 41px;
+  font-size: 12px;
+  border-bottom: 1px solid #999;
+}
+
+.auth-active {
+  font-weight: bold;
+  background-color: #ccdcec;
+}
+
+
+.auth-col {
+  cursor: pointer;
+}
+
+/* Move */
+.mv-list {
+  height: 390px;
+}
+
+.move-tab-content {
+  height: 400px;
+  margin-top: 8px;
+  max-height: 400px;
+  overflow-y: auto;
+}

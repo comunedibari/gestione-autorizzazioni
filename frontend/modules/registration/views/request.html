@@ -1,0 +1,151 @@
+<!-- Modal header -->
+<rw-modal-header config="headerCfg">
+</rw-modal-header>
+
+<!-- Modal body -->
+<div class="modal-body" ng-hide="headerCfg.minimized">
+
+  <!-- Loader -->
+  <div class="modal-loader" ng-show="loading">
+    <div class="spinner"></div>
+  </div>
+
+    <!-- Alert -->
+  <div ng-show="reqAlert.msg" class="modal-alert">
+    <div class="modal-alert-content alert-{{reqAlert.style}}">
+
+      <p>{{reqAlert.msg | translate}}</p>
+
+      <div class="text-right">
+        <button ng-show="reqAlert.bt0" ng-click="reqAlertDone(0)"
+          class="btn btn-sm btn-{{reqAlert.style}}">
+          {{reqAlert.bt0 | translate}}
+        </button>
+
+        <button ng-show="reqAlert.bt1" ng-click="reqAlertDone(1)"
+          class="btn btn-sm btn-{{reqAlert.style}}">
+          {{reqAlert.bt1 | translate}}
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+    <!-- Modal body content -->
+  <div class="modal-body-scroll">
+    <!--  User Form   -->
+    <div ng-class="{readonly: !newReg}">
+      <rw-form config="userFormCfg" entity="registration.user" controllers="requestObjCtrl">
+      </rw-form>
+    </div>
+    <!--  Authority Form   -->
+    <div ng-class="{readonly: !newReg}">
+      <rw-form config="authorityFormCfg" entity="registration.authority" controllers="requestObjCtrl">
+    </div>
+    </rw-form>
+    <div ng-class="{readonly: !newReg && !changeAuthorization}" class="row no-margin" ng-show="registration.authority.function_id  >= 2">
+      <!--  Authorization Form   -->
+      <rw-form config="authorizationFormCfg" entity="registration.authorization" controllers="requestObjCtrl">
+      </rw-form>
+      <div class="row no-margin">
+        <div class="no-pad col-lg-3 col-md-4 col-sm-4 col-xs-4">
+          <rw-form config="authorizationProtocolFormCfg" entity="registration.authorization" controllers="requestObjCtrl">
+          </rw-form>
+        </div>
+        <div class="no-pad col-lg-9 col-md-8 col-sm-8 col-xs-8">
+          <div class="row no-margin">
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+              <div>
+                <label class="rw-label control-label rw-control-font-size">
+                  {{'WORDS.ATTACHMENT' | translate}}
+                </label>
+              </div>
+              <input class="form-control input-sm"
+                ng-disabled="true" ng-required="true"
+                ng-model-options="{updateOn: 'blur'}" type="text"
+                ng-model="registration.authorization.auth_attach" name="auth_attach"
+                model-view-value="true" >
+                <span class="rw-messages"
+                  ng-show="mandatoryAuthAttach">
+                  {{"CORE_MSG.MANDATORY_ERROR" | translate}}
+                </span>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"
+              style="text-align:right; padding-right:15px; margin-top:23px;">
+              <label class="btn btn-default btn-sm input-sm"
+                ng-disabled="!newReg && !changeAuthorization"
+                title="{{'WORDS.NEW_FILE' | translate}}">
+                <input type="file" style="display:none;" accept="application/pdf"
+                  rw-file-model="authAttach.file"
+                  id="authAttach" ng-click="clearFileSelection('authAttach')">
+                  <span class="glyphicon glyphicon-folder-open"></span>
+                </input>
+              </label>
+
+              <a ng-href="{{authAttachUrl}}" download>
+                <button class="btn btn-default btn-sm"
+                  ng-disabled="!registration.authorization.auth_attach"
+                  ng-click="setUrl(registration.authorization.id, registration.authorization.auth_attach)"
+                  title="{{'WORDS.DOWNLOAD' | translate}}">
+                  <span class="glyphicon glyphicon-download-alt"></span>
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row no-margin" ng-show="registration.authority.authorizationHistory.length">
+        <button class="btn btn-default btn-sm" ng-click="newAuthorization()"
+          title="{{'REGISTRATION.NEW_AUTHORIZATION'| translate}}">
+          {{'REGISTRATION.NEW_AUTHORIZATION' | translate }}
+        </button>
+      </div>
+
+      <!-- History Authorization -->
+      <div ng-show="registration.authority.authorizationHistory.length" style="padding-top:15px">
+        <table class="row-border hover" style="margin:0px;"
+          datatable="ng" dt-instance="setHistoryTableInstance"
+          dt-options="historyTableOpt" dt-column-defs="historyTableDef">
+          <thead>
+            <tr>
+              <th>{{"WORDS.PROTOCOL" | translate}}</th>
+              <th>{{"CORE_LBL.START_DATE" | translate}}</th>
+              <th>{{"CORE_LBL.END_DATE" | translate}}</th>
+              <th>{{"WORDS.ATTACHMENT" | translate}}</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr ng-repeat="h in registration.authority.authorizationHistory" style="cursor: pointer;">
+              <td>{{h.auth_protocol}}</td>
+              <td>{{dateString(h.start_date)}}</td>
+              <td>{{dateString(h.end_date)}}</td>
+              <td class="text-center">
+                <a ng-href="{{authAttachUrl}}" download>
+                  <button class="btn btn-default btn-sm"
+                    ng-click="setUrl(h.id, h.auth_attach)"
+                    title="{{'WORDS.DOWNLOAD' | translate}}">
+                    <span class="glyphicon glyphicon-download-alt"></span>
+                  </button>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="row no-margin">
+    <div class="sd-toolbar">
+      <button class="btn btn-default btn-sm" ng-click="save()"
+        title="{{'WORDS.SAVE' | translate}}">
+        <span class="glyphicon glyphicon-floppy-disk"></span>
+      </button>
+    </div>
+  </div>
+</div>

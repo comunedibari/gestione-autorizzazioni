@@ -1,0 +1,8 @@
+<button popover-is-open="popoverIsOpen" ng-class="btnClass"
+  popover-title="{{config.title | translate}}" popover-placement="auto"
+  uib-popover-template="popoverCfg.templateUrl"
+  popover-append-to-body="true" ng-click="popoverVisibility()"
+  popover-trigger="outsideClick"  ng-disabled="disabled">
+  <span class="glyphicon glyphicon-{{config.icon}}"></span>
+  <label class="rw-control-font-size">{{config.label | translate}}</label>
+</button>

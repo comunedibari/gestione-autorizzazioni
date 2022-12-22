@@ -1,0 +1,347 @@
+<div ng-style="formStyle">
+  <form name="rwFormCtrl" id="config.id" ng-disabled="true">
+
+    <!-- Fields group -->
+    <fieldset ng-repeat="fg in config.fg" ng-show="fg.show" ng-class="classForFieldset(fg)">
+
+      <legend ng-if="fg.label || fg.icon" ng-class="classForLegend(fg)">
+        <span ng-if="fg.icon">
+          <img ng-src="{{fg.icon}}" style="center" height="100%"/>
+        </span>
+        &nbsp;<span ng-if="fg.label"> {{fg.label | translate}} </span>
+      </legend>
+
+      <!-- Row container -->
+      <div class="container-fluid no-pad rw-row" ng-repeat="row in fg.rows"
+        ng-show="row.show == undefined ? true : row.show">
+
+        <!-- Field container -->
+        <div ng-repeat="field in row" ng-show="field.show" ng-switch="field.type"
+          class="col-lg-{{field.width}} col-md-{{field.width}} col-sm-12 col-xs-12 rw-field">
+
+          <!-- Label -->
+          <div ng-if="field.label != null">
+            <label class="control-label rw-control-font-size rw-label">{{field.label | translate}}</label>
+            <label class="rw-label" ng-if="field.required">*</label>
+            <a href="#" ng-if="field.info" data-toggle="tooltip" data-placement="auto"
+              title="{{field.infoContent | translate}}" class="rw-tooltip">
+              <i class="glyphicon glyphicon-info-sign"></i>
+            </a>
+          </div>
+
+          <!-- Field -->
+          <label class="rw-label" ng-switch-when="fake" ng-disabled="true" ng-required="false"></label>
+
+          <label class="rw-label control-label rw-control-font-size rw-only-label" ng-switch-when="onlyLabel">{{field.text | translate}}</label>
+
+          <input ng-class="classForText(field)" ng-switch-when="text"
+            ng-disabled="!field.enabled" ng-required="field.required"
+            ng-model-options="{updateOn: 'blur'}" type="text"
+            ng-model="entity[field.id]" name="{{field.id}}"
+            placeholder="{{field.placeholder}}" ui-mask="{{field.mask}}"
+            model-view-value="true" style="{{field.style}}"
+            maxlength="{{field.maxlength}}" rw-change="changeCallback"/>
+
+          <input class="form-control {{field.height}}" ng-switch-when="pattern"
+            ng-disabled="!field.enabled" ng-required="field.required"
+            ng-model-options="{updateOn: 'blur'}" type="text" style="{{field.style}}"
+            ng-model="entity[field.id]" name="{{field.id}}" pattern="{{field.pattern}}"
+            minlength="{{field.minlength}}"  maxlength="{{field.maxlength}}"
+            rw-change="changeCallback"/>
+
+          <input class="form-control {{field.height}}" ng-switch-when="password"
+            ng-disabled="!field.enabled" ng-required="field.required"
+            ng-model-options="{updateOn: 'blur'}" type="password"
+            ng-model="entity[field.id]" name="{{field.id}}" style="{{field.style}}"
+            rw-change="changeCallback"/>
+
+          <div class="input-group " ng-switch-when="timestamp">
+            <input type="text" name="{{field.id}}"
+              class="form-control rw-control-font-size {{field.height}}"
+              ng-disabled="!field.enabled" ng-required="field.required"
+              ng-model="entity[field.id]" is-open="popupDict[field.id].opened"
+              ng-change="changeCallback(field.id,entity[field.id])"
+              datetime-picker="{{field.hideTime ? formatDate : formatDatetime}}"
+              enable-time="field.hideTime ? false : true"
+              button-bar="{{buttonBar}}"
+              datepicker-options="dateOptions"
+              timepicker-options="timeOptions"
+              read-as="true" save-as="'number'"
+              popup-position="{{field.position}}"
+              now-text="{{'WORDS.NOW' | translate}}"
+              time-text="{{'WORDS.TIME' | translate}}"
+              date-text="{{'WORDS.DATE' | translate}}"
+              close-text="{{'WORDS.CLOSE' | translate}}"
+              today-text= "{{'WORDS.TODAY' | translate}}"
+              cancel-text="{{'WORDS.CANCEL' | translate}}">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default {{field.height}}"
+                ng-click="openPopup(field.id)" ng-disabled="!field.enabled"
+                title="{{'WORDS.DATE_TIME' | translate}}">
+                <i class="glyphicon glyphicon-calendar"></i>
+              </button>
+            </span>
+          </div>
+
+          <div class="input-group " ng-switch-when="datetime">
+            <input ng-required="field.required" ng-disabled="!field.enabled"
+              type="text" class="form-control rw-control-font-size {{field.height}}"
+              datetime-picker="{{formatDatetime}}"  name="{{field.id}}"
+              ng-model="entity[field.id]" is-open="popupDict[field.id].opened"
+              button-bar="{{buttonBar}}" popup-position="{{field.position}}"
+              datepicker-options="dateOptions" timepicker-options="timeOptions"
+              cancel-text="{{'WORDS.CANCEL' | translate}}"
+              close-text="{{'WORDS.CLOSE' | translate}}"
+              time-text="{{'WORDS.TIME' | translate}}"
+              date-text="{{'WORDS.DATE' | translate}}"
+              today-text= "{{'WORDS.TODAY' | translate}}"
+              now-text="{{'WORDS.NOW' | translate}}" >
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default {{field.height}}"
+                ng-click="openPopup(field.id)" ng-disabled="!field.enabled"
+                title="{{'WORDS.DATE_TIME' | translate}}">
+                <i class="glyphicon glyphicon-calendar"></i>
+              </button>
+            </span>
+          </div>
+
+          <div class="input-group" ng-switch-when="date">
+            <input ng-required="field.required" ng-disabled="!field.enabled"
+              type="text" class="form-control rw-control-font-size {{field.height}}"
+              datetime-picker="{{formatDate}}"  name="{{field.id}}"
+              ng-model="entity[field.id]" is-open="popupDict[field.id].opened"
+              button-bar="{{buttonBar}}" popup-position="{{field.position}}"
+              datepicker-options="dateOptions" timepicker-options="timeOptions"
+              enable-time="false"
+              cancel-text="{{'WORDS.CANCEL' | translate}}"
+              close-text="{{'WORDS.CLOSE' | translate}}"
+              time-text="{{'WORDS.TIME' | translate}}"
+              date-text="{{'WORDS.DATE' | translate}}"
+              today-text= "{{'WORDS.TODAY' | translate}}"
+              now-text="{{'WORDS.NOW' | translate}}">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default {{field.height}}"
+                ng-click="openPopup(field.id)" ng-disabled="!field.enabled"
+                title="{{'WORDS.DATE' | translate}}">
+                <i class="glyphicon glyphicon-calendar"></i>
+              </button>
+            </span>
+          </div>
+
+          <div class="input-group " ng-switch-when="time">
+            <input ng-required="field.required" ng-disabled="!field.enabled"
+              type="text" class="form-control rw-control-font-size {{field.height}}"
+              datetime-picker="{{formatTime}}"  name="{{field.id}}"
+              ng-model="entity[field.id]" is-open="popupDict[field.id].opened"
+              button-bar="{{buttonBar}}" popup-position="{{field.position}}"
+              timepicker-options="timeOptions" datepicker-options="dateOptions"
+              enable-date="false" initial-picker="time"
+              cancel-text="{{'WORDS.CANCEL' | translate}}"
+              close-text="{{'WORDS.CLOSE' | translate}}"
+              time-text="{{'WORDS.TIME' | translate}}"
+              date-text="{{'WORDS.DATE' | translate}}"
+              today-text= "{{'WORDS.TODAY' | translate}}"
+              now-text="{{'WORDS.NOW' | translate}}">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default {{field.height}}"
+                ng-click="openPopup(field.id)" ng-disabled="!field.enabled"
+                title="{{'WORDS.TIME' | translate}}">
+                <i class="glyphicon glyphicon-time"></i>
+              </button>
+            </span>
+          </div>
+
+          <button class="form-control rw-btn-checkbox {{field.height}}"
+            ng-switch-when="checkbox" ng-disabled="!field.enabled"
+            ng-required="field.required" ng-model="entity[field.id]"
+            uib-btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false"
+            name="{{field.id}}"
+            rw-change="changeCallback">
+              <div ng-show="entity[field.id]" >{{'WORDS.YES' | translate}}</div>
+              <div ng-show="!entity[field.id]" >No</div>
+          </button>
+
+          <input class="form-control {{field.height}}"
+            ng-switch-when="boolean" readonly
+            style="text-align:center;"
+            ng-style="field.enabled ? {'background-color':'white'} : {}"
+            ng-disabled="!field.enabled" ng-required="field.required"
+            type="text" ng-model="valueBoolean(entity[field.id])"
+            name="{{field.id}}"
+            ng-model-options="{getterSetter: true, allowInvalid: true}"
+            ng-click="changeBoolean(field.id,entity[field.id])"/>
+
+          <input class="form-control {{field.height}}" ng-switch-when="email"
+            ng-disabled="!field.enabled" ng-required="field.required"
+            ng-model-options="{updateOn: 'blur'}" type="email"
+            ng-model="entity[field.id]" name="{{field.id}}" style="{{field.style}}"
+            maxlength="{{field.maxlength}}" rw-change="changeCallback"/>
+
+          <input class="form-control {{field.height}}" ng-switch-when="telephone"
+            ng-disabled="!field.enabled" ng-required="field.required"
+            ng-model-options="{updateOn: 'blur'}" type="tel"
+            pattern="([\+]\d{2})*[0-9]*-? ?/?[0-9]*" style="{{field.style}}"
+            ng-model="entity[field.id]" name="{{field.id}}"
+            maxlength="{{field.maxlength}}" rw-change="changeCallback"/>
+
+          <input class="form-control {{field.height}}" ng-switch-when="file"
+            ng-disabled="!field.enabled" ng-required="field.required"
+            ng-model-options="{updateOn: 'blur'}" type="file"
+            ng-model="entity[field.id]" name="{{field.id}}"/>
+
+          <input class="form-control {{field.height}}" ng-switch-when="number"
+            ng-disabled="!field.enabled" ng-required="field.required"
+            type="number" step={{field.step}} ng-model="entity[field.id]"
+            name="{{field.id}}" min={{field.min}} max={{field.max}}
+            style="{{field.style}}" rw-change="changeCallback"/>
+
+          <input class="form-control {{field.height}}" ng-switch-when="range"
+            ng-disabled="!field.enabled" ng-required="field.required"
+            ng-model-options="{updateOn: 'blur'}" type="range"
+            ng-model="entity[field.id]" name="{{field.id}}"
+            min={{field.min}} max={{field.max}} step={{field.step}}
+            rw-change="changeCallback"/>
+
+          <select class="form-control {{field.height}}" ng-switch-when="select"
+            ng-disabled="!field.enabled" ng-required="field.required"
+            ng-options="opt.id as opt.name | translate for opt in field.options"
+            ng-model="entity[field.id]" name="{{field.id}}"
+            rw-change="changeCallback">
+          </select>
+
+          <select class="form-control {{field.height}}" ng-switch-when="customSelect"
+            ng-disabled="!field.enabled" ng-required="field.required"
+            ng-options="opt[field.customOption.key] as
+            opt[field.customOption.label] | translate for opt in field.options"
+            ng-model="entity[field.id]" name="{{field.id}}"
+            rw-change="changeCallback">
+          </select>
+
+          <!-- Select with search -->
+          <div class="no-pad col-lg-12 col-md-12 col-sm-12 col-xs-12"
+            ng-switch-when="selectWithSearch">
+            <ui-select class="{{field.height}}" style="padding: 0px 0px 0px 0px"
+              ng-model="entity[field.id]" ng-disabled="!field.enabled"
+              theme="bootstrap" ng-required="field.required" name="{{field.id}}"
+              reset-search-input="true"
+              on-select="field.changeCallback($item,$model)">
+              <ui-select-match class="rw-control-font-size {{field.height}}"
+                style="padding: 0px 0px 0px 0px"
+                allow-clear="true"
+                placeholder="{{field.placeholder | translate}}">
+                {{$select.selected.name}}
+              </ui-select-match>
+              <ui-select-choices class="rw-control-font-size {{field.height}}"
+                position="{{field.position}}"
+                refresh="field.refreshfunc($select.search)"
+                refresh-delay="{{field.refreshdelay}}"
+                minimum-input-length="{{field.mininputlength}}"
+                style="padding: 0px 0px 0px 0px"
+                repeat="opt.id as opt in field.options | filterOr: {name: $select.search}">
+                  <div ng-bind-html="opt.name | translate | highlight: $select.search">
+                  </div>
+                  <small ng-if="opt.descr">{{opt.descr}}</small>
+              </ui-select-choices>
+              <ui-select-no-choice>
+              </ui-select-no-choice>
+            </ui-select>
+          </div>
+
+          <div class="input-group col-lg-12 col-md-12 col-sm-12 col-xs-12"
+            ng-switch-when="multiselect">
+            <ui-select class="form-control rw-control-font-size {{field.height}}"
+                multiple ng-model="entity[field.id]" ng-disabled="!field.enabled"
+                theme="bootstrap" ng-required="field.required" name="{{field.id}}"
+                close-on-select="false" search-enabled="true"
+                reset-search-input="true"
+                on-select="field.onSelect($item,$model)"
+                on-remove="field.onRemove($item,$model)">
+              <ui-select-match class="rw-control-font-size"
+                placeholder="{{field.placeholder | translate}}">
+                {{$item.name}}
+              </ui-select-match>
+              <ui-select-choices class="rw-control-font-size" position="{{field.position}}"
+                repeat="opt.id as opt in field.options | filterOr: {name: $select.search}">
+                <div class="rw-control-font-size"
+                  ng-bind-html="opt.name | translate | highlight: $select.search">
+                </div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+
+          <textarea class="form-control noresize {{field.height}}"
+            ng-switch-when="textarea" ng-disabled="!field.enabled"
+            ng-required="field.required" ng-model-options="{updateOn: 'blur'}"
+            ng-model="entity[field.id]" name="{{field.id}}" rows="{{field.rows}}"
+            maxlength="{{field.maxlength}}" rw-change="changeCallback">
+          </textarea>
+
+          <!-- Editor html -->
+          <div ng-switch-when="editor">
+            <summernote class="form-control noresize" name="{{field.id}}"
+              config="summOpt" ng-model="entity[field.id]"
+              ng-required="field.required">
+            </summernote>
+          </div>
+
+          <!-- Generic button -->
+          <button ng-class="classForButton(field)" ng-switch-when="genButton"
+              type="button" name="{{field.id}}"
+              title="{{field.title | translate}}"
+              ng-click="changeCallback(field.id)"
+              ng-disabled="!field.enabled">
+            <span ng-if="field.icon" class="glyphicon glyphicon-{{field.icon}}">
+            </span>
+            <label ng-if="field.btnlabel" class="rw-control-font-size">
+              {{field.btnlabel | translate}}
+            </label>
+            <img ng-if="field.src" ng-src="{{field.src}}" style="center" height="100%"/>
+          </button>
+
+          <button ng-class="classForButton(field)" ng-switch-when="button"
+            type="button"  ng-disabled="!field.enabled" name="{{field.id}}"
+            ng-click="entity[field.id]=entity[field.id]+1">
+            <label class="rw-control-font-size">
+              {{field.btnlabel | translate}}
+            </label>
+          </button>
+
+          <button ng-class="classForButton(field)" ng-switch-when="imgButton"
+            title="{{field.title | translate}}" name="{{field.id}}"
+            ng-disabled="!field.enabled" type="button"
+            ng-click="entity[field.id]=entity[field.id]+1">
+            <img ng-src="{{field.src}}" style="center" height="100%"/>
+          </button>
+
+          <button ng-class="classForButton(field)" ng-switch-when="glyphButton"
+            title="{{field.title | translate}}" name="{{field.id}}"
+            ng-disabled="!field.enabled" type="button"
+            ng-click="entity[field.id]=entity[field.id]+1">
+            <span class="glyphicon glyphicon-{{field.icon}}"></span>
+            <label class="rw-control-font-size">{{field.btnlabel | translate}}</label>
+          </button>
+
+          <rw-popup-collection btnclass="classForButton(field)"
+            ng-switch-when="popupCollButton" config="field.cfg">
+          </rw-popup-collection>
+
+          <ng-messages for="rwFormCtrl[field.id].$error"   class="rw-messages"
+            ng-show ="rwFormCtrl.isInvalid" role="alert">
+            <!-- Custom error message -->
+            <ng-message when="customErrMsg">{{field.customErrMsg | translate}}</ng-message>
+            <!-- Default error messages -->
+            <ng-message when="required">{{"CORE_MSG.MANDATORY_ERROR" | translate}}</ng-message>
+            <ng-message when="email">{{"CORE_MSG.INVALID_EMAIL_ADDRESS" | translate}}</ng-message>
+            <ng-message when="pattern"> {{"CORE_MSG.INVALID_FORMAT" | translate}}</ng-message>
+            <ng-message when="datetime">{{"CORE_MSG.INVALID_FORMAT" | translate}}</ng-message>
+            <ng-message when="date">{{"CORE_MSG.INVALID_FORMAT" | translate}}</ng-message>
+            <ng-message when="min">{{"CORE_MSG.INVALID_ERROR" | translate}}</ng-message>
+            <ng-message when="max">{{"CORE_MSG.INVALID_ERROR" | translate}}</ng-message>
+            <ng-message when="invalid">{{"CORE_MSG.INVALID_ERROR" | translate}}</ng-message>
+          </ng-messages>
+
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>

@@ -1,0 +1,36 @@
+<rw-modal-header config="headerCfg">
+</rw-modal-header>
+
+<div class="modal-body " ng-hide="headerCfg.minimized" >
+
+  <!-- Alert -->
+  <div ng-show="alert.msg" class="modal-alert">
+    <div class="modal-alert-content alert-{{alert.style}}">
+      <p>{{alert.msg | translate}}</p>
+
+      <div class="text-right">
+        <button ng-show="alert.btOk" ng-click="alertOk()"
+          class="btn btn-{{alert.style}} btn-sm">
+          {{alert.btOk | translate}}
+        </button>
+
+        <button ng-show="alert.btKo" ng-click="alertKo()"
+          class="btn btn-{{alert.style}} btn-sm">
+          {{alert.btKo | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="layer-config-body-not-scroll">
+    <uib-tabset active="active">
+      <uib-tab index="0" heading="Base Layer" class="rw-control-font-size">
+        <div ng-include="'core/webgis/views/base-layer.html'"></div>
+      </uib-tab>
+      <uib-tab index="1" heading="Layers" class="rw-control-font-size">
+        <div ng-include="'core/webgis/views/layer-tree.html'"></div>
+      </uib-tab>
+    </uib-tabset>
+  </div>
+
+</div>

@@ -1,0 +1,52 @@
+<!-- map div -->
+<div id="mapDiv" class="map" ng-controller="wgMapCtrl">
+  <div id="mapWmk">{{watermark | translate}}</div>
+
+  <div class="boxopen ol-unselectable ol-control" ng-click="manageToolsPanel(true)" ng-if="!toolsPanelIsOpen"></div>
+
+  <div class="row no-margin box-control" id="boxControls">
+    <div id="boxControlContent">
+      <div class="row no-margin">
+        <div class="box-title col-lg-11 col-md-11 col-sm-11 col-xs-11">{{controlTitle | translate}}</div>
+        <div class="boxclose col-lg-1 col-md-1 col-sm-1 col-xs-1"
+          ng-click="manageToolsPanel(false)" ng-if="toolsPanelIsOpen"></div>
+      </div>
+
+      <div id="mapControls" class="row no-margin">
+        <div ng-repeat="control in controls" style="{{controlWidthStyle}}" class="itemControl">
+          <a ng-click="getControl(control)">
+            <span title="{{control.tip | translate}}"
+                  class="icon-node {{control.class}}" ng-class="selectedControl[control.id]"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div id="toolsPanel" class="row no-margin toolsPanel" ng-if="enabledToolId"
+      ng-include="'core/webgis/views/'+enabledToolId+'.html'" >
+    </div>
+  </div>
+
+  <div id="mapCoords">
+    <div id="mapScale">{{"WORDS.SCALE"|translate}} 1:{{currScale}}</div>
+  </div>
+
+  <div id="mapBaseCtrl">
+    <div ng-if="showSidebar" class="custom-sidebar ol-unselectable ol-control">
+      <button ng-click="manageSidebar()">
+        <img src="image/sidebar.png">
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- tooltip div -->
+<div id="mapTooltip"></div>
+
+<!-- popup div -->
+<div id="mapPopup" class="ol-popup">
+  <div class="row no-margin">
+    <span id="mapPopupCloser" class="glyphicon glyphicon-remove"></span>
+  </div>
+  <div id="mapPopupContent"></div>
+</div>

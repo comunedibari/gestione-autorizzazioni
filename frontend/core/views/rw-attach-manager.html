@@ -1,0 +1,123 @@
+<div class="container-fluid  rw-attach-container">
+
+  <div class="row no-margin" style="min-height:40px">
+    <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4">
+      <label class="control-label rw-legend">
+         {{'WORDS.ATTACHMENTS' | translate}}
+      </label>
+    </div>
+    <div class="form-group col-lg-8 col-md-8 col-sm-8 col-xs-8 no-pad"
+      style="margin-bottom:0px">
+      <label class="btn btn-default btn-file btn-sm pull-right "
+        ng-hide="disabled" title="{{'CORE_LBL.NEW_ATTACH_LBL' | translate}}"
+        style="margin:5px;">
+        <input type="file" style="display:none;" rw-file-model="file"
+          ng-click="clearFileSelection()">
+          <span class="glyphicon glyphicon-plus"></span>
+        </input>
+      </label>
+    </div>
+  </div>
+
+   <!-- Alert -->
+  <a id="attachManagerAlertAnchor"></a>
+  <div ng-show="alert.msg" class="alert alert-{{alert.style}} pan-alert"
+    style="margin:5px">
+    <p>{{alert.msg | translate}}</p>
+
+    <div class="text-right">
+      <button ng-show="alert.btOk" ng-click="alertOk()"
+        class="btn btn-{{alert.style}} btn-sm">
+        {{alert.btOk | translate}}
+      </button>
+
+      <button ng-show="alert.btKo" ng-click="alertKo()"
+        class="btn btn-{{alert.style}} btn-sm">
+        {{alert.btKo | translate}}
+      </button>
+    </div>
+  </div>
+
+  <!-- Attachments list -->
+  <div class="row no-margin" ng-repeat="attach in attachments | orderBy:'index'">
+    <div class="rw-attach-container "
+      style="margin-top:10px; margin-left:5px; margin-right:5px;">
+
+      <div class="row rw-attach-row" >
+        <label class="text-truncate control-label rw-control-font-size
+          col-lg-12 col-md-12 col-sm-12 col-xs-12 no-pad" >{{attach.name}}
+        </label>
+      </div>
+
+      <div class="row rw-attach-row">
+        <!-- Image or Icon -->
+        <div class="no-pad col-lg-1 col-md-1 col-sm-2 col-xs-2 "
+          ng-if="attach.isImage">
+          <a href={{attach.preview}} download="{{attach.name}}"
+            title="{{attach.name}}">
+            <img class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-pad
+              fileinput-new thumbnail .rw-attach-image " style="margin-bottom:0"
+              id="{{attach.name}}" data-ng-src="{{attach.preview}}"/>
+          </a>
+        </div>
+        <div class="no-pad col-lg-1 col-md-1 col-sm-2 col-xs-2"
+          ng-if="!attach.isImage" style="overflow:auto">
+          <a href={{attach.preview}} download="{{attach.name}}"
+            title="{{attach.name}}">
+            <img class="fileinput-new thumbnail rw-attach-image" id="attach.id"
+              data-ng-src="{{attach.icon}}" style="margin-bottom:0"/>
+          </a>
+        </div>
+        <!-- Size and insert_date-->
+        <div class="col-lg-3 col-md-3 col-sm-2 col-xs-2" style="padding-right:0px">
+
+          <p style="margin-bottom:4px" class="control-label rw-control-font-size">
+            ({{attach.size}} kB)
+          </p>
+          <p style="margin-bottom:4px" class="control-label rw-control-font-size"
+            ng-show="attach.id && attach.insert_date">
+            {{attach.insert_date | date:'dd-MM-yyyy'}}
+          </p>
+        </div>
+
+        <!-- Description -->
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="padding-left:0px">
+          <textarea class="form-control noresize rw-control-font-size"
+            ng-model="attach.descr" rows="3" ng-disabled="attach.id"
+            ng-model-options="{updateOn: 'blur'}"
+            placeholder="{{'WORDS.DESCRIPTION' | translate }}">
+          </textarea>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="no-pad col-lg-2 col-md-2 col-sm-2 col-xs-2">
+          <p>
+            <button type="button" class="btn btn-default btn-block"
+              ng-click="upload($index)" ng-disabled="attach.id"
+              title="{{'WORDS.SEND' | translate}}" style="white-space:normal;">
+              <i class="glyphicon glyphicon-upload rw-control-font-size"></i>
+              <label class="rw-control-font-size" style="margin-bottom:0px">
+                {{'WORDS.SEND' | translate}}
+              </label>
+            </button>
+          </p>
+          <p>
+            <button type="button" class="btn btn-default btn-block"
+              ng-click="delete($index)" ng-disabled="disabled"
+              title="{{'WORDS.DELETE' | translate}}" style="white-space:normal;">
+              <i class="glyphicon glyphicon-trash rw-control-font-size"></i>
+              <label class="rw-control-font-size" style="margin-bottom:0px">
+                Cancella
+              </label>
+            </button>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+

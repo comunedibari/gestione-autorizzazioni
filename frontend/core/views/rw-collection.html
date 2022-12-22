@@ -1,0 +1,61 @@
+<div>
+  <!-- Loader -->
+  <div class="modal-loader" ng-show="loading">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Search tools -->
+  <div ng-if="searchCfg" style="margin-bottom:4px;">
+    <rw-search-tools config="searchCfg"></rw-search-tools>
+  </div>
+
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" 
+    style="font-size:12px;margin:10px;"
+    ng-if="content.length == 0 && !loading" >No data</div>
+
+  <!-- Collection -->
+  <div ng-style="collStyle">
+    <div ng-repeat="item in content" class="row cv-item"
+      ng-class="itemCSS[item.id]" ng-click="setSelected(item)">
+
+        <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11 cv-item-col">
+          <strong>{{item[titleAtt]}}</strong><br>
+          {{item[descrAtt]}}
+        </div>
+
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 cv-item-col text-right">
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </div>
+
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="row no-margin"  ng-show="config.pagination">
+
+    <!-- Record per page -->
+    <div class="no-pad col-lg-2 col-md-2 col-sm-2 col-xs-2">
+      <select class="rw-pagination" ng-model="rpp" ng-change="rppChanged()">
+        <option ng-repeat="val in rppArray">{{val}}</option>
+      </select>
+    </div>
+
+    <!-- Pagination -->
+    <div class="no-pad text-center col-lg-8 col-md-8 col-sm-8 col-xs-8">
+      <uib-pagination class="rw-pagination pagination-sm"
+        max-size="0"
+        ng-model="curPage"
+        ng-change="pageChanged()"
+        total-items="count"
+        items-per-page="rpp"
+        boundary-links="true">
+      </uib-pagination>
+    </div>
+
+    <!-- Pagination info -->
+    <div class="rw-pagination-info no-pad col-lg-2 col-md-2 col-sm-2 col-xs-2">
+      {{firstItem}}-{{lastItem}} {{"WORDS.OF" | translate}} {{count}}
+    </div>
+
+  </div>
+</div>

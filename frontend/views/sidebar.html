@@ -1,0 +1,40 @@
+<div id="sidebar" class="sidebar" ng-controller="sidebarCtrl">
+
+  <!-- Boxes loop -->
+  <div ng-repeat="box in boxes" ng-style="boxStyle" class="sb-box">
+
+    <!-- Header -->
+    <div class="sb-box-header">
+      {{box.title | translate}}
+    </div>
+
+    <!-- Body -->
+    <div class="sb-box-body" ng-style="boxBodyStyle" ng-controller="box.ctrl">
+      <table style="width:100%;">
+        <tbody>
+
+          <!-- Body row -->
+          <tr class="sb-box-body-row" ng-repeat="it in items"
+            ng-class="{sbBoxBodyRowBlink: it.blink}">
+
+            <!-- Body col 1 -->
+            <td class="sb-box-body-col-1" ng-style="it.style">
+              <img ng-if="it.img" ng-src="{{it.img}}"/>
+              <span ng-if="it.key">{{it.key}}</span>
+            </td>
+
+            <!-- Body col 2 -->
+            <td class="sb-box-body-col-2" ng-class="{pointer:onItem}"
+              ng-click="onItem(it)">
+              {{it.lbl1}}<br>{{it.lbl2}}
+            </td>
+
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</div>

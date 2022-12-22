@@ -1,0 +1,28 @@
+<div class="modal-header">
+  <div class="rw-modal-movable col-lg-10 col-md-10 col-sm-10 col-xs-9">
+    <h4 class="modal-title">{{config.title | translate}}</h4>
+  </div>
+  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+    <button type="button" class="modal-tlb-btn" ng-click="close()">
+      <span class="glyphicon glyphicon-remove"/>
+    </button>
+  </div>
+</div>
+<div class="modal-body">
+  <div class="modal-body-scroll">
+    <rw-form config="formCfg" entity="config.entity" controllers="formCtrlObj">
+    </rw-form>
+    <div class="text-right">
+      <a ng-show="!blob" class="btn btn-default btn-sm"
+         title="{{'WORDS.PRINT' | translate}}" ng-click="print()"
+         href="{{url}}" download>
+        <span class="glyphicon glyphicon-print"></span>
+      </a>
+
+      <button ng-show="blob" class="btn btn-default btn-sm"
+            title="{{'WORDS.PRINT' | translate}}" ng-click="print()">
+            <span class="glyphicon glyphicon-print"></span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<div ng-controller="wgStylesDefaultObjectCtrl" style="overflow-y:auto;"> 
+  <legend class="rw-legend">
+    {{'WEBGIS.STYLE.FEATURE_ATTRIBUTES'| translate}}
+  </legend>
+  <div ng-repeat="featureAttr in featureAttribs">
+    <div style="cursor: pointer;" ng-click="changedFeatureAttribute(featureAttr)">
+      {{featureAttr.name | translate}}
+    </div>
+  </div>
+</div> 

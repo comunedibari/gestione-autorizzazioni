@@ -1,0 +1,16 @@
+<div id="editPanel" ng-controller="wgEditCtrl">
+
+  <div ng-style="{'max-height':toolsPanelHeight,'overflow-y':'auto'};">
+    <rw-form config="editFormCfg" entity="editObj" controllers="objFormCtrl">
+    </rw-form>
+
+    <!-- Info & Alert -->
+    <span ng-show="info_alert.msg">
+      <span class="info-msg alert-{{info_alert.style}} ">
+        <p>{{info_alert.msg | translate}}</p>
+      </span>
+    </span>
+
+  </div>
+
+</div>

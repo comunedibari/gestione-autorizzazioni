@@ -1,0 +1,64 @@
+<div class="sd-dual-list-box">
+  <!-- Label for available  items -->
+  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+    <label class="control-label rw-control-font-size">
+      {{availableItemLabel | translate}}
+    </label>
+  </div>
+  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+  </div>
+  <!-- Label for selected  items -->
+  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+    <label class="control-label rw-control-font-size">
+      {{selectedItemLabel | translate}}
+    </label>
+  </div>
+  <!-- Available  items -->
+  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5
+      sd-dual-list-box-list-items">
+    <div ng-repeat="item in aLeft track by $index"
+      ng-click="selItem(item)"
+      class="sd-dual-list-box-single-item" ng-style="item.style">
+      {{label ? item[label] : item['noKey']}}
+    </div>
+  </div>
+  <!-- toolbar Add/Remove Item-->
+  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center">
+    <div class="row" style="margin-bottom:5px;">
+      <button class="btn btn-default btn-sm" ng-click="addSelItem()"
+        title="{{'WORDS.ADD_SELECTED' | translate}}">
+        <span class="glyphicon glyphicon-triangle-right"></span>
+      </button>
+    </div>
+
+    <div class="row" style="margin-bottom:5px;">
+      <button class="btn btn-default btn-sm" ng-click="addAllItems()"
+        title="{{'WORDS.ADD_ALL' | translate}}">
+        <span class="glyphicon glyphicon-forward"></span>
+      </button>
+    </div>
+
+    <div class="row" style="margin-bottom:5px;">
+      <button class="btn btn-default btn-sm" ng-click="rmSelItem()"
+        title="{{'WORDS.REMOVE_SELECTED' | translate}}">
+        <span class="glyphicon glyphicon-triangle-left"></span>
+      </button>
+    </div>
+
+    <div class="row">
+      <button class="btn btn-default btn-sm" ng-click="rmAllItems()"
+        title="{{'WORDS.REMOVE_ALL' | translate}}">
+        <span class="glyphicon glyphicon-backward"></span>
+      </button>
+    </div>
+  </div>
+  <!-- Selected items  -->
+  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5
+      sd-dual-list-box-list-items">
+    <div ng-repeat="item in aRight track by $index"
+      ng-click="selItem(item)"
+      class="sd-dual-list-box-single-item" ng-style="item.style">
+       {{label ? item[label] : item['noKey']}}
+    </div>
+  </div>
+</div>

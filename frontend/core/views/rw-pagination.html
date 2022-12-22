@@ -1,0 +1,27 @@
+<div class="row no-margin">
+
+  <!-- Record per page -->
+  <div class="no-pad col-lg-2 col-md-2 col-sm-2 col-xs-2">
+    <select class="rw-pagination" ng-model="rpp" ng-change="loadPage()">
+      <option ng-repeat="val in rppArray">{{val}}</option>
+    </select>
+  </div>
+
+  <!-- Pagination -->
+  <div class="no-pad text-center col-lg-8 col-md-8 col-sm-8 col-xs-8">
+    <uib-pagination class="rw-pagination pagination-sm"
+      max-size="0"
+      ng-model="curPage"
+      ng-change="loadPage()"
+      total-items="count"
+      items-per-page="rpp"
+      boundary-links="true">
+    </uib-pagination>
+  </div>
+
+  <!-- Pagination info -->
+  <div class="rw-pagination-info no-pad col-lg-2 col-md-2 col-sm-2 col-xs-2">
+    {{firstIndex}}-{{lastIndex}} {{"WORDS.OF" | translate}} {{count}}
+  </div>
+
+</div>

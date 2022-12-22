@@ -1,0 +1,28 @@
+<div class="row no-margin">
+
+  <!-- Simple -->
+  <div class="input-group col-lg-10 col-md-10 col-sm-10 col-xs-10"
+    style="float:left;" ng-if="config.simple">
+
+    <input class="form-control input-sm" ng-model="$parent.curSearchVal"
+      placeholder="{{'WORDS.SEARCH' | translate}}"
+      ng-keydown="onSearch($event)" ng-disabled="disable"/>
+
+    <span class="input-group-btn">
+      <button class="btn btn-default btn-sm" type="button" ng-click="onClear()"
+        ng-disabled="disable"
+        title="{{'WEBGIS.SEARCH.SEARCH_CLEAR' | translate}}">
+        <i class="glyphicon glyphicon-repeat"></i>
+      </button>
+    </span>
+  </div>
+
+  <!-- Advanced -->
+  <div class="no-pad col-lg-2 col-md-2 col-sm-2 col-xs-2"
+    style="padding-left:2px;" ng-if="config.advanced && !config.advanced.hide">
+
+    <rw-search-button config="config.advanced" ng-disabled="disable" >
+    </rw-search-button>
+  </div>
+
+</div>

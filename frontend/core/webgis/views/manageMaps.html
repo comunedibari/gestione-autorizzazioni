@@ -1,0 +1,73 @@
+<div id="manageMapsPanel">
+  <div id="manageMaps" ng-controller="wgCtrlManageMap">
+    <div  ng-style="{'max-height':toolsPanelHeight,'overflow-y':'auto'};">
+      <!-- loader -->
+      <div class="loader-search" ng-show="showLoader">
+          <div class="spinner"></div>
+      </div>
+      <rw-form class="form-servicemap" config="serviceMapFormCfg"
+               entity="serviceMapFormObj" controllers="formCtrlObj">
+      </rw-form>
+       <!-- loader -->
+
+      <div ng-repeat="(idx,service) in servicesArray">
+        <uib-accordion  class="accordion-category" close-others="">
+          <uib-accordion-group heading="{{service.label}}"
+                is-disabled="false" template-url="core/webgis/views/accordion-group.html">
+
+                <div class="row no-margin serviceMap-header-body">
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    {{"WEBGIS.LAYERS" | translate}}
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    {{"WEBGIS.GEOSERVICE.SCALE_MIN" | translate}}
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    {{"WEBGIS.GEOSERVICE.SCALE_MAX" | translate}}
+                  </div>
+                  <div ng-show="!service.added" class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <a class="serviceMap-iconlayer"
+                       ng-click="addAllLayersForService(idx)">
+                      <span title="{{'WEBGIS.GEOSERVICE.ADD_ALL_LAYERS' | translate}}"
+                            class="glyphicon glyphicon-ok"></span>
+                    </a>
+                  </div>
+                  <div ng-show="service.added" class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <a class="serviceMap-iconlayer"
+                       ng-click="removeAllLayersForService(idx)">
+                      <span title="{{'WEBGIS.GEOSERVICE.REMOVE_ALL_LAYERS' | translate}}"
+                            class="glyphicon glyphicon-remove"></span>
+                    </a>
+                  </div>
+                </div>
+                <div class="row no-margin serviceMap-layer"
+                     ng-repeat="(layerId,layer) in service.layers">
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    {{layer.label}}
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    {{layer.min_scale}}
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    {{layer.max_scale}}
+                  </div>
+
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <a ng-show="!layer.added" class="serviceMap-iconlayer" ng-click="addLayerToMap(idx,layerId)">
+                      <span title="{{'WEBGIS.GEOSERVICE.ADD_LAYER' | translate}}"
+                            class="glyphicon glyphicon-plus"></span>
+                    </a>
+
+                    <a ng-show="layer.added" class="serviceMap-iconlayer" ng-click="removeLayerToMap(idx,layerId)">
+                      <span title="{{'WEBGIS.GEOSERVICE.REMOVE_LAYER' | translate}}"
+                            class="glyphicon glyphicon-minus"></span>
+                    </a>
+                  </div>
+                </div>
+
+          </uib-accordion-group>
+        </uib-accordion>
+      </div>
+    </div>
+  </div>
+</div>

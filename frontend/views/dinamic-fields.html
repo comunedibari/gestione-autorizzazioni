@@ -1,0 +1,95 @@
+<div class="sd-dinamic-fields">
+  <div class="sd-df-title">
+    <div  class="no-pad col-md-11 col-sm-11 col-xs-11">
+        <div ng-if="config.label"
+          class="rw-legend sd-df-leggend">
+          {{config.label | translate}}
+        </div>
+    </div>
+    <!-- Button to add dinamic fields   -->
+    <div  class="no-pad col-md-1 col-sm-1 col-xs-1">
+      <button class="btn btn-default btn-sm" ng-click="addFields()"
+        ng-disabled="disabled" title="{{'WORDS.ADD' | translate}}">
+        <span class="glyphicon glyphicon-plus"></span>
+      </button>
+    </div>
+  </div>
+   <!-- Alert -->
+  <div ng-show="alert.msg" class="modal-alert">
+    <div class="modal-alert-content alert-info">
+
+      <p>{{alert.msg | translate}}</p>
+
+      <div class="text-right">
+        <button ng-show="alert.bt0" ng-click="alertDone(0)"
+          class="btn btn-sm btn-info">
+          {{alert.bt0 | translate}}
+        </button>
+
+        <button ng-show="alert.bt1" ng-click="alertDone(1)"
+          class="btn btn-sm btn-info">
+          {{alert.bt1 | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <form name="sdFormCtrl">
+    <!-- List of object in array -->
+    <div ng-repeat="entity in entities" ng-init="entityList = $index">
+      <div  class="no-pad col-md-11 col-sm-11 col-xs-11">
+        <!--  List of dinamic fields to create -->
+        <div ng-repeat="cfg in config.conf" ng-init="cfgList = $index"
+          class="col-lg-{{cfg.width}}
+                col-md-{{cfg.width}}
+                col-sm-11 col-xs-11">
+          <!-- Label -->
+          <div ng-if="cfg.label != null">
+            <label class="control-label rw-control-font-size sd-df-label">
+              {{cfg.label | translate}}
+            </label>
+            <label ng-if="cfg.required">*</label>
+          </div>
+          <!-- Dinamic fields -->
+          <input class="form-control input-sm"
+                ng-disabled="disabled"
+                ng-required="cfg.required" type="{{cfg.type}}"
+                ng-model="entity[cfg.id]"
+                ng-pattern="pattern(cfg.type)"
+                ng-model-options="{updateOn: 'blur'}"
+                name="{{cfg.id}}-{{entityList}}"/>
+          <!-- Validation error message -->
+          <ng-messages for="sdFormCtrl[cfg.id + '-' + entityList].$error"
+                class="rw-messages"
+                ng-show ="invalid"
+                role="alert">
+            <ng-message when="required">
+              {{"CORE_MSG.MANDATORY_ERROR" | translate}}
+            </ng-message>
+            <ng-message when="email">
+              {{"CORE_MSG.INVALID_EMAIL_ADDRESS" | translate}}
+            </ng-message>
+            <ng-message when="datetime">
+              {{"CORE_MSG.INVALID_FORMAT" | translate}}
+            </ng-message>
+            <ng-message when="date">
+              {{"CORE_MSG.INVALID_FORMAT" | translate}}
+            </ng-message>
+            <ng-message when="pattern">
+              {{"CORE_MSG.INVALID_FORMAT" | translate}}
+            </ng-message>
+          </ng-message>
+        </div>
+      </div>
+      <!-- Button to remove dinamic fields   -->
+      <div class="no-pad col-md-1 col-sm-1 col-xs-1 sd-df-remove-button">
+        <button class="btn btn-default btn-sm"
+                ng-click="removeFields(entity)"
+                ng-disabled="disabled"
+                title="{{'WORDS.DELETE' | translate}}">
+          <span class="glyphicon glyphicon-minus"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

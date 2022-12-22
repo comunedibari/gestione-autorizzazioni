@@ -1,0 +1,137 @@
+<!-- Modal header -->
+<rw-modal-header config="headerCfg">
+</rw-modal-header>
+
+<!-- Modal body -->
+<div class="modal-body" ng-hide="headerCfg.minimized">
+
+  <!-- Loader -->
+  <div class="modal-loader" ng-show="loading">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Alert -->
+  <div ng-show="mvListAlert.msg" class="modal-alert">
+    <div class="modal-alert-content alert-{{mvListAlert.style}}">
+
+      <p>{{mvListAlert.msg | translate}}</p>
+
+      <div class="text-right">
+        <button ng-show="mvListAlert.bt0" ng-click="mvListAlertDone(0)"
+          class="btn btn-sm btn-{{mvListAlert.style}}">
+          {{mvListAlert.bt0 | translate}}
+        </button>
+
+        <button ng-show="mvListAlert.bt1" ng-click="mvListAlertDone(1)"
+          class="btn btn-sm btn-{{mvListAlert.style}}">
+          {{mvListAlert.bt1 | translate}}
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal body content -->
+  <div class="no-margin modal-body-scroll">
+    <div ng-show="!showForm">
+      <!-- Move Table -->
+      <rw-table config="moveTable"></rw-table>
+      <div class="zoom-div">
+        <div class="text-right">
+          <button class="btn btn-default btn-sm pull-right" type="button"
+            title="{{'WORDS.ZOOM_TO' | translate}}"
+            ng-click="zoomTo(selEnt)"
+            ng-disabled="(!selEnt.x_max || !selEnt.y_max || !selEnt.x_min || !selEnt.y_min)"
+            style="margin-left:5px;">
+            <span class="glyphicon glyphicon-screenshot"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div ng-show="showForm">
+      <uib-tabset active="curTab" justified="true">
+        <!-- General data -->
+        <uib-tab index="0" heading="{{'WORDS.GENERAL'|translate}}">
+
+          <div class="move-tab-content">
+            <!--   Form   -->
+            <div ng-class="{readonly: selEnt.status_id >=1 && selEnt.status_id != 5}" >
+              <rw-form config="mvFormCfg" entity="selEnt" controllers="moveObjCtrl">
+              </rw-form>
+            </div>
+            <!--  Segnaletica mobile   -->
+            <div ng-class="{readonly: selEnt.status_id >=1 && selEnt.status_id != 5}" >
+              <rw-form config="moveSignageMobileFormCfg" entity="selEnt" controllers="moveObjCtrl">
+              </rw-form>
+            </div>
+            <!--   Controllo segnaletica   -->
+            <div ng-class="{readonly: selEnt.status_id != 2 || !canManageRequest}">
+              <rw-form config="moveControlFormCfg" entity="selEnt" controllers="moveObjCtrl">
+              </rw-form>
+            </div>
+            <!--   Approvazione      -->
+            <div ng-class="{readonly: selEnt.status_id != 2 || !canApprove}">
+              <rw-form config="moveApprovalFormCfg" entity="selEnt" controllers="moveObjCtrl">
+              </rw-form>
+            </div>
+          </div>
+        </uib-tab>
+
+        <!-- Attachments -->
+        <uib-tab index="1" disable="!selEnt.id"
+          heading="{{'WORDS.PHOTO' | translate}} / {{'WORDS.ATTACHMENTS'|translate}}">
+
+          <div class="move-tab-content">
+            <legend class="rw-legend"  style="padding:0px 15px">
+              <span> {{'WORDS.PHOTO' | translate}} </span>
+            </legend>
+
+            <rw-attach-manager config="movePhotoAttachCfg" entity="selEnt.photo">
+            </rw-attach-manager>
+
+            <legend class="rw-legend"  style="padding:10px 15px 0px;">
+              <span> {{'WORDS.OTHER' | translate}} </span>
+            </legend>
+            <rw-attach-manager config="moveAttachCfg" entity="selEnt">
+            </rw-attach-manager>
+          </div>
+        </uib-tab>
+      </uib-tabset>
+
+    </div>
+  </div>
+
+   <!-- Toolbar -->
+      <!-- Toolbar -->
+  <div class="row no-margin" ng-show="showForm">
+    <div class="no-pad sd-toolbar-left col-lg-6 col-md-6 col-sm-6 col-xs-6">
+      <button class="btn btn-default btn-sm" ng-click="sendRequest()"
+        ng-show="selEnt.id && selEnt.status_id == 5 && canSend">
+        <span>{{"ROADSITE.SEND_REQUEST"|translate}}</span>
+      </button>
+      <button class="btn btn-default btn-sm" ng-click="manageRequest()"
+        ng-show="selEnt.id && selEnt.status_id == 1 && canManageRequest">
+        <span>{{"MOVE.MANAGE_REQUEST"|translate}}</span>
+      </button>
+      <button class="btn btn-default btn-sm" ng-click="approve(1)"
+        ng-show="selEnt.id && selEnt.status_id == 2 && canApprove">
+        <span>{{"ROADSITE.APPROVE"|translate}}</span>
+      </button>
+      <button class="btn btn-default btn-sm" ng-click="approve(0)"
+        ng-show="selEnt.id && selEnt.status_id == 2 && canApprove">
+        <span>{{"ROADSITE.REJECT"|translate}}</span>
+      </button>
+    </div>
+    <div class="sd-toolbar col-lg-6 col-md-6 col-sm-6 col-xs-6">
+      <button class="btn btn-default btn-sm" ng-click="save()"
+        title="{{'WORDS.SAVE' | translate}}">
+        <span class="glyphicon glyphicon-floppy-disk"></span>
+      </button>
+      <button class="btn btn-default btn-sm" ng-click="close()"
+        title="{{'WORDS.CLOSE' | translate}}">
+        <span class="glyphicon glyphicon-remove"></span>
+      </button>
+    </div>
+  </div>
+</div>

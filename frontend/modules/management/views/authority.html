@@ -1,0 +1,145 @@
+<!-- Modal header -->
+<rw-modal-header config="headerCfg">
+</rw-modal-header>
+
+<!-- Modal body -->
+<div class="modal-body" ng-hide="headerCfg.minimized">
+
+  <!-- Loader -->
+  <div class="modal-loader" ng-show="loading">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Alert -->
+  <div ng-show="authAlert.msg" class="modal-alert">
+    <div class="modal-alert-content alert-{{authAlert.style}}">
+
+      <p>{{authAlert.msg | translate}}</p>
+
+      <div class="text-right">
+        <button ng-show="authAlert.bt0" ng-click="authAlertDone(0)"
+          class="btn btn-sm btn-{{authAlert.style}}">
+          {{authAlert.bt0 | translate}}
+        </button>
+
+        <button ng-show="authAlert.bt1" ng-click="authAlertDone(1)"
+          class="btn btn-sm btn-{{authAlert.style}}">
+          {{authAlert.bt1 | translate}}
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal body content -->
+  <div class="no-margin modal-body-scroll">
+
+    <!-- Authority list -->
+    <div class="right-pad col-lg-3 col-md-3 col-sm-12 col-xs-12">
+      <div style="width:74px;">
+        <button class="btn btn-default btn-sm"
+          ng-click="addAuth()"
+          title="{{'WORDS.ADD' | translate}}">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+        <button class="btn btn-default btn-sm"
+          ng-disabled="!selAuth.id"
+          ng-click="delAuth()"
+          title="{{'WORDS.DELETE' | translate}}">
+          <span class="glyphicon glyphicon-trash"></span>
+        </button>
+      </div>
+
+      <div style="margin-left:76px; margin-top:-30px">
+        <rw-search-tools config="authoritySearch"></rw-search-tools>
+      </div>
+
+      <div class="list">
+        <!--  Table list authority  -->
+        <table style="width:100%;">
+          <tbody>
+            <tr class="auth-row" ng-repeat="a in authList"
+              ng-class="{'auth-active': isSelected(a)}"  ng-click="onAuth(a)">
+              <td class="auth-col">
+                {{a.name}}
+                <br>
+                {{functionInfo(a.function_id)}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <rw-pagination config="authorityPagination"></rw-pagination>
+    </div>
+
+    <!-- authority detail -->
+    <div class="no-pad col-lg-9 col-md-9 col-sm-12 col-xs-12" ng-show="selAuth">
+      <rw-form config="formCfg" entity="selAuth" controllers="formCtrlObj">
+      </rw-form>
+
+      <div class="row no-margin" ng-show="selAuth.function_id  >= 2 && selAuth.id"
+        ng-class="{readonly: selAuth.function_id  >= 2 && selAuth.id}">
+        <!--  Authorization Form   -->
+        <rw-form config="authorizationFormCfg" entity="selAuth.authorization" controllers="formCtrlObj">
+        </rw-form>
+        <rw-form config="authorizationProtocolFormCfg" entity="selAuth.authorization" controllers="formCtrlObj">
+        </rw-form>
+        <div style="text-align:right;  margin-top:-50px;">
+          <a ng-href="{{authorizationAttachUrl}}" download>
+            <button class="btn btn-default btn-sm"
+              ng-click="setUrl(selAuth.authorization.id, selAuth.authorization.auth_attach)"
+              title="{{'WORDS.DOWNLOAD' | translate}}">
+              <span class="glyphicon glyphicon-download-alt"></span>
+            </button>
+          </a>
+        </div>
+      </div>
+
+      <!-- History Authorization -->
+      <div ng-show="selAuth.authorizationHistory.length" style="padding-top:15px">
+        <table class="row-border hover" style="margin:0px;"
+          datatable="ng" dt-instance="setHistoryTableInstance"
+          dt-options="historyTableOpt" dt-column-defs="historyTableDef">
+          <thead>
+            <tr>
+              <th>{{"WORDS.PROTOCOL" | translate}}</th>
+              <th>{{"CORE_LBL.START_DATE" | translate}}</th>
+              <th>{{"CORE_LBL.END_DATE" | translate}}</th>
+              <th>{{"WORDS.ATTACHMENT" | translate}}</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr ng-repeat="h in selAuth.authorizationHistory" style="cursor: pointer;">
+              <td>{{h.auth_protocol}}</td>
+              <td>{{dateString(h.start_date)}}</td>
+              <td>{{dateString(h.end_date)}}</td>
+              <td class="text-center">
+                <a ng-href="{{authorizationAttachUrl}}" download>
+                  <button class="btn btn-default btn-sm"
+                    ng-click="setUrl(h.id, h.auth_attach)"
+                    title="{{'WORDS.DOWNLOAD' | translate}}">
+                    <span class="glyphicon glyphicon-download-alt"></span>
+                  </button>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <!-- Toolbar -->
+      <div class="row no-margin" style="padding-top: 15px;">
+        <div class="text-right">
+          <button class="btn btn-default btn-sm" ng-click="save()">
+            {{"WORDS.SAVE" | translate}}
+          </button>
+          <button class="btn btn-default btn-sm" ng-click="canc()">
+            {{"WORDS.CANCEL" | translate}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

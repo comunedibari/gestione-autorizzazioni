@@ -1,0 +1,39 @@
+<div>
+
+  <!-- Header -->
+  <div class="text-center">
+    <h1 class="login-title">{{title}}</h1>
+
+    <img ng-src="image/logo-sit.png" height="100"/>
+    <img ng-src="image/logo-project.png" height="100"/>
+  </div>
+
+  <!-- Login form -->
+  <form class="form-login">
+    <div class="form-group">
+      <input class="form-control" type="text" placeholder="username"
+        ng-model="username" required autofocus>
+    </div>
+
+    <div class="form-group">
+      <input class="form-control" type="password" placeholder="password"
+        ng-model="password" required>
+    </div>
+
+    <button class="btn btn-lg btn-default btn-block" ng-click="doLogin()">
+      Login
+    </button>
+  </form>
+
+  <p class="text-danger text-center" ng-if="errorMsg">
+    {{errorMsg | translate}}
+  </p>
+
+  <!-- Recovery password -->
+  <div class="text-center">
+    <a ng-if="recoveryPwd" href="" ng-click="doRecoveryPwd()">
+      {{"CORE_MSG.RECOVERY_PASSWORD" | translate}}
+    </a>
+  </div>
+
+</div>

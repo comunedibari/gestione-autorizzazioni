@@ -1,0 +1,50 @@
+<div class="rw-search-group row no-margin no-pad">
+  <div class="row no-margin ">
+    <!-- Group Operators -->
+    <ul class="rw-search-buttonbar nav nav-pills col-lg-4 col-md-4 col-sm-4 col-xs-4" >
+      <li ng-repeat="operator in groups.operators | orderBy:'position'"  
+        ng-class="operator.op == selectedLogicalOperator.op ? 'active' : ''">
+        <a class="rw-control-font-size " style="padding:10px 10px" 
+          href="javascript:void(0)" ng-click="selectLogicalOperator(operator)">
+          {{::operator.lbl}}
+        </a>
+      </li>
+    </ul>
+    <!-- Group Buttons and add condition button-->
+    <div class="rw-search-buttonbar col-lg-8 col-md-8 col-sm-8 col-xs-8" >
+      <button class="btn btn-default btn-sm" type="button" ng-click="addGroup()"
+        ng-show="canAddGroup()" title="{{'CORE_TLP.SEARCH_ADD_GROUP' | translate}}"
+        tooltip-placement="auto">
+        <span class="glyphicon glyphicon-plus"></span>
+      </button>
+      <button class="btn btn-default btn-sm" type="button" ng-click="removeGroup()"
+        ng-show="canRemoveGroup()" 
+        title="{{'CORE_TLP.SEARCH_DEL_GROUP' | translate}}"
+        tooltip-placement="auto">
+        <span class="glyphicon glyphicon-minus"></span>
+      </button>
+      <button class="btn btn-default btn-sm" type="button" ng-click="addCondition()"
+        ng-show="groups.conditions.length < 1">
+        <span class="glyphicon glyphicon-plus"></span>
+        <span>{{'WORDS.CONDITION' | translate}}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="row no-margin">
+    <!-- Conditions -->
+    <div ng-repeat="condition in groups.conditions | orderBy:'index'">
+      <div rw-search-condition filter="filter.rules[$index]" condition="condition"
+        condition-index="$index">
+      </div>
+    </div>
+    <!-- Subgroups -->
+    <div  ng-repeat="innerGroup in groups.groups | orderBy:'index'">
+      <div rw-search-group filter="filter.groups[$index]" config="config"
+        groups="groups.groups[$index]" group-index="$index"
+        logical-operators="innerGroup.operators">
+      </div>
+    </div>
+  </div>
+</div>
+

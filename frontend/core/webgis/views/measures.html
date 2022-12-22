@@ -1,0 +1,84 @@
+<div id="measurePanel" ng-controller="wgMeasuresCtrl">
+
+  <div id="measure-tools" class="measure-text">
+    <button id="line_ruler" class="btn-measure"
+            ng-click="selectMeasureTool($event,'Distance')"
+            title="{{'WORDS.DISTANCE' | translate}}">
+      <img width="22px" src="image/webgis/length.png" />
+    </button>
+    <button id="polygon_ruler" class="btn-measure"
+            ng-click="selectMeasureTool($event,'Area')"
+            title="{{'WORDS.AREA' | translate}}">
+      <img width="22px" src="image/webgis/area.png" />
+    </button>
+  </div>
+
+  <div class="measure-text" ng-show="featureLine">
+    <legend class="rw-legend">{{"WORDS.DISTANCE"| translate}}</legend>
+
+    <!-- overall length -->
+    <div class="row rw-row-measure">
+      <div class="measure-col col-lg-4 col-md-4 col-xs-4 col-sm-4">
+        {{"WORDS.LENGTH"| translate}}</div>
+      <div class="measure-col col-lg-3 col-md-3 col-xs-3 col-sm-3">
+        {{objUm['length'].value}}</div>
+      <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+        <select class="form-control input-sm"
+                    ng-model="objUm['length'].um"
+                    ng-change="changeMeasure(objUm['length'].um,'length')"
+                    ng-options="opt.id as opt.name|translate for opt in lineOptions">
+        </select>
+      </div>
+    </div>
+
+    <!-- last length -->
+    <div class="row rw-row-measure">
+      <div class="measure-col col-lg-4 col-md-4 col-xs-4 col-sm-4">
+        {{"WORDS.LAST_SEGMENT"| translate}}</div>
+      <div class="measure-col col-lg-3 col-md-3 col-xs-3 col-sm-3">
+        {{objUm.last_segment.value}}</div>
+      <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+        <select class="form-control input-sm"
+                    ng-model="objUm['last_segment'].um"
+                    ng-change="changeMeasure(objUm['last_segment'].um,'last_segment')"
+                    ng-options="opt.id as opt.name|translate for opt in lineOptions">
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="measure-text" ng-show="featureArea">
+    <legend class="rw-legend">{{"WORDS.SURFACES"| translate}}</legend>
+
+    <!-- area -->
+    <div class="row rw-row-measure">
+      <div class="measure-col col-lg-4 col-md-4 col-xs-4 col-sm-4">
+        {{"WORDS.AREA"| translate}}</div>
+      <div class="measure-col col-lg-3 col-md-3 col-xs-3 col-sm-3">
+        {{objUm['area'].value}}</div>
+      <div class="measure-col col-lg-5 col-md-5 col-xs-5 col-sm-5">
+        <select class="form-control input-sm"
+                ng-model="objUm['area'].um"
+                ng-change="changeMeasure(objUm['area'].um,'area')"
+                ng-options="opt.id as opt.name|translate for opt in areaOptions">
+        </select>
+      </div>
+    </div>
+
+    <!-- perimeter -->
+    <div class="row rw-row-measure">
+      <div class="measure-col col-lg-4 col-md-4 col-xs-4 col-sm-4">
+        {{"WORDS.PERIMETER"| translate}}</div>
+      <div class="measure-col col-lg-3 col-md-3 col-xs-3 col-sm-3">
+        {{objUm['perimeter'].value}}</div>
+      <div class="measure-col col-lg-5 col-md-5 col-xs-5 col-sm-5">
+        <select class="form-control input-sm"
+            ng-model="objUm['perimeter'].um"
+            ng-change="changeMeasure(objUm['perimeter'].um,'perimeter')"
+            ng-options="opt.id as opt.name|translate for opt in lineOptions">
+        </select>
+      </div>
+    </div>
+  </div>
+
+</div>

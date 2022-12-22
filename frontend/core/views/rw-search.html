@@ -1,0 +1,24 @@
+<form name="searchForm" >
+  <div ng-repeat="group in searchObj.groups | orderBy:'index'">
+      <div rw-search-group filter="filter" config="searchObj" groups="group" 
+        group-index="$index" logical-operators="logicalOperators" />
+    </div>
+  </div>
+  <!-- Error Field -->
+  <div name="errorField" ng-show ="showError" class="rw-messages" role="alert">
+    {{ errorMessage | translate }}
+  </div>
+  <!-- Buttonbar -->
+  <div class="rw-search-form-footer row no-margin">
+    <button id="searchBtn" type="submit" class="btn btn-default pull-right"
+      ng-disabled="searchIsInvalid(filter)" ng-click="search(searchForm, $event)">
+      {{"WORDS.SEARCH" | translate}}
+    </button>
+    <button class="btn btn-default pull-left" ng-click="resetFilter()">Reset</button>
+  </div>
+</form>
+
+
+
+
+ 

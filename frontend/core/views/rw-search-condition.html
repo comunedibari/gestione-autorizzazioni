@@ -1,0 +1,98 @@
+<form class="rw-search-condition" name="searchConditionForm">
+    <div class="no-pad container-fluid">
+      <div class="no-margin row">
+        <!-- SourceField --> 
+        <div class="no-pad col-lg-4 col-md-4 col-sm-4 col-xs-4">
+          <select name="sourceField" class="input-sm form-control"
+            style="width:100% !important;"
+            ng-model="inputItem.sourceField"
+            ng-class="errorClass('sourceField')"
+            ng-options="f.id as f.name|translate for f in condition.sourceDs|orderBy:'position'" 
+            required />
+        </div>
+        <!-- Comparison Operator-->
+        <div class="no-pad col-lg-3 col-md-3 col-sm-3 col-xs-3">
+          <select name="comparisonOperator" class="input-sm form-control"
+            style="width:100% !important;"
+            ng-model="inputItem.comparisonOperator"
+            ng-class="errorClass('comparisonOperator')"
+            ng-options="o.id as o.name|translate for o in operatorsWithLbl|orderBy:'position'" 
+            required />
+        </div>
+        <!-- inputItem -->
+        <div class="no-pad col-lg-5 col-md-5 col-sm-5 col-xs-5">
+          <div class="no-pad row no-margin" ng-switch="selectedSourcefieldType">
+            <div class="no-pad col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="input-group">
+                <select name="inputItem" class="input-sm form-control" ng-switch-when="combo"
+                  id="{{searchConditionInputItemId}}"
+                  ng-options="opt.id as opt.name|translate for opt in inputItemDataSource"
+                  ng-model="inputItem.data" ng-class="errorClass('inputItem')"/>
+                <input name="inputItem" class="input-sm form-control" ng-switch-default 
+                  type="text" id="{{searchConditionInputItemId}}" ng-model="inputItem.data"
+                  ng-model-options="{updateOn: 'blur'}"
+                  ng-class="errorClass('inputItem')" autocomplete="off" />
+                <div class="input-group" style="width:100%" ng-switch-when="datetime">
+                  <input class="input-sm form-control" type="text" 
+                    datetime-picker="{{formatDatetime}}"
+                    ng-model="inputItem.data" is-open="popupDatetime.opened"
+                    button-bar="{{buttonBar}}" popup-position="top"
+                    datepicker-options="dateOptions" timepicker-options="timeOptions"
+                    cancel-text="{{'WORDS.CANCEL' | translate}}"
+                    close-text="{{'WORDS.CLOSE' | translate}}"
+                    time-text="{{'WORDS.TIME' | translate}}"
+                    date-text="{{'WORDS.DATE' | translate}}"
+                    today-text= "{{'WORDS.TODAY' | translate}}"
+                    now-text="{{'WORDS.NOW' | translate}}" required />
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default btn-xs input-sm" 
+                      ng-click="openPopup()">
+                      <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                  </span>
+                </div><!-- datetime -->
+                <div class="input-group" style="width:100%" ng-switch-when="date">
+                  <input class="input-sm form-control" type="text"
+                    datetime-picker="{{formatDate}}"
+                    ng-model="inputItem.data" is-open="popupDatetime.opened"
+                    button-bar="{{buttonBar}}" popup-position="top"
+                    datepicker-options="dateOptions" timepicker-options="timeOptions"
+                    enable-time="false"
+                    cancel-text="{{'WORDS.CANCEL' | translate}}"
+                    close-text="{{'WORDS.CLOSE' | translate}}"
+                    time-text="{{'WORDS.TIME' | translate}}"
+                    date-text="{{'WORDS.DATE' | translate}}"
+                    today-text= "{{'WORDS.TODAY' | translate}}"
+                    now-text="{{'WORDS.NOW' | translate}}" required />
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default btn-xs input-sm" 
+                      ng-click="openPopup()">
+                      <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                  </span>
+                </div><!-- date  -->
+                <div class="input-group-btn">
+                  <button class="btn btn-default btn-xs input-sm"
+                    ng-click="addCondition(searchConditionForm)"
+                    ng-show="canAddCondition(conditionIndex)"
+                    title="{{'CORE_TLP.SEARCH_ADD_COND' | translate}}"
+                    tooltip-placement="auto">
+                    <span class="glyphicon glyphicon-plus"></span>
+                  </button>
+                </div>
+                <div class="input-group-btn">
+                <button class="btn btn-default btn-xs input-sm"
+                    ng-click="removeCondition(conditionIndex)"
+                    title="{{'CORE_TLP.SEARCH_DEL_COND' | translate}}"
+                    tooltip-placement="auto">
+                    <span class="glyphicon glyphicon-minus"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div><!-- selectedSourcefieldType div -->
+        </div>
+      </div>
+    </div>
+
+</form>

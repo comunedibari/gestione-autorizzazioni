@@ -1,0 +1,118 @@
+<div>
+
+  <!-- Loader -->
+  <div class="modal-loader" ng-show="loading">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Tools -->
+  <table style="width:100%;">
+    <tbody>
+      <tr style="border-bottom:4px solid transparent;">
+
+        <!-- Add button -->
+        <td style="width:38px;" ng-if="config.btAdd">
+          <button class="btn btn-default btn-sm"
+            title="{{'WORDS.ADD'|translate}}"
+            ng-disabled="config.btAdd.disabled"
+            ng-click="config.btAdd.click()">
+            <span class="glyphicon glyphicon-plus"></span>
+          </button>
+        </td>
+
+        <!-- Update button -->
+        <td style="width:38px;" ng-if="config.btUpd">
+          <button class="btn btn-default btn-sm"
+            title="{{'WORDS.MODIFY'|translate}}"
+            ng-disabled="config.btUpd.disabled"
+            ng-click="config.btUpd.click()">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </button>
+        </td>
+
+        <!-- Del button -->
+        <td style="width:38px;" ng-if="config.btDel">
+          <button class="btn btn-default btn-sm"
+            title="{{'WORDS.DELETE'|translate}}"
+            ng-disabled="config.btDel.disabled"
+            ng-click="config.btDel.click()">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
+        </td>
+
+        <!-- Search -->
+        <td ng-if="searchCfg && config.reload != undefined"
+          ng-style="{width:searchCfg.width}">
+          <rw-search-tools config="searchCfg" ng-disabled="config.disable">
+          </rw-search-tools>
+        </td>
+
+        <!-- Export button -->
+        <td style="width:34px;" ng-if="export">
+          <button class="btn btn-default btn-sm"
+            title="Export CSV" ng-click="onExport()">
+            <i class="glyphicon glyphicon-export"></i>
+          </button>
+        </td>
+
+        <!-- Empty cell used to fill row width -->
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Table -->
+  <div ng-style="tableStyle">
+    <table id="{{config.id}}" style="margin:0px;" class="row-border hover"
+      datatable="ng" dt-instance="dtInstance"
+      dt-options="dtOpt" dt-column-defs="dtColDef">
+      <thead>
+        <tr>
+          <th ng-repeat="col in config.columns" ng-class="col.class"
+            ng-click="changeOrder(col)">
+            {{col.label | translate}}
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr ng-repeat="obj in data"
+          ng-class="rowClasses[$index]"
+          ng-click="setSelectedRow($index,obj)">
+          <td ng-repeat="col in config.columns" ng-style="col.style(obj)">
+            {{obj[col.id]}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="row no-margin"  ng-show="config.pagination">
+
+    <!-- Record per page -->
+    <div class="no-pad col-lg-2 col-md-2 col-sm-2 col-xs-2">
+      <select class="rw-pagination" ng-model="rpp" ng-change="rppChanged()">
+        <option ng-repeat="val in rppArray">{{val}}</option>
+      </select>
+    </div>
+
+    <!-- Pagination -->
+    <div class="no-pad text-center col-lg-8 col-md-8 col-sm-8 col-xs-8">
+      <uib-pagination class="rw-pagination pagination-sm"
+        max-size="0"
+        ng-model="curPage"
+        ng-change="pageChanged()"
+        total-items="count"
+        items-per-page="rpp"
+        boundary-links="true">
+      </uib-pagination>
+    </div>
+
+    <!-- Pagination info -->
+    <div class="rw-pagination-info no-pad col-lg-2 col-md-2 col-sm-2 col-xs-2">
+      {{first}}-{{last}} {{"WORDS.OF" | translate}} {{count}}
+    </div>
+
+  </div>
+</div>

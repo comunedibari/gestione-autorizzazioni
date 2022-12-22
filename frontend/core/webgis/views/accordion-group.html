@@ -1,0 +1,18 @@
+<div class="panel {{panelClass || 'panel-default'}}">
+  <div class="panel-heading" ng-keypress="toggleOpen($event)" ng-click="toggleOpen()" >
+    <h4 class="panel-title">
+        <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
+          <span uib-accordion-header ng-class="{'text-muted': isEnabled}" ng-click="toggleOpen()">
+            {{heading}}
+            <a ng-show="$parent.icon_accordion">
+              <span ng-click="$parent.removeAccordion($event)"
+                      class="glyphicon glyphicon-remove serviceMap-remove"/>
+            </a>
+          </span>
+        </a>
+      </h4>
+  </div>
+  <div class="panel-collapse collapse" uib-collapse="!isOpen">
+    <div ng-class="$parent.panel_accordion_body" ng-transclude></div>
+  </div>
+</div>

@@ -1,0 +1,133 @@
+<div class="no-pad container-fluid rw-row" style="margin-top:5px;">
+
+  <div ng-repeat="attr in attribs" class="col-lg-3 col-md-4 col-sm-4 col-xs-12" 
+        style="padding:0px 10px 0px 0px;">
+
+    <div class="no-pad container-fluid" >
+      <!-- Attribute label -->
+      <div class="row no-margin" >
+        <label class="control-label rw-control-font-size ">
+          {{attr.label ? attr.label : attr.id | translate}}
+        </label>
+      </div>
+
+      <!-- Attribute input -->
+      <div class="row no-margin">
+        <!-- Text -->
+        <div ng-if="attr.type == 'text'">
+          <!-- Item is made up by textbox and feature's attributes popup button -->
+          <div ng-if="attr.dependFromFeature" class="no-pad container-fluid">
+            <div class="no-pad row no-margin">
+              <div class="no-pad col-lg-12">
+                <div class="input-group">
+                  <input  class="input-sm form-control" type="text"
+                    id="{{attr.id}}" name="{{attr.id}}"
+                    ng-model-options="{updateOn: 'blur'}" maxlength="64"
+                    ng-model="entity[attr.id]">
+
+                  <!-- Feature's attributes popup button -->
+                  <div class="input-group-btn ">
+                    <button type="button" class="input-sm btn btn-secondary" 
+                      title="{{'WEBGIS.STYLE.FEATURE_ATTRIBUTES'| translate}}"
+                      popover-placement="auto right"
+                      popover-append-to-body="true"
+                      popover-trigger="outsideClick"
+                      uib-popover-template="'core/webgis/views/layer-tree-ft-attr-popup.html'">
+                      <div style="font-size:9px;"><b>A</b></div>
+                      </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Simple textbox -->
+          <input ng-if="!attr.dependFromFeature" class="input-sm form-control" 
+            type="text" ng-model-options="{updateOn: 'blur'}" maxlength="64"
+            ng-model="entity[attr.id]" />
+        </div>
+        <!-- ColorPicker -->
+        <div ng-if="attr.type == 'colorPicker'">
+          <div class="no-pad container-fluid">
+            <div class="no-pad row no-margin">
+              <div class="no-pad col-lg-12">
+                <div class="input-group">
+                  <!-- Color preview div -->
+                  <div class="input-group-btn ">
+                    <div class="input-sm" ng-style="colorPreviewStyle[attr.id]"/>
+                  </div>
+                  <!-- Color picker -->
+                  <input class="input-sm form-control" id="{{attr.id}}"
+                    name="{{attr.id}}" type="text" colorpicker="rgba"
+                    placeholder="rgba(255,255,255,1)"
+                    colorpicker-close-on-select
+                    ng-model="entity[attr.id]"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Combo -->
+        <select ng-if="attr.type == 'combo'" class="input-sm form-control"
+          ng-model="entity[attr.id]" id="{{attr.id}}" name="{{attr.id}}"
+          ng-options="opt.id as opt.name | translate for opt in attr.options"/>
+        <!-- Boolean -->
+        <button ng-if="attr.type == 'boolean'"
+          class="input-sm form-control rw-btn-checkbox" 
+          ng-model="entity[attr.id]" uib-btn-checkbox btn-checkbox-true="true" 
+          btn-checkbox-false="false">
+            <div ng-show="entity[attr.id]">{{'WORDS.YES' | translate}}</div>
+            <div ng-show="!entity[attr.id]" >No</div>
+        </button>
+        <!-- Fill-pattern popup -->
+        <ui-select ng-if="attr.type == 'fillPatternPopup'" class="input-sm"
+          ng-model="entity[attr.id]" theme="bootstrap"
+          style="padding: 0px 0px 0px 0px" reset-search-input="true">
+          <ui-select-match class="rw-control-font-size input-sm" 
+            style="padding: 0px 0px 0px 0px">
+            <img ng-src="{{ dFillPatterns[entity[attr.id]].image }}"
+              style="max-height:15px;"/> {{entity[attr.id]}}
+          </ui-select-match>
+          <ui-select-choices class="rw-control-font-size {{field.height}}"
+            repeat="pattern.id as pattern in aFillPatterns | filterOr: {id: $select.search}">
+            <img ng-src="{{ pattern.image }}" style="max-height:30px;"/>
+            <div ng-bind-html="pattern.id | highlight: $select.search" 
+              style="display: inline"></div>
+          </ui-select-choices>
+        </ui-select>
+        <!-- Image -->
+        <div ng-if="attr.type == 'image'">
+          <!-- Item is made up by image preview,add image button and delete image button-->
+          <div class="no-pad row no-margin">
+            <div class="no-pad col-lg-12">
+              <div class="input-group">
+                <div class="no-pad input-sm form-control"
+                  style="padding-top:0px;padding-bottom:0px;">
+                  <img ng-src="{{dImage[attr.id].imgUrl}}" height="28"
+                    style="display:block;margin:auto;"/>
+                </div>
+                <div class="input-group-btn">
+                  <label class="input-sm btn btn-file btn-secondary btn-file" 
+                    title="{{'WORDS.NEW_FILE' | translate}}"
+                    style="background-color:#dddddd"
+                    ng-hide="dImage[attr.id].imgUrl != emptyImagePath">
+                    <input type="file" style="display:none;" 
+                      rw-file-model="dImage[attr.id].imgToUpload">
+                      <span class="glyphicon glyphicon-plus"></span>
+                    </input>
+                  </label>
+                  <button type="button" class="input-sm btn btn-secondary"
+                    title="{{'WORDS.DELETE' | translate}}"
+                    ng-click="deleteImage(dImage[attr.id],attr.id)" 
+                    ng-hide="dImage[attr.id].imgUrl == emptyImagePath">
+                    <span class="glyphicon glyphicon-trash"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

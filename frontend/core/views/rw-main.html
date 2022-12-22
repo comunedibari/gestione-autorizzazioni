@@ -1,0 +1,68 @@
+<div>
+
+  <!-- Header -->
+  <div ng-if="showHeader" class="container-fluid">
+    <div ng-include="'views/header.html'"></div>
+  </div>
+
+  <!-- Navigation bar -->
+  <div ng-if="showNavbar" ng-include="'views/navbar.html'"></div>
+
+  <div class="container-fluid">
+    <div class="row">
+
+      <!-- Sidebar -->
+      <div ng-if="showSidebar" class="col-lg-3 col-md-3 col-sm-4 col-xs-12 no-pad">
+        <div ng-include="'views/sidebar.html'"></div>
+      </div>
+
+      <!-- Main view -->
+      <div ng-if="mainView" ng-class="mainViewClass">
+        <div ng-include="mainView"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div ng-if="showFooter" ng-include="'views/footer.html'"></div>
+</div>
+
+<!-- Bootstrap pagination template -->
+<script id="uib/template/pagination/pagination.html" type="text/ng-template">
+  <ul class="pagination">
+    <li ng-if="::boundaryLinks"
+        ng-class="{disabled: noPrevious()||ngDisabled}"
+        class="pagination-first">
+      <a href ng-click="selectPage(1, $event)">
+        <span class="glyphicon glyphicon-step-backward"/>
+      </a>
+    </li>
+    <li ng-if="::directionLinks"
+        ng-class="{disabled: noPrevious()||ngDisabled}"
+        class="pagination-prev">
+      <a href ng-click="selectPage(page - 1, $event)">
+        <span class="glyphicon glyphicon-triangle-left"/>
+      </a>
+    </li>
+    <li ng-repeat="page in pages track by $index"
+        ng-class="{active: page.active,disabled: ngDisabled&&!page.active}"
+        class="pagination-page">
+      <a href ng-click="selectPage(page.number, $event)">{{page.text}}</a>
+    </li>
+    <li ng-if="::directionLinks"
+        ng-class="{disabled: noNext()||ngDisabled}"
+        class="pagination-next">
+      <a href ng-click="selectPage(page + 1, $event)">
+        <span class="glyphicon glyphicon-triangle-right"/>
+      </a>
+    </li>
+    <li ng-if="::boundaryLinks"
+        ng-class="{disabled: noNext()||ngDisabled}"
+        class="pagination-last">
+      <a href ng-click="selectPage(totalPages, $event)">
+        <span class="glyphicon glyphicon-step-forward"/>
+      </a>
+    </li>
+  </ul>
+</script>

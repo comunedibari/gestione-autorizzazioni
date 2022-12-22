@@ -1,0 +1,47 @@
+<div class="modal-header" style="font-size:18px;">
+  {{"CORE_MSG.RECOVERY_PASSWORD_PANEL" | translate}}
+
+  <button type="button" class="close" ng-click="close()">
+    &times;
+  </button>
+</div>
+
+<div class="modal-body">
+
+  <!-- Loader -->
+  <div class="modal-loader" ng-show="loading">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Form -->
+  <form class="form-horizontal">
+
+    <div class="row">
+      <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 no-pad">
+        <label class="control-label text-right" for="username">Username:</label>
+      </div>
+      <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 no-pad">
+        <input class="form-control" type="text" id="username" name="username" ng-model="data.username" required autofocus>
+      </div>
+    </div>
+
+    <div class="row" style="padding-top:16px;">
+      <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 no-pad">
+        <label class="control-label text-right" for="username">Email:</label>
+      </div>
+      <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 no-pad">
+        <input class="form-control" type="email" id="email" name="email" ng-model="data.email" required>
+      </div>
+    </div>
+
+    <div class="form-actions text-center">
+        <input type="submit" value="Invia" class="btn btn-primary" ng-click="recovery()">
+    </div>
+  </form>
+
+  <!-- Mesage -->
+  <p class="text-danger text-center" ng-show="message">
+    {{message | translate}}
+  </p>
+
+</div>

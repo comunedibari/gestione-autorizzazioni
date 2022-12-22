@@ -1,0 +1,15 @@
+<div id="printPanel" ng-controller="printFormCtrl" >
+  <div id="print" ng-style="{'max-height':toolsPanelHeight,'overflow-y':'auto'};">
+    <!-- loader -->
+    <div class="modal-loader" ng-show="showLoader">
+        <div class="spinner"></div>
+    </div>
+    <rw-form config="printformCfg" entity="printObj" controllers="formCtrlObj">
+    </rw-form>
+    <div class="error-msg" ng-if="printError">{{"WEBGIS.PRINT_ERROR"|translate}}</div>
+    <div class="error-msg" ng-if="printBadEPSGMsg">{{"WEBGIS.PRINT_BAD_EPSG"|translate}}</div>
+    <button  ng-click="print()" class="print-button btn btn-default btn-sm">
+      {{"WORDS.PRINT" | translate}}
+    </button>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<div id="searchPanel" ng-controller="searchCtrl">
+  <uib-tabset active="selectedTab" justified="true"
+      template-url="core/webgis/views/tabset.html">
+
+    <uib-tab index="0" select="getSearchForm()" heading="{{'WORDS.SEARCH' | translate}}">
+      <div ng-style="panelSearchScroll()" style="min-height:130px;">
+        <rw-form class="form-search" config="searchFormCfg" entity="searchObj" controllers="formCtrlObj">
+        </rw-form>
+        <div ng-hide="advancedSearchFormHide"
+             style="width:368px; border-left-width:10px; margin-left:15px;">
+          <!--control-label rw-control-font-size -->
+          <legend class="rw-legend rw-control-font-size">
+            {{"WEBGIS.SEARCH.ADVANCED_SEARCH" | translate}}</legend>
+          <div style="padding:0px 5px 5px 5px;">
+            <rw-search config="advancedConfigSearch">
+            </rw-search>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+
+    <uib-tab index="1" heading="{{'WORDS.RESULT' | translate}}">
+      <div style="min-height:180px;">
+        <div ng-show="featuresArray.length > 0" class="row no-margin features-result">
+          <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 rw-control-font-size">
+            {{"WORDS.RESULTS_NUMBER" | translate}}: {{featuresArray.length}}
+          </div>
+          <button ng-click="resetSearch()"
+                  class="clear-button col-lg-3 col-md-3 col-sm-3 col-xs-3 btn
+                  btn-default btn-sm" title="{{'WORDS.CANCEL' | translate}}">
+            <span class="glyphicon glyphicon-repeat"></span>
+          </button>
+        </div>
+
+
+        <!-- loader -->
+        <div class="loader-search" ng-show="showLoader">
+          <div class="spinner"></div>
+        </div>
+
+        <div ng-show="featuresArray.length == 0 && !showLoader">
+          <strong class="rw-control-font-size">
+            {{"CORE_MSG.NO_RESULT_FOUND" | translate}}
+          </strong>
+        </div>
+
+        <div class="features-searched" ng-style="panelScroll()">
+          <div id={{getFeatureId(feature.id)}} class="feature-searched"
+              ng-click="clickFeature(feature)"
+              ng-repeat="feature in featuresArray">
+            <div class="row"
+                ng-repeat="(attribute,value) in feature['custom_properties']">
+              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 feature-label
+                  rw-control-font-size">
+                  {{attribute | translate}}:
+              </div>
+              <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 rw-control-font-size">
+                {{value}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+  </uib-tabset>
+</div>

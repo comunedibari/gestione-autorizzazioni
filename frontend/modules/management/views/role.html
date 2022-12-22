@@ -1,0 +1,90 @@
+<rw-modal-header config="headerCfg">
+</rw-modal-header>
+
+<div class="modal-body" ng-hide="headerCfg.minimized">
+
+  <!-- Alert -->
+  <div ng-show="alert.msg" ng-class="'pan-alert alert alert-'+alert.style">
+    <p>{{alert.msg | translate}}</p>
+
+    <div class="text-right">
+      <button ng-show="alert.btExec" ng-click="onAlert(1)"
+        ng-class="'btn btn-sm btn-'+alert.style">
+        {{alert.btExec | translate}}
+      </button>
+
+      <button ng-show="alert.btClose" ng-click="onAlert(0)"
+        ng-class="'btn btn-sm btn-'+alert.style">
+        {{alert.btClose | translate}}
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal content -->
+  <div class="row no-margin modal-body-scroll">
+
+    <!-- Collection -->
+    <div class="no-pad col-lg-4 col-md-4 col-sm-5 col-xs-5">
+      <rw-collection config="collCfg">
+      </rw-collection>
+    </div>
+
+    <!-- Role management -->
+    <div class="col-lg-8 col-md-8 col-sm-7 col-xs-7">
+
+      <!-- Toolbar -->
+      <div class="text-right">
+        <button class="btn btn-default btn-sm" ng-disabled="selRole"
+          ng-click="add()">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+
+        <button class="btn btn-default btn-sm"
+          ng-disabled="!selRole || selRole.readonly"
+          ng-click="del()">
+          <span class="glyphicon glyphicon-minus"></span>
+        </button>
+      </div>
+
+      <!-- Role form and permission table -->
+      <div ng-show="selRole">
+        <rw-form config="formCfg" entity="selRole" controllers="formCtrlObj">
+        </rw-form>
+
+        <table class="row-border hover" style="margin:0px;" datatable="ng"
+          dt-instance="dtInstance" dt-options="dtOpt" dt-column-defs="dtColDef">
+          <thead>
+            <tr>
+              <th>{{"WORDS.MODULE" | translate}}</th>
+              <th>{{"WORDS.PERMISSION" | translate}}</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr ng-repeat="p in permissions">
+              <td>{{p.app_desc}}</td>
+              <td>{{p.description}}</td>
+              <td class="text-center">
+                <input type="checkbox" ng-model="selRole.permObj[p.id]">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="text-right" style="margin-top:4px;">
+          <button class="btn btn-default btn-sm"
+            title="{{'WORDS.SAVE' | translate}}" ng-click="save()">
+            <span class="glyphicon glyphicon-floppy-disk"></span>
+          </button>
+
+          <button class="btn btn-default btn-sm"
+            title="{{'WORDS.CLOSE' | translate}}" ng-click="close()">
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

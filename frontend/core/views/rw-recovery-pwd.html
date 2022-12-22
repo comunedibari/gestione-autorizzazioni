@@ -1,0 +1,38 @@
+<div class="modal-header" style="font-size:18px;">
+  {{"CORE_MSG.RECOVERY_PASSWORD_PANEL" | translate}}
+
+  <button type="button" class="close" ng-click="close()">
+    &times;
+  </button>
+</div>
+
+<div class="modal-body">
+
+  <!-- Loader -->
+  <div class="modal-loader" ng-show="loading">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Form -->
+  <form class="form-login">
+    <div class="form-group">
+      <input class="form-control" type="text" placeholder="username"
+        ng-model="data.username" required autofocus>
+    </div>
+
+    <div class="form-group">
+      <input class="form-control" type="email" placeholder="email"
+        ng-model="data.email" required>
+    </div>
+
+    <button class="btn btn-lg btn-default btn-block" ng-click="recovery()">
+      {{"WORDS.SEND" | translate}}
+    </button>
+  </form>
+
+  <!-- Mesage -->
+  <p class="text-danger text-center" ng-show="message">
+    {{message | translate}}
+  </p>
+
+</div>

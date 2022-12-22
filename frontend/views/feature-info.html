@@ -1,0 +1,39 @@
+<div>
+
+  <!-- Close button -->
+  <div class="text-right">
+    <button style="float:none;" type="button" class="close" ng-click="close()">
+      &times;
+    </button>
+  </div>
+
+  <!-- Feature info -->
+  <table style="font-size:12px;">
+    <tbody ng-repeat="obj in data" ng-switch="obj.type">
+
+      <!-- Text -->
+      <tr ng-switch-when="TEXT" ng-show="obj.val">
+        <td class="fi-key-cell"><strong>{{obj.key}}</strong></td>
+        <td>{{obj.val}}</td>
+      </tr>
+
+      <!-- Link -->
+      <tr ng-switch-when="LINK" ng-show="obj.val">
+        <td colspan="2" style="padding-top:10px;">
+          <a href={{obj.val}} target="_blank">{{obj.key}}</a>
+        </td>
+      </tr>
+
+      <!-- Image -->
+      <tr ng-switch-when="IMAGE" ng-show="obj.val">
+        <td colspan="2">
+          <a href={{obj.val}} target="_blank">
+            <img ng-src="{{obj.val}}" style="height:210px;padding-top:10px;"/>
+          </a>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+</div>

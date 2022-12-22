@@ -1,0 +1,809 @@
+/*
+ * WebGis css
+ */
+
+.unstyle {
+  list-style: none;
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+}
+
+#mapWmk {
+  position: absolute;
+  z-index: 998;
+  font-size: x-small;
+  bottom: 1px;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 1px;
+  margin-left: 1px;
+}
+
+#mapCoords {
+  position: absolute;
+  z-index: 998;
+  font-size: smaller;
+  background: rgba(255, 255, 255, 0.5);
+  width: 310px;
+  height: 4em;
+  bottom: 4px;
+  right: 4px;
+  border-radius: 4px;
+}
+
+#mapScale {
+  position: absolute;
+  color: white;
+  right: 5em;
+  top: 6px;
+}
+
+#mapBaseCtrl {
+  position: absolute;
+  top: 1px;
+  z-index: 999;
+}
+
+#mapBaseCtrl button {
+  background-color: rgba(0,0,0,0.5);
+  height: 1.8em;
+  width: 1.8em;
+  padding: 1px;
+}
+
+.custom-sidebar {
+  position: absolute;
+}
+
+.custom-zoom {
+  position: absolute;
+  top: 4em;
+}
+
+.custom-zoomToExtent {
+  position: absolute;
+  top: 11.4em;
+}
+
+.custom-zoomToExtent button {
+  background-color: rgba(0,0,0,0.5);
+  height: 1.8em;
+  width: 1.8em;
+  padding: 1px;
+}
+
+.custom-zoomBox {
+  position: absolute;
+  top: 9em;
+}
+
+.custom-zoomBox button {
+  background-color: rgba(0,0,0,0.5);
+  height: 1.8em;
+  width: 1.8em;
+  padding: 1px;
+}
+
+.custom-attribution {
+  bottom: 1.4em !important;
+  right: auto !important;
+}
+
+.custom-attribution button {
+  background-color: rgba(0,0,0,0.5);
+  height: 1.8em;
+  width: 1.8em;
+  padding: 1px;
+}
+
+.custom-attribution ul {
+  font-size: 9px !important;
+}
+
+.custom-scale-line
+{
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 4px;
+  height: calc(100% - 4px);
+  margin: 2px;
+  padding: 2px;
+}
+
+.custom-scale-line-inner
+{
+  border:1px solid #eee;
+  border-top:none;
+  color:#eee;
+  font-size:10px;
+  text-align:center;
+  margin:1px;
+}
+
+.custom-mouse-position
+{
+  position: absolute;
+  top: 2em;
+  right: 1px;
+  width: 99%;
+  color: #ffffff;
+  text-align: center;
+}
+
+.ol-control button:hover,
+.ol-control button:focus {
+  background-color: #5a5a5a;
+  float: left;
+}
+
+.box-control {
+  top: 0.4em;
+  right: 0.4em;
+  width: 404px;
+  z-index: 999;
+  position: absolute;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.box-title {
+  cursor:pointer;
+  text-align: center;
+  color: white;
+  font-size: 14px;
+  padding: 2px 0px;
+}
+
+.itemControl {
+  float: left;
+  min-width: 40px;
+  text-align: center;
+}
+
+#mapControls {
+  z-index: 999;
+  padding: 8px 2px;
+}
+
+.selectedControl {
+  background-color: #5a5a5a;
+}
+
+.icon-node {
+  cursor: pointer;
+  width: 40px; /* same value of .itemControl */
+  height: 32px;
+  float: left;
+}
+
+.layer-slider {
+  padding-left: 0px;
+  padding-right: 16px;
+}
+
+.layer-zoom {
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 26px;
+}
+
+.icon-node:hover, .icon-node:focus {
+  background-color: #5a5a5a;
+}
+
+.toolsPanel {
+  background-color: #ffffff;
+  z-index: 999;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 1px solid #cacaca;
+}
+
+#overviewMap .ol-overviewmap {
+  position: relative;
+  text-align: center;
+}
+
+.custom-overview .ol-overviewmap-box {
+  border: 2px solid red;
+  cursor: pointer;
+}
+
+.custom-overview .ol-overviewmap-map {
+  width: 240px;
+}
+
+.boxopen {
+  position: absolute;
+  top: 0.4em;
+  right: 0.5em;
+  cursor:pointer;
+  padding: 8px 4px;
+  width: 2em;
+  height: 2em;
+  z-index: 998;
+  background-color: rgba(0,0,0,0.5);
+  background-image: url("../image/webgis/icon-arrow-left.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.boxopen:hover {
+  background-color: #5a5a5a;
+}
+
+.boxclose {
+  cursor:pointer;
+  background-image: url("../image/webgis/icon-arrow-right.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 12px 0px;
+}
+
+.tool-legend {
+  background-image: url("../image/webgis/legend.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.tool-layers {
+  background-image: url("../image/webgis/layers.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.tool-measures {
+  background-image: url("../image/webgis/ruler.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.tool-coords {
+  background-image: url("../image/webgis/coords.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.tool-overview {
+  background-image: url("../image/webgis/overview.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.tool-info {
+  background-image: url("../image/webgis/pointer.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.tool-search {
+  background-image: url("../image/webgis/find.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.tool-print {
+  background-image: url("../image/webgis/print.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.tool-edit {
+  background-image: url("../image/webgis/edit.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.tool-services {
+  background-image: url("../image/webgis/addservices.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.accordion-category .panel-group {
+  margin-bottom: 2px;
+}
+
+/* TODO: parlare con Pier Nico
+.panel-heading {
+  cursor: pointer;
+}
+*/
+
+.panel-accordion-body {
+  padding-top: 20px;
+}
+
+.accordion-category .accordion-toggle {
+  text-decoration: none;
+}
+
+.print-button {
+  margin: 0 15px 15px 15px;
+  width: calc(100% - 30px);
+}
+
+#layersPanel,
+#coordsPanel,
+#searchPanel,
+#legendPanel,
+#overviewPanel,
+#printPanel,
+#infoPanel,
+#manageMapsPanel,
+#editPanel
+{
+  padding: 8px;
+}
+
+.panel-heading .panel-title .accordion-toggle>span {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.btnlayers {
+  bottom: 0px;
+  width: 100%;
+  display: flex;
+  padding-left:8px;
+  padding-right:8px;
+  padding-bottom:8px;
+}
+
+.btn-button-layers {
+  width: 50%;
+  background-color: rgba(0,0,0,0.5);
+  color: #ffffff;
+  padding: 6px 12px;
+  margin: 1px;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+.btn-button-layers-focus {
+  outline:0;
+  box-shadow: inset 0 10px 4px rgba(0,0,0,0);
+  background-color: #5a5a5a;
+}
+
+.legend-item {
+  font-size: 12px;
+  padding-bottom: 10px;
+}
+
+.legend-class-item {
+  margin-top: 2px;
+}
+
+.legend-class-item-label {
+  margin-top: 4px;
+}
+
+#measure-tools{
+  text-align: center;
+}
+
+.btn-measure {
+  cursor:pointer;
+  padding: 6px 12px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin: 2px;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.btn-measure-focus {
+  background-color: #5a5a5a;
+}
+
+.measure-text {
+  margin: 12px;
+}
+
+.measure-col {
+  font-size: 12px;
+}
+
+.btn-mapquery {
+  cursor:pointer;
+  padding: 6px 12px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin: 2px;
+  background-color: rgba(0,0,0,0.5);
+}
+
+#spatial-query-tools {
+  text-align: center;
+  margin: 12px;
+}
+
+.layerBaseThumb {
+  border: 2px solid rgba(0,0,0,0.5);
+  padding: 2px;
+}
+
+.border-layerBase {
+  background-color: rgba(0,0,0,0.5);
+}
+
+.layerBaseLabel {
+  height: 3em;
+  text-align: center;
+  font-size: 12px;
+}
+
+.itemTitle {
+  font-weight: normal;
+  font-size: 12px;
+}
+
+.itemScale {
+  font-weight: normal;
+  font-size: 10px;
+}
+
+.autoHeight {
+  overflow: auto !important;
+  height: auto !important;
+}
+
+.noMargin {
+  margin: 0px;
+}
+
+.accordion-category .panel-group {
+  margin-bottom: 2px;
+}
+
+.btn-button-layers:focus {
+  outline:0;
+  box-shadow: inset 0 10px 4px rgba(0,0,0,0);
+  background-color: #4A4A4C;
+}
+
+.layers-margin {
+  margin-top: 12px;
+}
+
+.groupLayerSlider{
+  width: 200px;
+}
+
+.icon-feature {
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.feature-selected {
+  background-color: #F1F1F1;
+  border: solid;
+  border-width: 1px;
+}
+
+.features-searched {
+  margin-top: 15px;
+  padding-top: 2px;
+  overflow-x: hidden;
+  border-top: solid;
+  border-color: #5a5a5a;
+  border-width: 1px;
+}
+
+.feature-searched {
+  border-width: 1px;
+  border-color: rgba(0,0,0,0.5);
+  padding: 8px;
+  cursor: pointer;
+}
+
+.features-result {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.feature-label {
+  font-weight: bold;
+}
+
+.loader-search {
+  position: absolute;
+  z-index: 10;
+  height: 100%;
+  width: 100%;
+}
+
+.error-msg {
+  text-align: center;
+  color: #f62020;
+}
+
+.info-msg {
+  font-size:12px;
+}
+
+/*
+ * service geo
+ */
+.serviceMap-remove {
+  float: right!important;
+}
+
+.serviceMap-heading{
+font-size: 15px;
+}
+
+.serviceMap-header-body{
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.serviceMap-layer {
+  padding-bottom: 12px;
+  font-size: 12px;
+}
+
+.serviceMap-iconlayer {
+  cursor: pointer;
+}
+
+.serviceMap-iconlayer:hover {
+  background-color: #e4e4e4;
+}
+
+.serviceMap-disablelayer {
+  cursor: default;
+}
+
+/*
+ * map popup
+ */
+.ol-popup {
+  position: absolute;
+  background-color: white;
+  -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+  filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #cccccc;
+  bottom: 12px;
+  left: -50px;
+  min-width: 200px;
+}
+
+.ol-popup:after, .ol-popup:before {
+  top: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.ol-popup:after {
+  border-top-color: white;
+  border-width: 10px;
+  left: 48px;
+  margin-left: -10px;
+}
+
+.ol-popup:before {
+  border-top-color: #cccccc;
+  border-width: 11px;
+  left: 48px;
+  margin-left: -11px;
+}
+
+#mapPopupCloser {
+  float: right;
+  padding-bottom: 6px;
+}
+
+#mapPopupContent {
+  max-height: 200px;
+}
+
+#mapTooltip {
+  position: relative;
+  padding: 4px;
+  max-width: 300px !important;
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  opacity: 0.9;
+  font: 10pt sans-serif;
+  border-radius: 2px !important;
+  moz-border-radius: 2px !important;
+  webkit-border-radius: 2px !important;
+}
+
+.cursorPointer {
+  cursor: pointer;
+}
+
+.custom-list-group-item {
+  position: relative;
+  display: block;
+  padding: 6px 6px;
+  margin-bottom: -1px;
+  background-color: #fff;
+  /*border: 1px solid #ddd;*/
+  font-size: 12px;
+}
+
+/* Rules for layer-tree node */
+
+.angular-ui-tree-empty
+{
+  background-color: white !important;
+}
+
+.layer-config-body-not-scroll .nav>li>a
+{
+  padding:15px 10px 15px 10px;
+}
+
+.radio-margin
+{
+  margin: 35px 5px 25px 0px !important;
+}
+
+.layer-tree-node
+{
+  border: 1px solid #dae2ea;
+  background: #f8faff;
+}
+
+.layer-tree-node-content
+{
+  margin: 5px;
+  height: 35px;
+  padding:5px;
+}
+
+.layer-tree-node-btn
+{
+  margin-right:5px;
+}
+
+.layer-tree-checkbox
+{
+  width:24px;
+  margin-top:25px !important;
+}
+
+.layer-tree-label
+{
+  padding:0 5px 0 5px;
+  margin-bottom: 0px;
+}
+
+.layer-no-border
+{
+  border: 0px;
+}
+
+.layer-style-name {
+  width: 100%;
+  height: 22px;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.layer-tree-legend-class
+{
+  border: 1px solid #dae2ea;
+  background: #f8faff;
+  margin: 5px 5px 0px 15px;
+  padding: 5px 5px 0px 0px;
+  /* Row roles to fixs cols with same height */
+  width: 97%;
+  height: 100%;
+  display: table;
+}
+
+.base-layer-tree-node-content
+{
+  margin: 5px;
+  height: 85px;
+  padding:5px;
+}
+
+/*
+ * Rules for media with display with width < 500px
+ */
+@media only screen and (max-width:500px)
+{
+  .box-control {
+    width: 100% !important;
+    top: 0px !important;
+    right: 0px !important;
+    height: auto !important;
+    /*min-height: 80px;*/
+  }
+
+  #mapBaseCtrl {
+    display: none;
+  }
+
+  .custom-scale-line {
+    height: auto !important;
+  }
+
+  .custom-mouse-position {
+    display: none;
+  }
+
+  #mapCoords {
+    height: 2em;
+    bottom: 2em;
+  }
+}
+
+/*
+ * Rules for media with display with width < 320px
+ */
+@media only screen and (max-width:320px)
+{
+  #mapCoords {
+    width: calc(100% - 1em);
+    height: 2em;
+    bottom: 2em;
+  }
+
+  #mapScale {
+    right: 3em;
+  }
+
+  .custom-attribution {
+    display: none;
+  }
+
+  .layer-config-body-not-scroll
+  {
+    max-height: 530px;
+    overflow-y: auto;
+  }
+}
+
+@media only screen and (min-width:321px) and (max-width:768px)
+{
+  .layer-config-body-not-scroll
+  {
+    max-height: 530px;
+    overflow-y: auto;
+  }
+}
+
+@media only screen and (min-width:769px) and (max-width: 1023px)
+{
+  .layer-config-body-not-scroll
+  {
+    max-height: 530px;
+    overflow-y: auto;
+  }
+}
+
+@media only screen and (min-width:1024px)
+{
+  .layer-config-body-not-scroll
+  {
+    height: 530px;
+  }
+
+  .layer-tree-body
+  {
+    height:450px;
+    max-height:450px;
+  }
+
+  .layer-tree-tab
+  {
+    max-height:270px;
+    overflow-y:auto;
+  }
+}

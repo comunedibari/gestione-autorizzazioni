@@ -1,0 +1,110 @@
+<div class="container-fluid rw-geodata-container">
+
+  <!-- Header -->
+  <div class="row no-margin" style="min-height:40px">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 no-pad">
+      <div ng-if="config.title != null" class="row no-margin">
+        <label class="control-label rw-legend">
+          {{config.title | translate}}
+        </label>
+      </div>
+      <div ng-if="config.subTitle != null" class="row no-margin">
+        <span class="control-label rw-control-font-size">
+          {{config.subTitle | translate}}
+        </span>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-pad">
+      <label class="btn btn-default btn-sm pull-right" type="button"
+             title="{{config.addShpLabel | translate}}"
+             ng-disabled="disableAddBtn()" >
+        <input type="file" style="display:none;" rw-file-model="geodataFile"
+               ng-disabled="disableAddBtn()"/>
+        <span class="glyphicon glyphicon-paperclip"></span>
+      </label>
+      <button class="btn btn-default btn-sm pull-right" type="button"
+              ng-click="addItem()" ng-disabled="disableAddBtn()"
+              title="{{config.addDrawLabel | translate}}"
+              style="margin-right:5px;">
+        <i class="glyphicon glyphicon-pencil"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Alert -->
+  <a id="geoDataManagerAlertAnchor"></a>
+  <div ng-show="alert.msg" class="modal-alert">
+    <div class="modal-alert-content alert-{{alert.style}} ">
+      <p>{{alert.msg | translate}}</p>
+      <p ng-show="alert.detMsg">{{alert.detMsg | translate}}</p>
+
+      <div class="text-right">
+        <button ng-show="alert.btOk" ng-click="alertOk()"
+          class="btn btn-{{alert.style}} btn-sm">
+          {{alert.btOk | translate}}
+        </button>
+
+        <button ng-show="alert.btKo" ng-click="alertKo()"
+          class="btn btn-{{alert.style}} btn-sm">
+          {{alert.btKo | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Items Array -->
+  <div class="row no-margin" ng-repeat="item in geodata | orderBy:'index'">
+    <div class="rw-geodata-container"
+         style="margin-top:10px; margin-left:5px; margin-right:5px;">
+
+      <!-- Form -->
+      <rw-form config="getFormCfg($index)" entity="item"
+               controllers="formCtrlObj">
+      </rw-form>
+
+      <div class="sd-toolbar">
+        <!-- edit button -->
+        <button class="btn btn-default btn-sm" type="button"
+                ng-show="config.showBtnEdit"
+                title="{{config.editLbl | translate}}"
+                ng-click="edit($index)" ng-disabled="!item[config.layerIdField]">
+          <span class="glyphicon glyphicon-edit"></span>
+        </button>
+        <!-- save button -->
+        <button class="btn btn-default btn-sm" type="button"
+                ng-show="config.showBtnSave"
+                title="{{config.saveLbl | translate}}"
+                ng-click="save($index)"
+                ng-disabled="disableSaveBtn($index)">
+          <span class="glyphicon glyphicon-floppy-disk"></span>
+        </button>
+        <!-- download button -->
+        <label class="btn btn-default btn-sm" type="button"
+               ng-show="config.showBtnDown"
+               title="{{config.downloadLbl | translate}}"
+               ng-disabled="!item[config.layerIdField]">
+          <a ng-click="download($index)" ng-href={{gdDownloadUrl}}>
+            <span class="glyphicon glyphicon-download"></span>
+          </a>
+        </label>
+        <!-- zoomTo button -->
+        <button class="btn btn-default btn-sm" type="button"
+                ng-show="config.showBtnZoomTo"
+                title="{{config.zoomToLbl | translate}}"
+                ng-click="zoomTo($index)"
+                ng-disabled="!item[config.layerIdField]">
+          <span class="glyphicon glyphicon-screenshot"></span>
+        </button>
+        <!-- remove button -->
+        <button class="btn btn-default btn-sm" type="button"
+                ng-show="config.showBtnDel"
+                title="{{config.deleteLbl | translate}}"
+                ng-click="delete($index)">
+          <span class="glyphicon glyphicon-trash"></span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

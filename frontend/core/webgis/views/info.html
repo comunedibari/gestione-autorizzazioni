@@ -1,0 +1,72 @@
+<div id="infoPanel" ng-controller="wgInfoCtrl" >
+  <div ng-style="{'max-height':toolsPanelHeight,'overflow-y':'auto'};">
+
+    <div class="loader-search" ng-show="showLoader">
+      <div class="spinner"></div>
+    </div>
+
+    <div ng-show="!getFeatureInfoArray && !showLoader">
+      <p>{{"WEBGIS.USE_INFO_TOOL" | translate}}</p>
+    </div>
+
+    <div class="row no-margin row-eq-height"
+         style="padding-bottom:10px;">
+      <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 rw-control-font-size">
+        <div class="row no-margin" ng-show="getFeatureInfoArray">
+          {{"WORDS.SELECTED_POINT" | translate}}:
+        </div>
+        <div class="row no-margin" ng-show="getFeatureInfoArray">
+          {{customCoordFormat(clickPointCoord)}}
+        </div>
+        <div class="row no-margin"
+             ng-show="!showNoLayerMsg && getFeatureInfoArray.length > 0"
+             style="padding-top:6px;">
+          {{"WORDS.RESULTS_NUMBER" | translate}}: {{numResult}}
+        </div>
+        <div class="row no-margin"
+             ng-show="!showNoLayerMsg && getFeatureInfoArray.length == 0 && !showLoader"
+             style="padding-top:6px;">
+          {{"CORE_MSG.NO_RESULT_FOUND" | translate}}
+        </div>
+        <div class="row no-margin"
+             ng-show="showNoLayerMsg"
+             style="padding-top:6px;">
+          {{"WEBGIS.NO_LAYERS_TO_QUERY" | translate}}
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <button ng-click="resetInfo()"
+                ng-show="getFeatureInfoArray.length > 0"
+                class="clear-button btn btn-default btn-sm ">
+          <span class="glyphicon glyphicon-repeat"></span>
+        </button>
+      </div>
+    </div>
+
+
+    <div ng-repeat="obj in getFeatureInfoArray" >
+      <!-- Layer name -->
+      <legend class="rw-legend rw-control-font-size no-pad">
+        Layer
+        <span ng-show="obj.parentName">{{obj.parentName | translate}} - </span>
+        {{obj.layerName | translate}}
+      </legend>
+      <!-- Layer attributes -->
+      <div ng-repeat="f in obj.data.features"
+           style="margin-bottom:10px" ng-click="extendedInfo(obj, f)">
+        <div ng-repeat="col in dLayersAttributes[obj.layerName].result">
+          <div class="no-pad container-fluid">
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 feature-label 
+              rw-control-font-size">
+              {{col.name}}:
+            </div>
+            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 rw-control-font-size">
+              {{f.properties[col.id]}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div> 

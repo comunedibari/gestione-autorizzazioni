@@ -1,0 +1,89 @@
+<div class="container-fluid">
+  <div class="row no-margin">
+    <div class="no-pad col-lg-6 col-md-6 col-sm-6 col-xs-6">
+      <!-- Property_name -->
+      <div class="no-pad col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="row no-margin">
+          <label class="control-label rw-control-font-size">
+            {{'WORDS.ATTRIBUTE' | translate }}
+          </label>
+        </div>
+        <div class="row no-margin">
+          <select class="input-sm form-control col-lg-12 col-md-12
+            col-sm-12 col-xs-12"
+            ng-model="entity.property_name"
+            ng-options="opt.id as opt.name for opt in entity.attributes"/>
+        </div>
+      </div>
+      <!-- Operator -->
+      <div class=" col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="row no-margin">
+          <label class="control-label rw-control-font-size">
+            {{'WORDS.OPERATOR_LBL' | translate }}
+          </label>
+        </div>
+        <div class="row no-margin">
+          <select class="input-sm form-control col-lg-12 col-md-12
+            col-sm-12 col-xs-12" ng-model="entity.operator"
+            ng-disabled="entity.property_name == null"
+            ng-options="opt.id as opt.name | translate for opt in entity.operators"/>
+        </div>
+      </div>
+    </div>
+    <!-- Value -->
+    <div class="no-pad col-lg-6 col-md-6 col-sm-6 col-xs-6"
+         ng-show="entity.operands_number != 0">
+      <!--Value/Min/Values -->
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="row no-margin">
+          <label ng-show="entity.operands_number == 1"
+            class="control-label rw-control-font-size">
+            {{'WORDS.VALUE' | translate }}
+          </label>
+          <label ng-show="entity.operands_number == 2"
+            class="control-label rw-control-font-size">
+            Min
+          </label>
+          <label ng-show="entity.operands_number == 'endless'"
+            class="control-label rw-control-font-size">
+            {{'WORDS.VALUES' | translate }}
+          </label>
+        </div>
+        <div class="row no-margin">
+          <input class="form-control input-sm col-lg-12 col-md-12 
+            col-sm-12 col-xs-12" type="text" 
+            ng-model-options="{updateOn: 'blur'}"
+            ng-show="entity.operands_number != null"
+            ng-model="entity.min" maxlength="64" />
+        </div>
+      </div>
+      <!-- Max -->
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"
+        ng-show="entity.operands_number == 2">
+        <div class="row no-margin">
+          <label class="control-label rw-control-font-size">
+            Max
+          </label>
+        </div>
+        <div class="row no-margin">
+          <input class="form-control input-sm col-lg-12 col-md-12
+            col-sm-12 col-xs-12" type="text" 
+            ng-model-options="{updateOn: 'blur'}" 
+            ng-model="entity.max" maxlength="64" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Message for user -->
+  <div class="row no-margin">
+    <div ng-show="entity.operands_number == 'endless'">
+      <div class="no-pad col-lg-6 col-md-6 col-sm-6 col-xs-6">
+      <!-- Empty col -->
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"
+        style="font-size:10px;margin-top:3px;">
+        {{'WEBGIS.FILTER_INFO_MSG' | translate}}
+      </div>
+    </div>
+  </div>
+</div>

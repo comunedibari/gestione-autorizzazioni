@@ -1,0 +1,75 @@
+<div class="layer-tree-node layer-tree-node-content autoHeight" ui-tree-handle>
+
+  <!-- item view -->
+  <div class="row no-margin">
+    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 no-pad cursorPointer"
+      ng-click="toggle(this)">
+      <span class="glyphicon" ng-if="item.layers.length > 0"
+            ng-class="{'glyphicon-chevron-right': collapsed,
+            'glyphicon-chevron-down' : !collapsed}">
+      </span>
+    </div>
+    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 no-pad">
+      <input type="checkbox"
+             ng-model="item.selected"
+             ng-change="selectLayer(item.id)"
+             ng-disabled="item.disabled" />
+    </div>
+    <div class="layer-no-border layer-tree-label cursorPointer
+      col-lg-9 col-md-9 col-sm-9 col-xs-9 no-pad" ng-click="toggle(this)">
+      <span class="itemTitle noMargin">{{item.label | translate}}</span>
+      <span class="itemScale"
+            ng-if="layerHasScaleLimit(item.id)"
+            ng-switch="scaleLimitType(item.id)">
+        <span ng-switch-when="_FROM_SCALE_">
+          ({{'WORDS.FROM' | translate}}&nbsp;1:{{item.max_scale}})
+        </span>
+        <span ng-switch-when="_UNTIL_TO_SCALE_">
+          ({{'WORDS.UNTIL_TO' | translate}}&nbsp;1:{{item.min_scale}})
+        </span>
+        <span ng-switch-when="_FROM_TO_SCALE_">
+          ({{'WORDS.FROM' | translate}}&nbsp;1:{{item.min_scale}}&nbsp;
+          {{'WORDS.TO' | translate}}&nbsp;1:{{item.max_scale}})
+        </span>
+      </span>
+    </div>
+
+    <!-- Tools button -->
+    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 no-pad cursorPointer"
+      ng-if="item.layerType != 'COMPOSED_LAYER_ITEM'"
+      ng-click="manageLayerTools(item.id)">
+      <span class="glyphicon glyphicon-option-horizontal"></span>
+    </div>
+  </div>
+
+  <!-- Tools view -->
+  <div class="row no-margin" ng-show="toolsCfg[item.id].show">
+    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 no-pad">
+    </div>
+
+    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 layer-slider">
+      <rzslider
+        rz-slider-model="toolsCfg[item.id].slValue"
+        rz-slider-options="toolsCfg[item.id].slOptions">
+      </rzslider>
+    </div>
+
+    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 no-pad">
+      <span ng-click="zoomToLayerExtent(item.id)"
+        title="{{'WEBGIS.TLP.LAYER_ZOOM' | translate}}"
+        class="layer-zoom glyphicon glyphicon-zoom-in">
+      </span>
+    </div>
+  </div>
+
+</div>
+
+<ol ui-tree-nodes="" ng-if="item.display"
+    ng-model="item.layers"
+    ng-class="{hidden: collapsed}">
+  <li ng-repeat="item in item.layers"
+      ng-include="'core/webgis/views/layer-item.html'"
+      ui-tree-node
+      data-collapsed="item.collapsed">
+  </li>
+</ol>

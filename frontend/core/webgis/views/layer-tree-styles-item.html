@@ -1,0 +1,67 @@
+<div class="row no-margin" >
+  <legend class="rw-legend">
+    {{'WEBGIS.STYLE.DEFAULT_STYLE' | translate}}
+  </legend>
+  <button type="button" class="btn btn-default btn-sm"
+    ng-click="addDefaultStyleObj()" title="{{'WORDS.ADD' | translate}}">
+    <span class="glyphicon glyphicon-plus"></span>
+  </button>
+</div>
+<!-- Styles -->
+<div ui-tree="stylesTreeOpt" data-drag-delay="dataDragDelay">
+  <ol ui-tree-nodes="" ng-model="entity.styles.default">
+    <li ng-repeat="obj in entity.styles.default"
+      ui-tree-node data-collapsed="obj.collapsed">
+      <div ui-tree-handle class="layer-tree-node
+        layer-tree-node-content autoHeight">
+          <div class="row no-margin">
+          <a class="pull-left cursorPointer"
+            ng-click="toggle(this)">
+            <span class="glyphicon glyphicon-chevron-right"
+              ng-class="{'glyphicon-chevron-right': collapsed,
+                    'glyphicon-chevron-down': !collapsed}">
+            </span>
+          </a>
+            <div class="layer-no-border layer-tree-label
+              cursorPointer col-lg-8 col-md-8 col-sm-9 col-xs-7"
+              ng-click="toggle(this)">
+            <p class="itemTitle noMargin">
+                {{obj.type.name | translate}}
+            </p>
+          </div>
+          <div style="position:absolute; right:10px">
+            <a class="pull-right btn btn-danger btn-xs"
+              ng-click="removeDefaultStyleObj($index)"
+              title="{{'WORDS.DELETE' | translate}}">
+              <span class="glyphicon glyphicon-remove"></span>
+            </a>
+          </div>
+          </div>
+      </div>
+      <!-- Style detail -->
+      <div ng-if="obj.display" ng-class="{hidden: collapsed}"
+        style="margin:2px 5px 0px 5px;border: 1px solid #ccc;">
+        <div class="container-fluid" >
+          <div class="row no-margin" >
+            <label class="control-label rw-control-font-size">
+              {{'WORDS.TYPE' | translate }}
+            </label>
+          </div>
+          <div class="row no-margin">
+            <div class="row no-margin">
+              <div class="no-pad col-lg-3 col-md-3 col-sm-3 col-xs-9">
+                <select class="form-control input-sm"
+                  ng-model="obj.type"
+                  ng-options="opt.name | translate for opt in aDefaultObjType"/>
+              </div>
+            </div>
+          </div>
+          <!-- Default Styles object -->
+          <wg-styles-default-object layer-id="layerId"
+            entity="obj" attribs="obj.type.attributes"
+            feature-attribs="featureAttribs"></wg-styles-default-object>
+        </div>
+      </div>
+    </li>
+  </ol>
+</div>

@@ -1,0 +1,24 @@
+<div id="legendPanel" ng-controller="wgLegendCtrl">
+  <div id="legend" ng-style="{'max-height':toolsPanelHeight,'overflow-y':'auto'}">
+
+  <!-- Categories -->
+  <div ng-repeat="cat in categories">
+
+    <uib-accordion class="accordion-category" close-others="false">
+      <uib-accordion-group heading="{{cat.label | translate}}" is-open="cat.isOpen">
+
+      <!-- Fisrt level layer -->
+      <ul style="list-style-type:none;padding-left:0px;">
+        <li
+          ng-repeat="layer in cat.layers"
+          ng-include="'core/webgis/views/legend-item.html'">
+        </li>
+      </ul>
+
+      </uib-accordion-group>
+    </uib-accordion>
+
+  </div>
+
+  </div>
+</div>

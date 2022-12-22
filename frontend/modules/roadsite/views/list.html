@@ -1,0 +1,388 @@
+<!-- Modal header -->
+<rw-modal-header config="headerCfg">
+</rw-modal-header>
+
+<!-- Modal body -->
+<div class="modal-body" ng-hide="headerCfg.minimized">
+
+  <!-- Loader -->
+  <div class="modal-loader" ng-show="loading">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Alert -->
+  <div ng-show="rsListAlert.msg" class="modal-alert">
+    <div class="modal-alert-content alert-{{rsListAlert.style}}">
+
+      <p>{{rsListAlert.msg | translate}}</p>
+
+      <div class="text-right">
+        <button ng-show="rsListAlert.bt0" ng-click="rsListAlertDone(0)"
+          class="btn btn-sm btn-{{rsListAlert.style}}">
+          {{rsListAlert.bt0 | translate}}
+        </button>
+
+        <button ng-show="rsListAlert.bt1" ng-click="rsListAlertDone(1)"
+          class="btn btn-sm btn-{{rsListAlert.style}}">
+          {{rsListAlert.bt1 | translate}}
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal body content -->
+  <div class="modal-body-scroll roadsite-list">
+    <div ng-show="!showForm">
+      <div style="position: absolute;z-index: 99" ng-style="(btnPermission === true) ?
+      {'margin-left':'114px'} :
+      {'margin-left':'38px'}">
+        <rw-search-tools config="searchCfg"></rw-search-tools>
+      </div>
+      <!-- Roadsite Table -->
+      <div style="position: relative;">
+        <rw-table config="roadsiteTable"></rw-table>
+      </div>
+      <!-- zoomTo button -->
+      <div class="zoom-div" style="position: absolute;z-index: 99" >
+        <div class="text-right">
+          <button class="btn btn-default btn-sm pull-right" type="button"
+            title="{{'WORDS.ZOOM_TO' | translate}}"
+            ng-click="zoomTo(selEnt)"
+            ng-disabled="(!selEnt.x_max || !selEnt.y_max || !selEnt.x_min || !selEnt.y_min)"
+            style="margin-left:5px;">
+            <span class="glyphicon glyphicon-screenshot"></span>
+          </button>
+          <button class="btn btn-sm trackingBtnBar"
+              ng-disabled="disableShowButton"
+              ng-click="showRoadsite()"
+              ng-class="showRoadsiteBtnClass"
+              title="{{'ROADSITE.SHOW_ROADSITE' | translate}}">
+            <span class="glyphicon glyphicon-globe"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div ng-show="showForm">
+      <!--   Form   -->
+      <div ng-class="{readonly: selEnt.status_id >=2}" >
+        <rw-form config="rsFormCfg" entity="selEnt" controllers="roadsiteObjCtrl">
+        </rw-form>
+      </div>
+
+      <!--  Geometry      -->
+      <div class="row no-margin" style="min-height:40px; padding:0px 15px">
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 no-pad"
+          ng-style="selEnt.status_id >=2? {'opacity':'0.7','pointer-events': 'none'} : {}">
+          <label class="control-label rw-control-font-size rw-label">{{'WORDS.GEOMETRY' | translate}}</label>
+          <button class="form-control rw-btn-checkbox input-sm"
+            ng-disabled="true" ng-model="selEnt.hasGeom"
+            uib-btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false"
+            name="hasGeomNatDist">
+              <div ng-show="selEnt.hasGeom" >{{'WORDS.YES' | translate}}</div>
+              <div ng-show="!selEnt.hasGeom" >No</div>
+          </button>
+        </div>
+
+        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 no-pad"
+          ng-style="selEnt.status_id >=2? {'opacity':'0.7','pointer-events': 'none'} : {}">
+          <div class="row no-margin subtitle-geom">
+            <span class="control-label rw-control-font-size" ng-if="!selEnt.hasGeom">
+              {{'ROADSITE.SUBTITLE_ROADSITE_NO_GEOM' | translate}}
+            </span>
+            <span class="control-label rw-control-font-size" ng-if="selEnt.hasGeom && !geomDrawed">
+              {{'ROADSITE.SUBTITLE_ROADSITE_GEOM' | translate}}
+            </span>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-pad" style="padding-top:15px">
+          <button class="btn btn-default btn-sm pull-right" type="button"
+            ng-click="deleteGeom()"
+            ng-style="selEnt.status_id >=2? {'opacity':'0.7','pointer-events': 'none'} : {}"
+            ng-disabled="!selEnt.hasGeom || selEnt.status_id >= 2"
+            title="{{'ROADSITE.DELETE_GEOM' | translate}}"
+            style="margin-left:5px;">
+            <i class="glyphicon glyphicon-trash"></i>
+          </button>
+          <!-- download button -->
+          <label class="btn btn-default btn-sm pull-right" type="button"
+            title="{{'WORDS.DOWNLOAD' | translate}}"
+            ng-disabled="(!selEnt.geom)"
+            style="margin-left:5px;">
+            <a ng-click="download()" ng-href={{gdDownloadUrl}}>
+              <span class="glyphicon glyphicon-download"></span>
+            </a>
+          </label>
+          <!-- zoomTo button -->
+          <!-- <button class="btn btn-default btn-sm pull-right" type="button"
+            title="{{'WORDS.ZOOM_TO' | translate}}"
+            ng-click="zoomTo(selEnt)"
+            ng-disabled="(!selEnt.x_max || !selEnt.y_max || !selEnt.x_min || !selEnt.y_min)"
+            style="margin-left:5px;">
+            <span class="glyphicon glyphicon-screenshot"></span>
+          </button> -->
+          <label class="btn btn-default btn-sm pull-right" type="button"
+            ng-style="selEnt.status_id >=2? {'opacity':'0.7','pointer-events': 'none'} : {}"
+            title="{{'ROADSITE.ADD_SHP_ROADSITE' | translate}}"
+            ng-disabled="(selEnt.x_max && selEnt.y_max && selEnt.x_min && selEnt.y_min) || selEnt.status_id >= 2"
+            style="margin-left:5px;">
+            <input type="file" style="display:none;" rw-file-model="geodataFile.file"
+            id="shapeFile" ng-click="clearFileSelection('shapeFile')"/>
+            <span class="glyphicon glyphicon-paperclip"></span>
+          </label>
+          <button class="btn btn-default btn-sm pull-right" type="button"
+            ng-style="selEnt.status_id >=2? {'opacity':'0.7','pointer-events': 'none'} : {}"
+            ng-click="drawRoadsite()"
+            ng-disabled="geomDrawed || selEnt.status_id >= 2"
+            title="{{'ROADSITE.ADD_DRAW_ROADSITE' | translate}}"
+            style="margin-left:5px;">
+            <i class="glyphicon glyphicon-pencil"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Note  Form   -->
+      <div ng-class="{readonly: canAddNotePM}" >
+        <rw-form config="rsNoteFormCfg" entity="selEnt" controllers="roadsiteObjCtrl">
+        </rw-form>
+      </div>
+
+      <!-- Date roadsite-->
+      <div ng-class="{readonly: canAddNotePM}" >
+        <rw-form config="rsRoadsiteDate" entity="selEnt" controllers="roadsiteObjCtrl">
+        </rw-form>
+      </div>
+
+      <!--  Attach      -->
+      <legend class="rw-legend"  style="padding:0px 15px">
+        <span> {{'WORDS.ATTACHMENTS' | translate}} </span>
+      </legend>
+      <div class="row no-margin" style="padding-bottom:15px">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-pad">
+          <div class="row no-margin">
+            <div class="col-lg-9 col-md-8 col-sm-8 col-xs-8">
+              <div>
+                <label class="rw-label control-label rw-control-font-size">
+                  {{'ROADSITE.PROJECT_ATTACH' | translate}} *
+                </label>
+              </div>
+              <input class="form-control input-sm"
+                ng-style="selEnt.status_id >=2? {'opacity':'0.7','pointer-events': 'none'} : {}"
+                ng-disabled="true" ng-required="true"
+                ng-model-options="{updateOn: 'blur'}" type="text"
+                ng-model="selEnt.project_attach" name="project_attach"
+                model-view-value="true" >
+                <span class="rw-messages"
+                  ng-show="mandatoryProjectAttach">
+                  {{"CORE_MSG.MANDATORY_ERROR" | translate}}
+                </span>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4"
+              style="text-align:right; padding-right:15px; margin-top:23px;">
+              <label class="btn btn-default btn-sm input-sm"
+                ng-style="selEnt.status_id >=2? {'opacity':'0.7','pointer-events': 'none'} : {}"
+                ng-disabled="selEnt.status_id >= 2"
+                title="{{'WORDS.NEW_FILE' | translate}}">
+                <input type="file" style="display:none;" accept="application/pdf"
+                  rw-file-model="projectAttach.file"
+                  id="projectAttach" ng-click="clearFileSelection('projectAttach')">
+                  <span class="glyphicon glyphicon-folder-open"></span>
+                </input>
+              </label>
+
+              <a ng-href="{{projectAttachUrl}}" download>
+                <button class="btn btn-default btn-sm"
+                  ng-disabled="!selEnt.project_attach"
+                  ng-click="setUrl('project_attach')"
+                  title="{{'WORDS.DOWNLOAD' | translate}}">
+                  <span class="glyphicon glyphicon-download-alt"></span>
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-pad">
+          <div class="row no-margin">
+            <div class="col-lg-9 col-md-8 col-sm-8 col-xs-8">
+              <div>
+                <label class="rw-label control-label rw-control-font-size">
+                  {{'ROADSITE.AUTHORIZATION_ATTACH' | translate}} *
+                </label>
+              </div>
+              <input class="form-control input-sm"
+                ng-style="selEnt.status_id >=2? {'opacity':'0.7','pointer-events': 'none'} : {}"
+                ng-disabled="true" ng-required="true"
+                ng-model-options="{updateOn: 'blur'}" type="text"
+                ng-model="selEnt.authorization_attach" name="authorization_attach"
+                model-view-value="true" >
+                <span class="rw-messages"
+                  ng-show="mandatoryAuthorizationAttach">
+                  {{"CORE_MSG.MANDATORY_ERROR" | translate}}
+                </span>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4"
+              style="text-align:right; padding-right:15px; margin-top:23px;">
+              <label class="btn btn-default btn-sm input-sm"
+                ng-style="selEnt.status_id >=2? {'opacity':'0.7','pointer-events': 'none'} : {}"
+                ng-disabled="selEnt.status_id >= 2"
+                title="{{'WORDS.NEW_FILE' | translate}}">
+                <input type="file" style="display:none;" accept="application/pdf"
+                  rw-file-model="authorizationAttach.file"
+                  id="authorizationAttach" ng-click="clearFileSelection('authorizationAttach')">
+                  <span class="glyphicon glyphicon-folder-open"></span>
+                </input>
+              </label>
+
+              <a ng-href="{{authorizationAttachUrl}}" download>
+                <button class="btn btn-default btn-sm"
+                  ng-disabled="!selEnt.authorization_attach"
+                  ng-click="setUrl('authorization_attach')"
+                  title="{{'WORDS.DOWNLOAD' | translate}}">
+                  <span class="glyphicon glyphicon-download-alt"></span>
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 no-pad">
+          <div class="row no-margin">
+            <div class="col-lg-9 col-md-8 col-sm-8 col-xs-8">
+              <div>
+                <label class="rw-label control-label rw-control-font-size">
+                  {{'ROADSITE.COORD_COMMUNICATION_ATTACH' | translate}}
+                </label>
+              </div>
+              <input class="form-control input-sm"
+                ng-style="selEnt.status_id >=2? {'opacity':'0.7','pointer-events': 'none'} : {}"
+                ng-disabled="true" ng-required="false"
+                ng-model-options="{updateOn: 'blur'}" type="text"
+                ng-model="selEnt.coord_communication_attach" name="coord_communication_attach"
+                model-view-value="true" >
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4"
+              style="text-align:right; padding-right:15px; margin-top:23px;">
+              <label class="btn btn-default btn-sm input-sm"
+                ng-style="selEnt.status_id >=2? {'opacity':'0.7','pointer-events': 'none'} : {}"
+                ng-disabled="selEnt.status_id >= 2"
+                title="{{'WORDS.NEW_FILE' | translate}}">
+                <input type="file" style="display:none;" accept="application/pdf"
+                  rw-file-model="coordCommunicationAttach.file"
+                  id="coordCommunicationAttach" ng-click="clearFileSelection('coordCommunicationAttach')">
+                  <span class="glyphicon glyphicon-folder-open"></span>
+                </input>
+              </label>
+
+              <a ng-href="{{coordCoomunicationAttachUrl}}" download>
+                <button class="btn btn-default btn-sm"
+                  ng-disabled="!selEnt.coord_communication_attach"
+                  ng-click="setUrl('coord_coomunication_attach')"
+                  title="{{'WORDS.DOWNLOAD' | translate}}">
+                  <span class="glyphicon glyphicon-download-alt"></span>
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--  Status request -->
+      <div class="row no-margin">
+        <div ng-class="{readonly: selEnt.status_id >=2}">
+          <rw-form config="rsRequestFormCfg" entity="selEnt" controllers="roadsiteObjCtrl">
+          </rw-form>
+        </div>
+        <!--  Approved attach        -->
+        <div class="no-pad col-lg-4 col-md-4 col-sm-4 col-xs-4">
+          <div class="row no-margin">
+            <div class="col-lg-9 col-md-8 col-sm-8 col-xs-8">
+              <div>
+                <label class="rw-label control-label rw-control-font-size">
+                  {{'ROADSITE.APPROVED_ATTACH' | translate}} *
+                </label>
+              </div>
+              <input class="form-control input-sm"
+                ng-style="(!canApprove || selEnt.status_id >=3) ?
+                  {'opacity':'0.7','pointer-events': 'none'} : {}"
+                ng-disabled="true" ng-required="true"
+                ng-model-options="{updateOn: 'blur'}" type="text"
+                ng-model="selEnt.approved_attach" name="approved_attach"
+                model-view-value="true" >
+                <span class="rw-messages"
+                  ng-show="mandatoryApproveAttach">
+                  {{"CORE_MSG.MANDATORY_ERROR" | translate}}
+                </span>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4"
+              style="text-align:right; padding-right:15px; margin-top:23px;">
+              <label class="btn btn-default btn-sm input-sm"
+                ng-style="(!canApprove || selEnt.status_id >=3) ?
+                {'opacity':'0.7','pointer-events': 'none'} : {}"
+                ng-disabled="(!canApprove || selEnt.status_id >=3)"
+                title="{{'WORDS.NEW_FILE' | translate}}">
+                <input type="file" style="display:none;" accept="application/pdf"
+                  rw-file-model="approvedAttach.file"
+                   id="approvedAttach" ng-click="clearFileSelection('approvedAttach')">
+                  <span class="glyphicon glyphicon-folder-open"></span>
+                </input>
+              </label>
+
+              <a ng-href="{{approvedAttachUrl}}" download>
+                <button class="btn btn-default btn-sm"
+                  ng-disabled="!selEnt.approved_attach"
+                  ng-click="setUrl('approved_attach')"
+                  title="{{'WORDS.DOWNLOAD' | translate}}">
+                  <span class="glyphicon glyphicon-download-alt"></span>
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!--  Approved form  -->
+        <div class="no-pad col-lg-8 col-md-8 col-sm-8 col-xs-8" ng-class="{readonly: selEnt.status_id >=3}">
+          <rw-form config="rsApprovedFormCfg" entity="selEnt" controllers="roadsiteObjCtrl">
+          </rw-form>
+        </div>
+      </div>
+
+      <div ng-class="{readonly: !canApprove || selEnt.status_id != 2}">
+        <rw-form config="rsRoadsiteNoteAdminCfg" entity="selEnt" controllers="roadsiteObjCtrl">
+        </rw-form>
+      </div>
+
+      <div class="row no-margin" ng-class="{readonly: !canAddNotePM || !endDateGreaterNow()}">
+        <rw-form config="rsRoadsitePMCfg" entity="selEnt" controllers="roadsiteObjCtrl">
+        </rw-form>
+      </div>
+    </div>
+  </div>
+
+   <!-- Toolbar -->
+  <div class="row no-margin" ng-show="showForm">
+    <div class="no-pad sd-toolbar-left col-lg-6 col-md-6 col-sm-6 col-xs-6">
+      <button class="btn btn-default btn-sm" ng-click="sendRequest()"
+        ng-show="selEnt.id && selEnt.status_id == 1 && canSend">
+        <span>{{"ROADSITE.SEND_REQUEST"|translate}}</span>
+      </button>
+      <button class="btn btn-default btn-sm" ng-click="approve(1)"
+        ng-show="selEnt.id && selEnt.status_id == 2 && canApprove">
+        <span>{{"ROADSITE.APPROVE"|translate}}</span>
+      </button>
+      <button class="btn btn-default btn-sm" ng-click="approve(0)"
+        ng-show="selEnt.id && selEnt.status_id == 2 && canApprove">
+        <span>{{"ROADSITE.REJECT"|translate}}</span>
+      </button>
+    </div>
+    <div class="sd-toolbar col-lg-6 col-md-6 col-sm-6 col-xs-6">
+      <button class="btn btn-default btn-sm" ng-click="save()"
+        title="{{'WORDS.SAVE' | translate}}">
+        <span class="glyphicon glyphicon-floppy-disk"></span>
+      </button>
+      <button class="btn btn-default btn-sm" ng-click="close()"
+        title="{{'WORDS.CLOSE' | translate}}">
+        <span class="glyphicon glyphicon-remove"></span>
+      </button>
+    </div>
+  </div>
+</div>

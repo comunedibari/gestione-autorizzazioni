@@ -1,0 +1,53 @@
+<div ng-if="showLegend(layer.id)" class="legend-item">
+
+  <!-- Internal legend -->
+  <div ng-if="!layer.legend.extern">
+    <div>{{layer.legend.label | translate}}</div>
+
+    <!-- Icon or base64 image -->
+    <img
+      ng-if="layer.legend.icon"
+      ng-src="{{layer.legend.icon}}"/>
+    <img
+      ng-if="layer.legend.image"
+      data-ng-src="data:image/png;base64,{{layer.legend.image}}"/>
+
+    <!-- Classes -->
+    <div ng-repeat="class in layer.legend.classes">
+      <div class="row no-margin legend-class-item">
+
+        <!-- Class icon or base64 image -->
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 no-pad">
+          <img
+            ng-if="class.icon"
+            ng-src="{{class.icon}}"/>
+          <img
+            ng-if="class.image"
+            data-ng-src="data:image/png;base64,{{class.image}}"/>
+        </div>
+
+        <!-- Class label -->
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 no-pad legend-class-item-label">
+          {{class.name | translate}}
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- External legend -->
+  <div ng-if="layer.legend.extern">
+    <div>{{layer.legend.label | translate}}</div>
+    <img ng-src="{{legendURL(layer.id)}}"/>
+  </div>
+
+</div>
+
+<!-- Children layers -->
+<ul style="list-style-type:none;padding-left:20px;">
+  <li
+    ng-repeat="layer in layer.layers"
+    ng-include="'core/webgis/views/legend-item.html'">
+  </li>
+</ul>

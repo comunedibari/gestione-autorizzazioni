@@ -1,0 +1,68 @@
+<rw-modal-header config="headerCfg">
+</rw-modal-header>
+
+<div class="modal-body" ng-hide="headerCfg.minimized">
+
+  <!-- Alert -->
+  <div ng-show="alert.msg" ng-class="'pan-alert alert alert-'+alert.style">
+    <p>{{alert.msg | translate}}</p>
+
+    <div class="text-right">
+      <button ng-show="alert.btExec" ng-click="onAlert(1)"
+        ng-class="'btn btn-sm btn-'+alert.style">
+        {{alert.btExec | translate}}
+      </button>
+
+      <button ng-show="alert.btClose" ng-click="onAlert(0)"
+        ng-class="'btn btn-sm btn-'+alert.style">
+        {{alert.btClose | translate}}
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal content -->
+  <div class="row no-margin modal-body-scroll">
+
+    <!-- Collection -->
+    <div class="no-pad col-lg-4 col-md-4 col-sm-5 col-xs-5">
+      <rw-collection config="collCfg">
+      </rw-collection>
+    </div>
+
+    <!-- User management -->
+    <div class="col-lg-8 col-md-8 col-sm-7 col-xs-7">
+
+      <!-- Toolbar -->
+      <div class="text-right">
+        <button class="btn btn-default btn-sm" ng-disabled="selUser"
+          ng-click="add()">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+
+        <button class="btn btn-default btn-sm" ng-disabled="!selUser"
+          ng-click="del()">
+          <span class="glyphicon glyphicon-minus"></span>
+        </button>
+      </div>
+
+      <!-- Form -->
+      <div ng-show="selUser">
+        <rw-form config="formCfg" entity="selUser" controllers="formCtrlObj">
+        </rw-form>
+
+        <div class="text-right">
+          <button class="btn btn-default btn-sm"
+            title="{{'WORDS.SAVE' | translate}}" ng-click="save()">
+            <span class="glyphicon glyphicon-floppy-disk"></span>
+          </button>
+
+          <button class="btn btn-default btn-sm"
+            title="{{'WORDS.CLOSE' | translate}}" ng-click="close()">
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
