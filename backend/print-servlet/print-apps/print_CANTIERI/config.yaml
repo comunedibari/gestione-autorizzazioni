@@ -1,0 +1,251 @@
+# 
+# The template name for map print must be in the format <page_format>|<orientation>
+# where <page_format> is the page format and <orientation> is Portrait or Landscape
+#
+templates:
+  # ----------------------------------------------------------------------------
+  A4|Portrait: !template
+    reportTemplate: reportA4Portrait.jrxml
+    attributes:
+      authority: !string
+        default: ""
+      title: !string {}
+      descr: !string
+        default: ""
+      printURL: !string {}
+      scale: !integer {}
+      projection: !string {}
+      xmin: !float {}
+      ymin: !float {}
+      xmax: !float {}
+      ymax: !float {}
+      thereIsOverview: !boolean {default: false}
+      thereIsLegend: !boolean {default: false}
+      legend_title: !string
+        default: ""
+      scalebar: !scalebar
+        width: 200
+        height: 40
+      legend: !legend {}
+      overviewMap: !overviewMap
+        width: 148
+        height: 148
+        maxDpi: 300
+        zoomFactor: 2
+        style: bbox
+      map: !map
+        width: 563
+        height: 668
+        maxDpi: 300
+    outputFilename: stampa-${dd-MM-yyyy_HH:mm}
+    processors:
+      - !reportBuilder
+        directory: '.'
+      - !configureHttpRequests
+         httpProcessors:
+         # this directive is useful for print osm
+         - !forwardHeaders
+           headers: [Referrer, User-Agent, Cookie]
+      - !createMap
+        inputMapper: {map: map}
+        outputMapper: {mapSubReport: mapSubReport}
+      - !createScalebar {}
+      - !prepareLegend
+        template: legend.jrxml
+        #inputMapper: {legend: legend}
+        #outputMapper:
+         # legendDataSource: legend
+         # legendSubReport: legendSubReport
+         # numberOfLegendRows: numberOfLegendRows
+      - !createOverviewMap
+        inputMapper: {
+          map: map,
+          overviewMap: overviewMap
+        }
+        outputMapper: {
+          overviewMapSubReport: overviewMapSubReport
+        }
+  # ----------------------------------------------------------------------------
+  A4|Landscape: !template
+    reportTemplate: reportA4Landscape.jrxml
+    attributes:
+      authority: !string
+        default: ""
+      title: !string {}
+      descr: !string
+        default: ""
+      printURL: !string {}
+      scale: !integer {}
+      projection: !string {}
+      xmin: !float {}
+      ymin: !float {}
+      xmax: !float {}
+      ymax: !float {}
+      thereIsOverview: !boolean {default: false}
+      thereIsLegend: !boolean {default: false}
+      legend_title: !string {}
+      scalebar: !scalebar
+        width: 200
+        height: 40
+      legend: !legend {}
+      overviewMap: !overviewMap
+        width: 148
+        height: 148
+        maxDpi: 300
+        zoomFactor: 2
+        style: bbox
+      map: !map
+        width: 810
+        height: 428
+        maxDpi: 300
+    outputFilename: stampa-${dd-MM-yyyy_HH:mm}
+    processors:
+      - !reportBuilder
+        directory: '.'
+      - !configureHttpRequests
+         httpProcessors:
+         # this directive is useful for print osm
+         - !forwardHeaders
+           headers: [Referrer, User-Agent, Cookie]
+      - !createMap
+        inputMapper: {map: map}
+        outputMapper: {mapSubReport: mapSubReport}
+      - !createScalebar {}
+      - !prepareLegend
+        template: legend.jrxml
+        #inputMapper: {legend: legend}
+        #outputMapper:
+         # legend: legend
+         # legendSubReport: legendSubReport
+         # numberOfLegendRows: numberOfLegendRows
+      - !createOverviewMap
+        inputMapper: {
+          map: map,
+          overviewMap: overviewMap
+        }
+        outputMapper: {
+          overviewMapSubReport: overviewMapSubReport
+        }
+  # ----------------------------------------------------------------------------
+  A3|Portrait: !template
+    reportTemplate: reportA3Portrait.jrxml
+    attributes:
+      authority: !string
+        default: ""
+      title: !string {}
+      descr: !string
+        default: ""
+      printURL: !string {}
+      scale: !integer {}
+      projection: !string {}
+      xmin: !float {}
+      ymin: !float {}
+      xmax: !float {}
+      ymax: !float {}
+      thereIsOverview: !boolean {default: false}
+      thereIsLegend: !boolean {default: false}
+      legend_title: !string {}
+      scalebar: !scalebar
+        width: 200
+        height: 40
+      legend: !legend {}
+      overviewMap: !overviewMap
+        width: 188
+        height: 188
+        maxDpi: 300
+        zoomFactor: 2
+        style: bbox
+      map: !map
+        width: 800
+        height: 908
+        maxDpi: 300
+    outputFilename: stampa-${dd-MM-yyyy_HH:mm}
+    processors:
+      - !reportBuilder
+        directory: '.'
+      - !configureHttpRequests
+         httpProcessors:
+         # this directive is useful for print osm
+         - !forwardHeaders
+           headers: [Referrer, User-Agent, Cookie]
+      - !createMap
+        inputMapper: {map: map}
+        outputMapper: {mapSubReport: mapSubReport}
+      - !createScalebar {}
+      - !prepareLegend
+        template: legend.jrxml
+        #inputMapper: {legend: legend}
+        #outputMapper:
+         # legend: legend
+         # legendSubReport: legendSubReport
+         # numberOfLegendRows: numberOfLegendRows
+      - !createOverviewMap
+        inputMapper: {
+          map: map,
+          overviewMap: overviewMap
+        }
+        outputMapper: {
+          overviewMapSubReport: overviewMapSubReport
+        }
+  # ----------------------------------------------------------------------------
+  A3|Landscape: !template
+    reportTemplate: reportA3Landscape.jrxml
+    attributes:
+      authority: !string
+        default: ""
+      title: !string {}
+      descr: !string
+        default: ""
+      printURL: !string {}
+      scale: !integer {}
+      projection: !string {}
+      xmin: !float {}
+      ymin: !float {}
+      xmax: !float {}
+      ymax: !float {}
+      thereIsOverview: !boolean {default: false}
+      thereIsLegend: !boolean {default: false}
+      legend_title: !string {}
+      scalebar: !scalebar
+        width: 200
+        height: 40
+      legend: !legend {}
+      overviewMap: !overviewMap
+        width: 188
+        height: 188
+        maxDpi: 300
+        zoomFactor: 2
+        style: bbox
+      map: !map
+        width: 1148
+        height: 568
+        maxDpi: 300
+    outputFilename: stampa-${dd-MM-yyyy_HH:mm}
+    processors:
+      - !reportBuilder
+        directory: '.'
+      - !configureHttpRequests
+         httpProcessors:
+         # this directive is useful for print osm
+         - !forwardHeaders
+           headers: [Referrer, User-Agent, Cookie]
+      - !createMap
+        inputMapper: {map: map}
+        outputMapper: {mapSubReport: mapSubReport}
+      - !createScalebar {}
+      - !prepareLegend
+        template: legend.jrxml
+        #inputMapper: {legend: legend}
+        #outputMapper:
+         # legend: legend
+         # legendSubReport: legendSubReport
+         # numberOfLegendRows: numberOfLegendRows
+      - !createOverviewMap
+        inputMapper: {
+          map: map,
+          overviewMap: overviewMap
+        }
+        outputMapper: {
+          overviewMapSubReport: overviewMapSubReport
+        }
+  

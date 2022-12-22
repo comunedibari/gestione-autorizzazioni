@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final utlizzo versione della libreria JasperReports6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportA3Landscape" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="30a11cee-90ff-4453-90ce-c42307b80bd9">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="title" class="java.lang.String"/>
+	<parameter name="descr" class="java.lang.String"/>
+	<parameter name="scalebarSubReport" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="legendDataSource" class="net.sf.jasperreports.engine.data.JRTableModelDataSource"/>
+	<parameter name="legendSubReport" class="java.lang.String"/>
+	<parameter name="mapSubReport" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="scale" class="java.lang.Integer"/>
+	<parameter name="projection" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="xmin" class="java.lang.Double"/>
+	<parameter name="ymin" class="java.lang.Double"/>
+	<parameter name="xmax" class="java.lang.Double"/>
+	<parameter name="ymax" class="java.lang.Double">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="printURL" class="java.lang.String"/>
+	<parameter name="overviewMapSubReport" class="java.lang.String"/>
+	<parameter name="legend_title" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="thereIsOverview" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="thereIsLegend" class="java.lang.Boolean">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="authority" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="100" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
+				<reportElement x="0" y="0" width="100" height="98" uuid="8b3e9164-ccca-4f0a-ad68-959faac52a71">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<imageExpression><![CDATA["resources/logo.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="220" y="0" width="930" height="60" forecolor="#000000" uuid="58990a0c-de79-4420-8242-b74f214f0ff9">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="26"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{title}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="60" width="930" height="40" uuid="b1a4caa3-e0ad-4f4e-b920-981c9a28ee6a">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{descr}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="" x="0" y="99" width="1150" height="1" forecolor="#7A7A7A" uuid="e68fbeb1-ddf5-4a1f-8224-7663dc4bec82">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="0" width="120" height="98" forecolor="#000000" uuid="7bd5151b-cd84-4ecc-ab88-8d880410d856">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{authority}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="570" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="1150" height="570" uuid="518049d8-39ab-4a2f-a56a-dd75eacbd9dc">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<subreport>
+				<reportElement x="1" y="1" width="1148" height="568" uuid="f1e278c3-16b2-4d04-9ae8-4aabc9222959">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<subreportExpression><![CDATA[$P{mapSubReport}]]></subreportExpression>
+			</subreport>
+			<rectangle>
+				<reportElement x="2" y="376" width="192" height="192" uuid="2cd83b8a-50a2-4a7d-8961-ee7e9dd7c958">
+					<printWhenExpression><![CDATA[$P{thereIsOverview}]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<subreport>
+				<reportElement x="4" y="378" width="188" height="188" uuid="eaad6845-5585-4d81-b360-1dcefa67c13d">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<printWhenExpression><![CDATA[$P{thereIsOverview}]]></printWhenExpression>
+				</reportElement>
+				<subreportExpression><![CDATA[$P{overviewMapSubReport}]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="96" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement x="0" y="0" width="350" height="16" uuid="a5506985-4fd3-4924-b19b-376509336447">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Trebuchet MS" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Stralcio di mappa estratto da "+$P{printURL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="47" width="350" height="16" uuid="8878ae95-b724-44ae-ae02-23f57d2b179c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Trebuchet MS" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Sistema di proiezione: "+$P{projection}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="63" width="350" height="16" uuid="f88dc838-3ebe-4bc2-a022-e7201903c2f7">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Trebuchet MS" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Coordinate vertice inferiore sinistro: "+$P{xmin}+", "+$P{ymin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="79" width="350" height="16" uuid="bd4f465e-ac7c-421f-876f-ec81ae249a77">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Trebuchet MS" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Coordinate vertice superiore destro: "+$P{xmax}+", "+$P{ymax}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd.MM.YYYY, HH:mm">
+				<reportElement x="970" y="78" width="180" height="16" uuid="1ab320fd-05b3-4cfc-8f6b-5c962fb5f43a">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Trebuchet MS" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="990" y="0" width="160" height="19" uuid="4bddf0a5-e7c1-454a-8407-8312eab0cf64">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Trebuchet MS" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Scala 1:"+$P{scale}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="24" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement x="1028" y="4" width="80" height="16" forecolor="#7A7A7A" uuid="75b9d582-da1d-431f-bf17-9d26a9e7035c">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Trebuchet MS" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="1150" height="1" uuid="8782d7c5-7372-41a4-a840-3549b42ec8bc">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+			<textField evaluationTime="Report">
+				<reportElement x="1108" y="4" width="42" height="16" forecolor="#5A5A5A" uuid="a973467c-35dd-4ae5-9652-f1b7bd387c11">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Trebuchet MS" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" di " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="100">
+			<printWhenExpression><![CDATA[$P{thereIsLegend}]]></printWhenExpression>
+			<break>
+				<reportElement x="0" y="0" width="1150" height="1" uuid="fd4802c6-4188-47a8-b140-33d4d8514e05">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</break>
+			<textField>
+				<reportElement x="0" y="0" width="1150" height="55" uuid="17574116-2e78-4550-bb98-bdf9ea111f8b">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Trebuchet MS" size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{legend_title}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="70" width="1150" height="30" uuid="efdc9ca2-8fc6-419a-ac90-5718e5faf4f2">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<dataSourceExpression><![CDATA[$P{legendDataSource}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{legendSubReport}]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>

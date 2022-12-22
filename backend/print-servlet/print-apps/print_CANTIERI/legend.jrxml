@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2016-11-21T14:58:36 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="legend" columnCount="4" pageWidth="595" pageHeight="842" columnWidth="141" columnSpacing="10" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6b65086b-74e0-4bec-834b-1b74d5ae2d31">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<style name="legendLabel" mode="Transparent" hTextAlign="Left" vTextAlign="Middle" fontName="Trebuchet MS" fontSize="8">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{icon} != null]]></conditionExpression>
+			<style mode="Transparent" forecolor="#E3110E" hTextAlign="Left" vTextAlign="Middle" fontName="Trebuchet MS" fontSize="20"/>
+		</conditionalStyle>
+	</style>
+	<field name="name" class="java.lang.String"/>
+	<field name="icon" class="java.awt.Image">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="level" class="java.lang.Integer"/>
+	<detail>
+		<band height="14" splitType="Prevent">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<printWhenExpression><![CDATA[!$F{name}.equals("")]]></printWhenExpression>
+			<textField isStretchWithOverflow="true">
+				<reportElement key="" style="legendLabel" mode="Transparent" x="0" y="0" width="138" height="13" isRemoveLineWhenBlank="true" uuid="804c03e8-4edc-4888-8dba-0c683717bfeb">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Trebuchet MS" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="16" splitType="Prevent">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<printWhenExpression><![CDATA[$F{icon} != null]]></printWhenExpression>
+			<image scaleImage="RealSize" vAlign="Middle">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="138" height="13" isRemoveLineWhenBlank="true" uuid="067c1436-8c32-4bd6-9fd2-db394dc7366a"/>
+				<imageExpression><![CDATA[$F{icon}]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+</jasperReport>
