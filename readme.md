@@ -24,17 +24,17 @@ Di seguito i sotto-moduli che costituiscono il front-end ed il back-end
     - **management**: contiene le funzionalità di gestione degli utenti e dei ruoli
     - **move**: modulo di front end per la gestione dei traslochi
     - **registration**: contiene tutte le funzionalità di registrazione e accreditamento delle aziende
-    - **roadsite**: contiene la gestione dei cantieir stradali
+    - **roadsite**: contiene la gestione dei cantieri stradali
     - **Webgis**: modulo di frontend del motore cartografico
 
 
 ### Funzionalità del gestionale
-MODULO "MANUTENZIONE STRADE"
+**MODULO "MANUTENZIONE STRADE"**
 Il modulo in oggetto consente alle Società preposte di avviare l’interlocuzione con gli uffici competenti del Comune al fine di ricevere idonea autorizzazione per l’esecuzione dei lavori su sede stradale.
-Gli operatori delle Società e gli utenti amministratori della piattaforma hanno accesso con credenziali custom. Tali credenziali sono generate e gestite attraverso un pannello dedicato di amministrazione (per il Comune). .
-La fase di richiesta di rilascio autorizzazione all’esecuzione dei lavori prevede la compilazione di un form con informazioni alfanumeriche e allegati; tale richiesta inviata attraverso il sistema viene protocollata e valutata dagli operatori comunali ai fini dell’approvazione.
+Gli operatori delle Società e gli utenti amministratori della piattaforma hanno accesso con credenziali custom. Tali credenziali sono generate e gestite attraverso un pannello dedicato di amministrazione (per il Comune).
+La fase di richiesta di rilascio autorizzazione all’esecuzione dei lavori prevede la compilazione di un form con informazioni alfanumeriche e allegati; tale richiesta, inviata attraverso il sistema, viene protocollata (integrazione con il sistema di protocollazione dell'Ente) e valutata dagli operatori comunali ai fini dell’approvazione.
 
-MODULO TRASLOCHI
+**MODULO TRASLOCHI**
 Il modulo consente di gestire le richieste di trasloco effettuate da parte delle specifiche aziende. Anche in questo caso sono gestite le funzioni di registrazione e relativo controllo dell’accesso degli utenti abilitati.
 Le aziende di traslochi accedono alla piattaforma con credenziali ad hoc e con ruolo specifico e possono segnalare un trasloco; l’elenco dei traslochi è poi visibile agli operatori di Polizia municipale che approvano o negano la richiesta. 
 
