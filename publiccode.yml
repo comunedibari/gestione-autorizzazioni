@@ -36,7 +36,7 @@ dependsOn:
 description:
   it:
     features:
-      - GIS
+      - GIS, Workflow management
     genericName: Gestione autorizzazioni
     localisedName: Gestione autorizzazioni
     longDescription: |
@@ -71,7 +71,18 @@ description:
       aziende di traslochi accedono alla piattaforma con credenziali ad hoc e
       con ruolo specifico e possono segnalare un trasloco; l’elenco dei
       traslochi è poi visibile agli operatori di Polizia municipale che
-      approvano o negano la richiesta. 
+      approvano o negano la richiesta.
+    screenshots:
+      - |-
+        https://raw.githubusercontent.com/comunedibari/gestione-autorizzazioni/master/immagini/screenshot1.png
+      - |-
+        https://raw.githubusercontent.com/comunedibari/gestione-autorizzazioni/master/immagini/screenshot2.png
+      - |-
+        https://raw.githubusercontent.com/comunedibari/gestione-autorizzazioni/master/immagini/screenshot3.png
+      - |-
+        https://raw.githubusercontent.com/comunedibari/gestione-autorizzazioni/master/immagini/screenshot4.png
+      - |-
+        https://raw.githubusercontent.com/comunedibari/gestione-autorizzazioni/master/immagini/screenshot5.png
     shortDescription: |-
       Gestione autorizzazioni, gestionale per l'autorizzazione di cantieri
       stradali e traslochi sul territorio urbano
@@ -114,6 +125,6 @@ platforms:
 releaseDate: '2022-12-01'
 softwareType: standalone/web
 softwareVersion: 1.0.0
-url: 'https://github.com/comunedibari/gestione-autorizzazioni'
+url: 'https://github.com/comunedibari/cruscotto_geospaziale'
 usedBy:
   - Comune di Bari
