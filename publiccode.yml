@@ -40,7 +40,7 @@ description:
     genericName: Gestione autorizzazioni
     localisedName: Gestione autorizzazioni
     longDescription: |
-      Lo scopo principale di questa applicazione è la gestione web-based delle
+      Lo scopo principale di questa applicazione, realizzata nell'ambito del progetto "Città Connessa: Sistema Informativo per il controllo degli oggetti" (cod. progetto BA 1.1.1.d – CUP J91J17000130007) a valere su risorse di finanziamento PON METRO 2014-2020 – Asse 1 "Agenda Digitale", è la gestione web-based delle
       richieste di manutenzione stradale e trasloco effettuate dalle aziende
       competenti.
 
@@ -62,15 +62,15 @@ description:
       dagli operatori comunali ai fini dell’approvazione.
 
 
-      MODULO TRASLOCHI
+      MODULO "TRASLOCHI"
 
 
       Il modulo consente di gestire le richieste di trasloco effettuate da parte
-      delle specifiche aziende. Anche in questo caso sono gestite le funzioni di
+      delle aziende autorizzate. Anche in questo caso sono gestite le funzioni di
       registrazione e relativo controllo dell’accesso degli utenti abilitati. Le
       aziende di traslochi accedono alla piattaforma con credenziali ad hoc e
       con ruolo specifico e possono segnalare un trasloco; l’elenco dei
-      traslochi è poi visibile agli operatori di Polizia municipale che
+      traslochi è poi visibile agli operatori di Polizia Municipale che
       approvano o negano la richiesta.
     screenshots:
       - |-
