@@ -1,9 +1,8 @@
 /*
- *    Date: 
- *  Author: 
- * Project: 
+ *   Date: 2022 05 11
  *
- * 
+ *
+ *
  */
 
 angular.module("roadsite")
@@ -161,6 +160,7 @@ function roadsiteListCtrl($scope,$uibModalInstance,Roadsite,rwAuthSvc,rsModelSvc
     loadAuthority(function(resAuth)
     {
       $scope.showForm = true;
+      $scope.headerCfg.closeDisabled = true;
 
       $scope.selEnt.authority_id = userInfo.authority_id;
 
@@ -293,6 +293,7 @@ function roadsiteListCtrl($scope,$uibModalInstance,Roadsite,rwAuthSvc,rsModelSvc
         }
 
         $scope.showForm = true;
+        $scope.headerCfg.closeDisabled = true;
 
         if ($scope.selEnt.address)
         {
@@ -1138,6 +1139,7 @@ function roadsiteListCtrl($scope,$uibModalInstance,Roadsite,rwAuthSvc,rsModelSvc
     $scope.roadsiteObjCtrl[$scope.rsFormCfg.id].reset();
     $scope.selEnt = null;
     $scope.showForm = false;
+    $scope.headerCfg.closeDisabled = false;
 
     wgMapSvc.clearEditLayer();
 
@@ -1722,7 +1724,7 @@ function roadsiteListCtrl($scope,$uibModalInstance,Roadsite,rwAuthSvc,rsModelSvc
   $scope.download = function(idx)
   {
     var downloadUrl = "/geoserver/"+rwConfigSvc.msWorkspace+"/wfs?SERVICE=WFS&VERSION=2.0.0" +
-    "&REQUEST=GetFeature&typeNames="+rwConfigSvc.msWorkspace+":roadsite"
+    "&REQUEST=GetFeature&typeNames="+rwConfigSvc.msWorkspace+":view_cantieri_aperti"
     "&propertyName=geom";
     var outputFormat = "shape-zip";
 
