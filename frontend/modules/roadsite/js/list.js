@@ -570,20 +570,9 @@ function roadsiteListCtrl($scope,$uibModalInstance,Roadsite,rwAuthSvc,rsModelSvc
         }
       },
       {
-        id:"start_date",
+        id:"protocol_request_date",
         type:"date",
-        label:"CORE_LBL.START_DATE",
-        sortable:true,
-        style: function(obj)
-        {
-          if (obj.status_id == 2)
-            return {"font-weight": "900"};
-        }
-      },
-      {
-        id:"end_date",
-        type:"date",
-        label:"CORE_LBL.END_DATE",
+        label:"ROADSITE.PROTOCOL_REQUEST_DATE",
         sortable:true,
         style: function(obj)
         {
@@ -594,6 +583,17 @@ function roadsiteListCtrl($scope,$uibModalInstance,Roadsite,rwAuthSvc,rsModelSvc
       {
         id:"protocol_request_number",
         label: "ROADSITE.PROTOCOL_REQUEST_NUMBER",
+        style: function(obj)
+        {
+          if (obj.status_id == 2)
+            return {"font-weight": "900"};
+        }
+      },
+      {
+        id:"protocol_approved_date",
+        type:"date",
+        label:"ROADSITE.PROTOCOL_APPROVED_DATE",
+        sortable:true,
         style: function(obj)
         {
           if (obj.status_id == 2)
