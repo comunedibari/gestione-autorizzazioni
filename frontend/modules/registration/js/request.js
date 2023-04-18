@@ -1,9 +1,8 @@
 /*
- *    Date: 
- *  Author: 
- * Project: 
+ *   Date: 2022 07 28
  *
- * 
+ *
+ *
  */
 
 angular.module("registration")
@@ -18,6 +17,7 @@ function requestCtrl($scope,ui, $uibModalInstance,rwContextSvc,rwHttpSvc,rwAuthS
 
   $scope.newReg = true;
   $scope.changeAuthorization = false;
+  $scope.bErrPrivacy = false;
 
   _ROLE_ROADSITE = 37;
   _ROLE_MOVE = 38;
@@ -49,6 +49,7 @@ function requestCtrl($scope,ui, $uibModalInstance,rwContextSvc,rwHttpSvc,rwAuthS
               label: "WORDS.USERNAME",
               width: 3,
               height: "input-sm",
+              maxlength:16,
               required: true, enabled: true, show: true
             },
             {
@@ -326,6 +327,7 @@ function requestCtrl($scope,ui, $uibModalInstance,rwContextSvc,rwHttpSvc,rwAuthS
 
   $scope.save = function()
   {
+
     var aForm = ["userForm","authorityForm"];
     if ($scope.registration.authority.function_id >= 2)
     {
@@ -349,11 +351,18 @@ function requestCtrl($scope,ui, $uibModalInstance,rwContextSvc,rwHttpSvc,rwAuthS
       }
     }
 
+    $scope.bErrPrivacy = !$scope.registration.privacy ? true : false;
+
     if(!formVal)
     {
       $scope.reqAlert.msg = "CORE_LBL.NOT_VALID";
       $scope.reqAlert.style = "warning";
       $scope.reqAlert.bt0 = "Ok";
+      return;
+    }
+
+    if ($scope.bErrPrivacy)
+    {
       return;
     }
 
