@@ -1,0 +1,87 @@
+logging:
+  level:
+    root: DEBUG
+    org.springframework.web: DEBUG
+
+resilience4j.circuitbreaker:
+  instances:
+    soapProtocolloBari:
+      registerHealthIndicator: true
+      slidingWindowSize: 5
+      permittedNumberOfCallsInHalfOpenState: 3
+      slidingWindowType: TIME_BASED
+      minimumNumberOfCalls: 5
+      waitDurationInOpenState: 50s
+      failureRateThreshold: 50
+      eventConsumerBufferSize: 10
+    soapProtocolloBariGPC:
+      registerHealthIndicator: true
+      slidingWindowSize: 5
+      permittedNumberOfCallsInHalfOpenState: 3
+      slidingWindowType: TIME_BASED
+      minimumNumberOfCalls: 5
+      waitDurationInOpenState: 50s
+      failureRateThreshold: 50
+      eventConsumerBufferSize: 10
+
+resilience4j.retry:
+  instances:
+    soapProtocolloBari:
+      maxAttempts: 2
+      waitDuration: 3s
+      enableExponentialBackoff: true
+      exponentialBackoffMultiplier: 2
+      retryExceptions:
+        - java.net.SocketTimeoutException
+        - org.springframework.web.client.HttpServerErrorException
+        - java.io.IOException
+    soapProtocolloBariGPC:
+      maxAttempts: 2
+      waitDuration: 3s
+      enableExponentialBackoff: true
+      exponentialBackoffMultiplier: 2
+      retryExceptions:
+        - java.net.SocketTimeoutException
+        - org.springframework.web.client.HttpServerErrorException
+        - java.io.IOException
+soap:
+  bari:
+    uri: http://musica-vip-esb.comba.comune.bari.it/services/COLLAUDOProtocolloProtocol
+
+openfeign:
+  bari:
+    url: http://gpc-dev.comune.bari.it
+
+# Di base resilience4j imposta la priorita prima al CB poi al retry (minore il numero piu bassa e la priorita)
+# per requisito funzionale, il retry deve entrare in azione prima del CB
+resilience4j:
+  circuitbreaker:
+    circuit-breaker-aspect-order: 1
+  retry:
+    retry-aspect-order: 2
+
+server:
+  port: 8081
+  tomcat:
+    max-http-form-post-size: 35MB
+    max-http-post-size: 35MB
+    max-swallow-size: 35MB
+
+codiceAmministrazione: ''
+
+#MAX_DIM_ALLEGATI_PROTOCOLLO_KB [default: '29296.9']
+#FLAG_CONTROLLO_ALLEGATI [default: true]
+#FLAG_CONTROLLO_ALLEGATI se settato a true va fatto il controllo della dimensione ed invio al protocollo dei doc
+#se settato a false, non va fatto il controllo della dimensione totale degli allegati e non vanno inviati nemmeno al protocollo
+flagControlloAllegati: true
+maxDimAllegatiProtocolloKb: 29296.9
+
+#NON TOGLIERE O MODIFICARE QUESTI VALORI ALTRIMENTI SPRING INTERCETTERA' LA RICHIESTA PRIMA DEL METODO CUSTOM
+spring:
+  servlet:
+    multipart:
+      max-file-size: 35MB
+      max-request-size: 35MB
+
+build:
+  version: '1.0.19'

@@ -1,0 +1,6 @@
+package it.almaviva.baricittaconnessaprotocollomiddleware.data.richiestaprotocollo.web;
+
+import it.almaviva.baricittaconnessaprotocollomiddleware.data.richiestaprotocollo.soap.RichiestaProtocolloUscitaResponse;
+
+public class ProtocolloUscitaWebResponse extends RichiestaProtocolloUscitaResponse {
+}

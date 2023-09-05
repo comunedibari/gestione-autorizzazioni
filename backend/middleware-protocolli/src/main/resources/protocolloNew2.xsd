@@ -1,0 +1,352 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.1.7-b01-. --><xs:schema xmlns:tns="http://protocollo.linksmt.it/RichiestaSOAP" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://protocollo.linksmt.it/RichiestaSOAP">
+
+<xs:element name="allegaturaRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="amministrazione" type="xs:string" />
+<xs:element name="areaOrganizzativaOmogenea" type="xs:string" />
+<xs:element name="numeroProtocollo" type="xs:long" />
+<xs:element name="anno" type="xs:string" />
+<xs:element name="idUtente" type="xs:int" minOccurs="0" />
+<xs:element name="allegati" type="tns:Allegato" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="allegaturaResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="esito" type="xs:boolean" />
+<xs:element name="errore" type="tns:Errore" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="destinatariProtocolloRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="numeroProtocollo" type="xs:long" />
+<xs:element name="anno" type="xs:string" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="dettaglioAllegatoRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="identificativo" type="xs:string" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="dettaglioAllegatoResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="allegato" type="tns:Allegato" minOccurs="0" />
+<xs:element name="errore" type="tns:Errore" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="inoltroProtocolloRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="numeroProtocollo" type="xs:int" />
+<xs:element name="anno" type="xs:string" />
+<xs:element name="destinatarioUser" type="xs:string" />
+<xs:element name="mittenteUser" type="xs:string" />
+<xs:element name="tipoInoltro" type="xs:string" />
+<xs:element name="note" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="inoltroProtocolloResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="id" type="xs:int" minOccurs="0" />
+<xs:element name="errore" type="tns:Errore" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="mittenteProtocolloRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="numeroProtocollo" type="xs:long" />
+<xs:element name="anno" type="xs:string" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="protocolloDaCompletareRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="numeroProtocollo" type="xs:long" />
+<xs:element name="anno" type="xs:string" />
+<xs:element name="documento" type="tns:Documento" />
+<xs:element name="amministrazione" type="xs:string" />
+<xs:element name="areaOrganizzativaOmogenea" type="xs:string" />
+<xs:element name="idUtente" type="xs:int" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="protocolloFascRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="mittente" type="tns:Mittente" />
+<xs:element name="destinatari" type="tns:Destinatario" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+<xs:element name="documento" type="tns:Documento" />
+<xs:element name="allegati" type="tns:Allegato" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+<xs:element name="areaOrganizzativaOmogenea" type="xs:string" />
+<xs:element name="amministrazione" type="xs:string" />
+<xs:element name="oggetto" type="xs:string" />
+<xs:element name="idUtente" type="xs:int" minOccurs="0" />
+<xs:element name="idFascicolo" type="xs:string" />
+<xs:element name="idTitolario" type="xs:string" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="protocolloInformazioniRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="numeroProtocollo" type="xs:long" />
+<xs:element name="anno" type="xs:string" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="protocolloInformazioniResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="numeroProtocollo" type="xs:long" minOccurs="0" />
+<xs:element name="dataProtocollo" type="xs:dateTime" minOccurs="0" />
+<xs:element name="errore" type="tns:Errore" minOccurs="0" />
+<xs:element name="mittente" type="tns:Mittente" minOccurs="0" />
+<xs:element name="destinatari" type="tns:Destinatario" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+<xs:element name="documento" type="tns:Documento" minOccurs="0" />
+<xs:element name="allegati" type="tns:Allegato" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+<xs:element name="areaOrganizzativaOmogenea" type="xs:string" minOccurs="0" />
+<xs:element name="amministrazione" type="xs:string" minOccurs="0" />
+<xs:element name="oggetto" type="xs:string" minOccurs="0" />
+<xs:element name="idUtente" type="xs:int" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="protocolloProvvisorioRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="mittente" type="tns:Mittente" />
+<xs:element name="destinatari" type="tns:Destinatario" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+<xs:element name="areaOrganizzativaOmogenea" type="xs:string" />
+<xs:element name="amministrazione" type="xs:string" />
+<xs:element name="oggetto" type="xs:string" />
+<xs:element name="idUtente" type="xs:int" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="protocolloRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="mittente" type="tns:Mittente" />
+<xs:element name="destinatari" type="tns:Destinatario" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+<xs:element name="documento" type="tns:Documento" />
+<xs:element name="allegati" type="tns:Allegato" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+<xs:element name="areaOrganizzativaOmogenea" type="xs:string" />
+<xs:element name="amministrazione" type="xs:string" />
+<xs:element name="oggetto" type="xs:string" />
+<xs:element name="idUtente" type="xs:int" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="protocolloResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="numeroProtocollo" type="xs:long" minOccurs="0" />
+<xs:element name="anno" type="xs:int" />
+<xs:element name="dataProtocollo" type="xs:dateTime" minOccurs="0" />
+<xs:element name="errore" type="tns:Errore" minOccurs="0" />
+<xs:element name="mittente" type="tns:Mittente" minOccurs="0" />
+<xs:element name="destinatari" type="tns:Destinatario" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="protocolloUscitaFascRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="mittente" type="tns:MittenteProtUscita" minOccurs="0" />
+<xs:element name="destinatari" type="tns:ContattoDestinatario" maxOccurs="unbounded" />
+<xs:element name="documento" type="tns:Documento" />
+<xs:element name="allegati" type="tns:Allegato" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+<xs:element name="areaOrganizzativaOmogenea" type="xs:string" />
+<xs:element name="amministrazione" type="xs:string" />
+<xs:element name="oggetto" type="xs:string" />
+<xs:element name="idUtente" type="xs:int" minOccurs="0" />
+<xs:element name="riservato" type="xs:boolean" minOccurs="0" />
+<xs:element name="invio" type="xs:boolean" minOccurs="0" />
+<xs:element name="email" type="tns:DatiEmail" minOccurs="0" />
+<xs:element name="idFascicolo" type="xs:string" />
+<xs:element name="idTitolario" type="xs:string" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="protocolloUscitaFascResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="numeroProtocollo" type="xs:long" minOccurs="0" />
+<xs:element name="anno" type="xs:int" />
+<xs:element name="dataProtocollo" type="xs:dateTime" minOccurs="0" />
+<xs:element name="errore" type="tns:Errore" minOccurs="0" />
+<xs:element name="esitoProtocollazione" type="xs:boolean" minOccurs="0" />
+<xs:element name="esitoCompletamentoProtocollo" type="xs:boolean" minOccurs="0" />
+<xs:element name="esitoFascicolazione" type="xs:boolean" minOccurs="0" />
+<xs:element name="esitoInvio" type="xs:boolean" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="protocolloUscitaWebRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="mittente" type="tns:MittenteProtUscita" minOccurs="0" />
+<xs:element name="destinatari" type="tns:ContattoDestinatario" maxOccurs="unbounded" />
+<xs:element name="documento" type="tns:Documento" />
+<xs:element name="allegati" type="tns:Allegato" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+<xs:element name="areaOrganizzativaOmogenea" type="xs:string" />
+<xs:element name="amministrazione" type="xs:string" />
+<xs:element name="oggetto" type="xs:string" />
+<xs:element name="idUtente" type="xs:int" minOccurs="0" />
+<xs:element name="riservato" type="xs:boolean" minOccurs="0" />
+<xs:element name="invio" type="xs:boolean" minOccurs="0" />
+<xs:element name="email" type="tns:DatiEmail" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="protocolloUscitaWebResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="numeroProtocollo" type="xs:long" minOccurs="0" />
+<xs:element name="anno" type="xs:int" />
+<xs:element name="dataProtocollo" type="xs:dateTime" minOccurs="0" />
+<xs:element name="errore" type="tns:Errore" minOccurs="0" />
+<xs:element name="esitoProtocollazione" type="xs:boolean" minOccurs="0" />
+<xs:element name="esitoCompletamentoProtocollo" type="xs:boolean" minOccurs="0" />
+<xs:element name="esitoInvio" type="xs:boolean" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:complexType name="Errore">
+<xs:sequence>
+<xs:element name="codice" type="xs:string" />
+<xs:element name="descrizione" type="xs:string" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="Mittente">
+<xs:sequence>
+<xs:element name="personaFisica" type="tns:PersonaFisica" minOccurs="0" />
+<xs:element name="personaGiuridica" type="tns:PersonaGiuridica" minOccurs="0" />
+<xs:element name="indirizzo" type="xs:string" minOccurs="0" />
+<xs:element name="comune" type="xs:string" minOccurs="0" />
+<xs:element name="nazione" type="xs:string" minOccurs="0" />
+<xs:element name="pecEmail" type="xs:string" minOccurs="0" />
+<xs:element name="email" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="PersonaFisica">
+<xs:sequence>
+<xs:element name="nome" type="xs:string" />
+<xs:element name="cognome" type="xs:string" />
+<xs:element name="codiceFiscale" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="PersonaGiuridica">
+<xs:sequence>
+<xs:element name="ragioneSociale" type="xs:string" />
+<xs:element name="partitaIVA" type="xs:string" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="Destinatario">
+<xs:sequence>
+<xs:element name="areaOrganizzativaOmogenea" type="xs:string" />
+<xs:element name="personaFisica" type="tns:PersonaFisica" />
+<xs:element name="amministrazione" type="xs:string" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="Documento">
+<xs:sequence>
+<xs:element name="titolo" type="xs:string" />
+<xs:element name="sunto" type="xs:string" minOccurs="0" />
+<xs:element name="dettaglio" type="xs:string" minOccurs="0" />
+<xs:element name="nomeFile" type="xs:string" />
+<xs:element name="classifica" type="xs:string" minOccurs="0" />
+<xs:element name="contenuto" type="xs:base64Binary" />
+<xs:element name="improntaMIME" type="tns:ImprontaMIME" minOccurs="0" />
+<xs:element name="collocazioneTelematica" type="xs:string" minOccurs="0" />
+</xs:sequence>
+<xs:attribute name="tipoRiferimento" type="xs:string" />
+</xs:complexType>
+
+<xs:complexType name="ImprontaMIME">
+<xs:simpleContent>
+<xs:extension base="xs:string">
+<xs:attribute name="algoritmo" type="xs:string" />
+<xs:attribute name="codifica" type="xs:string" />
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+
+<xs:complexType name="Allegato">
+<xs:sequence>
+<xs:element name="documento" type="tns:Documento" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="MittenteProtUscita">
+<xs:sequence>
+<xs:element name="nome" type="xs:string" minOccurs="0" />
+<xs:element name="cognome" type="xs:string" minOccurs="0" />
+<xs:element name="uo" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ContattoDestinatario">
+<xs:sequence>
+<xs:element name="codiceFiscale" type="xs:string" minOccurs="0" />
+<xs:element name="cognome" type="xs:string" minOccurs="0" />
+<xs:element name="comune" type="xs:string" minOccurs="0" />
+<xs:element name="idProvincia" type="xs:int" minOccurs="0" />
+<xs:element name="email" type="xs:string" minOccurs="0" />
+<xs:element name="pecEmail" type="xs:string" minOccurs="0" />
+<xs:element name="indirizzo" type="xs:string" minOccurs="0" />
+<xs:element name="nazione" type="xs:string" minOccurs="0" />
+<xs:element name="nome" type="xs:string" minOccurs="0" />
+<xs:element name="piva" type="xs:string" minOccurs="0" />
+<xs:element name="ragioneSociale" type="xs:string" minOccurs="0" />
+<xs:element name="modalitaSpedizione" type="xs:int" />
+<xs:element name="fax" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DatiEmail">
+<xs:sequence>
+<xs:element name="oggetto" type="xs:string" />
+<xs:element name="testo" type="xs:string" />
+<xs:element name="from" type="xs:string" minOccurs="0" />
+<xs:element name="tipoAllegati" type="xs:int" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

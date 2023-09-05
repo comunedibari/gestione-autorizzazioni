@@ -19,6 +19,7 @@ Di seguito i sotto-moduli che costituiscono il front-end ed il back-end
     - **EntityManager**: componente principale del back end deputata alla gestione delle entità  rappresenta l'astrazione del livello dei dati nell'architettura del sistema di centrale in quanto fornisce una rappresentazione a oggetti dei dati del dominio e l'astrazione del DBMS adottato, ovvero l'assoluta indipendenza delle funzioni dell'applicazione dal RDBMS
     - **EventEngine**:  gestore eventi è un modulo di fondamentale importanza per l'intero funzionamento del sistema: il suo compito è quello di ricevere tutti gli eventi emessi da un qualsiasi componente interno al sistema o esterno, classificarli, processarli, salvarli nella base dati. L'evento è rappresentato da un'entità contenente alcuni attributi obbligatori (sorgente, tipo, data di creazione, ...) ed una serie di attributi custom che caratterizzano il particolare tipo di evento. Dal punto di vista pratico può essere visto come una notifica che un qualunque modulo, in un certo istante, deve inviare ad altri moduli del sistema.
     - **RuleEngine**: modulo che si occupa delle definizione di regole e operazioni pianificate; è utilizzato per l'invio delle notifiche push all'app mobile.
+    - **middleware-protocolli**: modulo per la gestione dei protocollli.
 - front-end: contiene i seguenti moduli di frontend:
 	- **core**: contiene le funzioni di core quali gestione form, tabelle, etc.
     - **management**: contiene le funzionalità di gestione degli utenti e dei ruoli
